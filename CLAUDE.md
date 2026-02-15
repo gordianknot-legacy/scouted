@@ -126,15 +126,53 @@ All parsers share canonical implementations of:
 
 ### Source Classification (`scraper/index.ts`)
 Each source is classified for filtering:
-- **India-focused** (NGOBox, `/tag/india/`): education filter only
+- **India-focused** (NGOBox, `/tag/india/`, CSRBox, IDR): education filter only
 - **Education-focused** (`/education/`, `/edtech/`): India filter only
-- **International general** (Grants.gov, GOV.UK FCDO): both India + education filters
+- **Pre-filtered** (Google CSE, Devex, Alliance): already filtered in parser, pass through
 - Negative keywords (`veterinary`, `petroleum`, `mining`, `military`) reject non-education noise
+
+### Active Sources
+| Source | Parser | Type | Expected Yield |
+|--------|--------|------|---------------|
+| NGOBox (3 URLs) | `ngobox`, `ngobox-rfp` | Grant aggregator | 5-20/run |
+| FundsForNGOs (2 URLs) | `fundsforngos` | Grant aggregator | 3-10/run |
+| CSRBox | `csrbox` | CSR data scraper | 10-30 companies |
+| IDR (idronline.org) | `idr` | RSS (education + philanthropy feeds) | 5-10/run |
+| Devex | `devex` | RSS + JSON-LD from article pages | 2-5/run |
+| Alliance Magazine | `alliance` | RSS + search page scraping | 2-5/run |
+| Google Custom Search | `google-cse` | API (8 queries, 50-domain CSE) | 5-20/run |
+
+### Scoring Algorithm
+- **Sector match (+30)**: Title/description/tags contain CSF sector keywords
+- **Geography match (+20)**: Location or text mentions CSF priority state
+- **Funding size (+20)**: Amount >= ₹1 Crore or equivalent international currency
+- **Known donor (+15)**: Organisation matches `KNOWN_EDUCATION_FUNDERS` list in config.ts
+- **Duration (+10)**: Project >= 2 years
+- **Decay**: Frontend applies -5 per week since creation
+
+### Known Education Funders (`config.ts`)
+The `KNOWN_EDUCATION_FUNDERS` array contains ~80 organisations including:
+- CSF's current donors (Bajaj, Gates Foundation, Dell Foundation, Reliance, etc.)
+- Major Indian CSR spenders (Tata, Wipro, Infosys, Mahindra, etc.)
+- International education philanthropies (Hewlett, CIFF, LEGO Foundation, etc.)
+- When a new donor is identified, add their name (lowercase) to this array.
 
 ### Rate Limiting
 - Detail page fetching: 3 concurrent, 1s delay, 10s timeout
 - Pagination: up to 5 pages per NGOBox source, sequential
-- API sources (Grants.gov, GOV.UK): single request each
+- Devex: 10s crawl delay between article page fetches (per robots.txt)
+- Google CSE: 0.5s delay between queries, stops on rate limit (429)
+
+### Environment Variables (Scraper)
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `SUPABASE_URL` | Yes | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Service role key (bypasses RLS) |
+| `GOOGLE_CSE_API_KEY` | No | Google Custom Search API key (100 free queries/day) |
+| `GOOGLE_CSE_ID` | No | Programmable Search Engine ID (50-domain limit) |
+| `RESEND_API_KEY` | Yes (digest) | Resend email API key |
+
+Note: Google Custom Search JSON API sunsets **1 Jan 2027**. The scraper gracefully skips if env vars are not set.
 
 ## 10. Security: RLS Policy Rationale
 - **opportunities**: anon can `SELECT` only. No `INSERT`/`UPDATE` for anon. Scraper uses `service_role` key which bypasses RLS.
@@ -155,7 +193,8 @@ Each source is classified for filtering:
 5. **Classify filtering**: set `isIndiaSource` / `isEducationSource` logic in the filter block
 
 ### Recommended Future Sources
-- **IDR** (idronline.org) — Indian development sector articles
 - **NITI Aayog** — Government of India policy think tank
 - **MyGov.in** — Government citizen engagement platform
 - **Give2Asia** — Asia-focused philanthropy grants
+- **data.gov.in** — Open government CSR expenditure datasets (Dataset 1612)
+- **csr.gov.in** — National CSR Portal (requires browser automation)

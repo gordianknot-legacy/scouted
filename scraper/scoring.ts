@@ -1,4 +1,4 @@
-import { CSF_SECTORS, CSF_PRIORITY_STATES } from './config.js'
+import { CSF_SECTORS, CSF_PRIORITY_STATES, KNOWN_EDUCATION_FUNDERS } from './config.js'
 
 export interface RawOpportunity {
   title: string
@@ -27,12 +27,18 @@ export function calculateScore(opp: RawOpportunity): number {
     score += 20
   }
 
-  // Funding size (+20)
+  // Funding size (+20) — only for ₹1 Crore+ or equivalent
   const amountText = `${opp.amount || ''} ${text}`
   const croreMatch = amountText.match(/(\d+)\s*(?:crore|cr)/i)
   const millionMatch = amountText.match(/(?:\$|£|€)\s*(\d[\d,.]*)\s*(?:million|m\b)/i)
   if ((croreMatch && parseInt(croreMatch[1]) >= 1) || millionMatch) {
     score += 20
+  }
+
+  // Known donor/funder (+15)
+  const orgText = `${opp.organisation || ''} ${opp.title}`.toLowerCase()
+  if (KNOWN_EDUCATION_FUNDERS.some(f => orgText.includes(f))) {
+    score += 15
   }
 
   // Duration (+10)

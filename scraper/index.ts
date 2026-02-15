@@ -4,15 +4,21 @@ import { upsertOpportunities, type DbOpportunity } from './supabase.js'
 import { parseNgobox } from './parsers/ngobox.js'
 import { parseNgoboxRfp } from './parsers/ngobox-rfp.js'
 import { parseFundsForNgos } from './parsers/fundsforngos.js'
-import { parseGrantsGov } from './parsers/grants-gov.js'
-import { parseGovukFcdo } from './parsers/govuk-fcdo.js'
+import { parseIdr } from './parsers/idr.js'
+import { parseDevex } from './parsers/devex.js'
+import { parseAlliance } from './parsers/alliance.js'
+import { parseCsrbox } from './parsers/csrbox.js'
+import { parseGoogleCse } from './parsers/google-cse.js'
 
 const PARSERS: Record<string, (url: string) => Promise<RawOpportunity[]>> = {
   ngobox: parseNgobox,
   'ngobox-rfp': parseNgoboxRfp,
   fundsforngos: parseFundsForNgos,
-  'grants-gov': parseGrantsGov,
-  'govuk-fcdo': parseGovukFcdo,
+  idr: parseIdr,
+  devex: parseDevex,
+  alliance: parseAlliance,
+  csrbox: parseCsrbox,
+  'google-cse': parseGoogleCse,
 }
 
 // All Indian states + UTs for location detection
@@ -34,13 +40,11 @@ const EDUCATION_PHRASES = [
   'classroom', 'scholarship', 'fellowship', 'anganwadi', 'early childhood', 'ecce',
   'pedagog', 'curriculum', 'skill development', 'k-12', 'foundational learning',
   'foundational literacy', 'foundational numeracy',
-  // Expanded phrases
   'school governance', 'high potential', 'national education policy', 'nep',
   'samagra shiksha', 'pre-primary',
 ]
 
 // Short keywords that need word-boundary matching to avoid false positives
-// e.g., "stem" shouldn't match "ecosystem", "fln" is unique enough
 const EDUCATION_REGEX = /\b(fln|stem|learning|student|academic|training)\b/i
 
 // Negative keywords — reject titles containing these (unless also education-related)
@@ -75,7 +79,6 @@ function isEducationRelevant(opp: RawOpportunity): boolean {
 
 function hasNegativeKeyword(opp: RawOpportunity): boolean {
   const title = opp.title.toLowerCase()
-  // Reject if title has negative keyword AND no education keyword
   if (NEGATIVE_KEYWORDS.some(k => title.includes(k))) {
     return !isEducationRelevant(opp)
   }
@@ -91,7 +94,7 @@ async function main() {
   const allOpportunities: DbOpportunity[] = []
 
   for (const source of SOURCES) {
-    console.log(`[${source.name}] Fetching ${source.url}...`)
+    console.log(`\n[${source.name}] Fetching ${source.url}...`)
 
     const parser = PARSERS[source.parser]
     if (!parser) {
@@ -104,14 +107,28 @@ async function main() {
       console.log(`[${source.name}] Parsed ${raw.length} raw opportunities`)
       totalParsed += raw.length
 
-      // Determine source characteristics
-      // India-focused: NGOBox (all India), FundsForNGOs /tag/india/
-      const isIndiaSource = source.url.includes('ngobox.org') || source.url.includes('/tag/india/')
-      // Education-focused: URLs with education/edtech in path
+      // Source classification for filtering
+      //
+      // India-focused sources: trust education tagging, only filter for education
+      //   NGOBox (all India-based), FundsForNGOs /tag/india/, CSRBox, IDR
+      //
+      // Education-focused sources: trust education categorisation, only filter for India
+      //   FundsForNGOs /education/, /edtech/
+      //
+      // Pre-filtered sources: already filtered in parser (pass through)
+      //   Google CSE (searches for India+education), Devex (filtered in parser), Alliance (filtered in parser)
+      //
+      // General sources: require both India + education match
+      //   (none currently)
+      //
+      const isIndiaSource = source.url.includes('ngobox.org') ||
+                            source.url.includes('/tag/india/') ||
+                            source.url.includes('csrbox.org') ||
+                            source.url.includes('idronline.org')
       const isEducationSource = /education|edtech/i.test(source.url)
-
-      // Grants.gov and GOV.UK FCDO: not India-source, not education-source (both filters apply)
-      // Their parsers already do internal India+education filtering, but we double-check here
+      const isPreFiltered = source.parser === 'google-cse' ||
+                            source.parser === 'devex' ||
+                            source.parser === 'alliance'
 
       // Filter out items with deadlines older than 3 months
       const cutoff = new Date()
@@ -128,6 +145,9 @@ async function main() {
         // Reject negative keywords (veterinary, petroleum, etc.)
         if (hasNegativeKeyword(opp)) return false
 
+        // Pre-filtered sources already did India+education filtering in the parser
+        if (isPreFiltered) return true
+
         // Education-tagged sources: trust the source's categorization
         if (isEducationSource) {
           return isIndiaSource || isIndiaRelevant(opp)
@@ -143,7 +163,7 @@ async function main() {
         return isIndiaRelevant(opp)
       })
 
-      console.log(`[${source.name}] After filter: ${filtered.length} (India-source: ${isIndiaSource})`)
+      console.log(`[${source.name}] After filter: ${filtered.length}`)
 
       // Score each opportunity
       const scored: DbOpportunity[] = filtered.map(opp => ({
@@ -165,7 +185,8 @@ async function main() {
     return true
   })
 
-  console.log(`\nTotal parsed: ${totalParsed}`)
+  console.log(`\n=== Summary ===`)
+  console.log(`Total parsed: ${totalParsed}`)
   console.log(`Unique after dedup: ${unique.length}`)
 
   // Upsert to Supabase
