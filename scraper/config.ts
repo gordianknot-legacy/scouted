@@ -31,6 +31,16 @@ export const SOURCES: Source[] = [
     url: 'https://www2.fundsforngos.org/tag/india/',
     parser: 'fundsforngos',
   },
+  {
+    name: 'Grants.gov',
+    url: 'https://api.grants.gov/v1/api/search2',
+    parser: 'grants-gov',
+  },
+  {
+    name: 'GOV.UK FCDO',
+    url: 'https://www.gov.uk/api/search.json',
+    parser: 'govuk-fcdo',
+  },
 ]
 
 // FLN and Foundational Literacy are merged

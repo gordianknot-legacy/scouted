@@ -4,11 +4,15 @@ import { upsertOpportunities, type DbOpportunity } from './supabase.js'
 import { parseNgobox } from './parsers/ngobox.js'
 import { parseNgoboxRfp } from './parsers/ngobox-rfp.js'
 import { parseFundsForNgos } from './parsers/fundsforngos.js'
+import { parseGrantsGov } from './parsers/grants-gov.js'
+import { parseGovukFcdo } from './parsers/govuk-fcdo.js'
 
 const PARSERS: Record<string, (url: string) => Promise<RawOpportunity[]>> = {
   ngobox: parseNgobox,
   'ngobox-rfp': parseNgoboxRfp,
   fundsforngos: parseFundsForNgos,
+  'grants-gov': parseGrantsGov,
+  'govuk-fcdo': parseGovukFcdo,
 }
 
 // All Indian states + UTs for location detection
@@ -20,6 +24,8 @@ const INDIA_MARKERS = [
   'goa', 'tripura', 'meghalaya', 'manipur', 'nagaland', 'mizoram', 'sikkim', 'arunachal pradesh',
   'south asia', 'subcontinent', 'developing countr', 'lmic', 'low-income countr',
   'global south', 'asia-pacific',
+  // India-specific programmes and institutions
+  'niti aayog', 'samagra shiksha', 'nep 2020', 'sarva shiksha', 'mid-day meal', 'icds',
 ]
 
 // Multi-word phrases checked with includes()
@@ -28,11 +34,17 @@ const EDUCATION_PHRASES = [
   'classroom', 'scholarship', 'fellowship', 'anganwadi', 'early childhood', 'ecce',
   'pedagog', 'curriculum', 'skill development', 'k-12', 'foundational learning',
   'foundational literacy', 'foundational numeracy',
+  // Expanded phrases
+  'school governance', 'high potential', 'national education policy', 'nep',
+  'samagra shiksha', 'pre-primary',
 ]
 
 // Short keywords that need word-boundary matching to avoid false positives
 // e.g., "stem" shouldn't match "ecosystem", "fln" is unique enough
 const EDUCATION_REGEX = /\b(fln|stem|learning|student|academic|training)\b/i
+
+// Negative keywords — reject titles containing these (unless also education-related)
+const NEGATIVE_KEYWORDS = ['veterinary', 'petroleum', 'mining', 'military']
 
 function isIndiaRelevant(opp: RawOpportunity): boolean {
   const text = `${opp.title} ${opp.description} ${opp.location || ''} ${opp.tags.join(' ')}`.toLowerCase()
@@ -59,6 +71,15 @@ function isEducationRelevant(opp: RawOpportunity): boolean {
   // Only check title + description — NOT tags, since tags are self-assigned by our parsers
   const text = `${opp.title} ${opp.description}`.toLowerCase()
   return EDUCATION_PHRASES.some(phrase => text.includes(phrase)) || EDUCATION_REGEX.test(text)
+}
+
+function hasNegativeKeyword(opp: RawOpportunity): boolean {
+  const title = opp.title.toLowerCase()
+  // Reject if title has negative keyword AND no education keyword
+  if (NEGATIVE_KEYWORDS.some(k => title.includes(k))) {
+    return !isEducationRelevant(opp)
+  }
+  return false
 }
 
 async function main() {
@@ -89,6 +110,9 @@ async function main() {
       // Education-focused: URLs with education/edtech in path
       const isEducationSource = /education|edtech/i.test(source.url)
 
+      // Grants.gov and GOV.UK FCDO: not India-source, not education-source (both filters apply)
+      // Their parsers already do internal India+education filtering, but we double-check here
+
       // Filter out items with deadlines older than 3 months
       const cutoff = new Date()
       cutoff.setMonth(cutoff.getMonth() - 3)
@@ -100,6 +124,9 @@ async function main() {
 
         // Exclude items that explicitly mention foreign countries in title
         if (isExplicitlyForeignCountry(opp)) return false
+
+        // Reject negative keywords (veterinary, petroleum, etc.)
+        if (hasNegativeKeyword(opp)) return false
 
         // Education-tagged sources: trust the source's categorization
         if (isEducationSource) {

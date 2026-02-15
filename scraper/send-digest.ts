@@ -28,7 +28,12 @@ interface Opportunity {
   location: string | null
 }
 
-function buildEmailHtml(opportunities: Opportunity[], date: string): string {
+interface Subscriber {
+  email: string
+  unsubscribe_token: string
+}
+
+function buildEmailHtml(opportunities: Opportunity[], date: string, unsubscribeUrl: string): string {
   const rows = opportunities.map(opp => {
     const scoreColour = opp.relevance_score >= 75 ? '#22c55e' : opp.relevance_score >= 50 ? '#FFD400' : '#ef4444'
     const deadline = opp.deadline
@@ -136,6 +141,13 @@ function buildEmailHtml(opportunities: Opportunity[], date: string): string {
                     Opportunities are scored by relevance to CSF's mission in Indian education.
                   </td>
                 </tr>
+                <tr>
+                  <td align="center" style="padding-top:12px;">
+                    <a href="${unsubscribeUrl}" style="font-family:Cambria,Georgia,serif; font-size:12px; color:#999; text-decoration:underline;">
+                      Unsubscribe from this digest
+                    </a>
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
@@ -169,10 +181,10 @@ async function main() {
     return
   }
 
-  // Fetch subscribers
+  // Fetch subscribers with unsubscribe tokens
   const { data: subscribers, error: subError } = await supabase
     .from('subscribers')
-    .select('email')
+    .select('email, unsubscribe_token')
 
   if (subError) {
     console.error('Failed to fetch subscribers:', subError.message)
@@ -191,15 +203,24 @@ async function main() {
     year: 'numeric',
   })
 
-  const html = buildEmailHtml(opportunities as Opportunity[], today)
-  const emails = subscribers.map(s => s.email)
-
-  console.log(`Sending digest with ${opportunities.length} opportunities to ${emails.length} subscribers`)
-
   // Use sandbox sender unless domain is verified in Resend
   const fromAddress = process.env.RESEND_DOMAIN_VERIFIED === 'true'
     ? 'ScoutEd <digest@scouted.whybe.ai>'
     : 'ScoutEd <onboarding@resend.dev>'
+
+  // Build personalised emails with per-subscriber unsubscribe links
+  const emailPayloads = (subscribers as Subscriber[]).map(sub => {
+    const unsubscribeUrl = `https://scouted.whybe.ai/api/unsubscribe?token=${sub.unsubscribe_token}`
+    const html = buildEmailHtml(opportunities as Opportunity[], today, unsubscribeUrl)
+    return {
+      from: fromAddress,
+      to: sub.email,
+      subject: `ScoutEd Digest — ${today}`,
+      html,
+    }
+  })
+
+  console.log(`Sending digest with ${opportunities.length} opportunities to ${emailPayloads.length} subscribers`)
 
   // Send via Resend (batch)
   const res = await fetch('https://api.resend.com/emails/batch', {
@@ -208,14 +229,7 @@ async function main() {
       'Authorization': `Bearer ${resendApiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(
-      emails.map(email => ({
-        from: fromAddress,
-        to: email,
-        subject: `ScoutEd Digest — ${today}`,
-        html,
-      }))
-    ),
+    body: JSON.stringify(emailPayloads),
   })
 
   if (!res.ok) {

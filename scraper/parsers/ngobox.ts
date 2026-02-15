@@ -1,4 +1,6 @@
 import type { RawOpportunity } from '../scoring.js'
+import { stripTags, extractTags, extractLocation, parseDate, extractAmount, dedup } from './utils.js'
+import { enrichWithDetails } from './detail-fetcher.js'
 
 /**
  * Parser for NGOBox grant listing pages.
@@ -46,7 +48,8 @@ export async function parseNgobox(url: string): Promise<RawOpportunity[]> {
     console.error(`Error parsing NGOBox (${url}):`, err)
   }
 
-  return dedup(opportunities)
+  const deduped = dedup(opportunities)
+  return enrichWithDetails(deduped, { sourceName: 'NGOBox Grants' })
 }
 
 function parseGrantsFromHtml(html: string, opportunities: RawOpportunity[]) {
@@ -71,12 +74,12 @@ function parseGrantsFromHtml(html: string, opportunities: RawOpportunity[]) {
     // Extract deadline
     const deadlineMatch = blockText.match(/Deadline:\s*(\d{1,2}\s+\w+\.?\s+\d{4})/i) ||
                           blockHtml.match(/Deadline:<\/strong>\s*(\d{1,2}\s+\w+\.?\s+\d{4})/i)
-    const deadline = deadlineMatch ? parseNgoboxDate(deadlineMatch[1]) : null
+    const deadline = deadlineMatch ? parseDate(deadlineMatch[1]) : null
 
     // Extract grant amount
     const amountMatch = blockText.match(/Grant\s*Amount:\s*([^\n]+)/i) ||
                         blockHtml.match(/Grant\s*Amount:<\/strong>\s*([^<\n]+)/i)
-    const amount = amountMatch ? formatAmount(amountMatch[1].trim()) : null
+    const amount = amountMatch ? extractAmount(amountMatch[1].trim()) : null
 
     // Extract organisation — first meaningful text before noise markers
     const orgText = blockText.trim().split(/Deadline:|Grant\s*Amount:|Add to Google|#st |\.stbtn|Fellowships|img\{/i)[0].trim()
@@ -97,81 +100,4 @@ function parseGrantsFromHtml(html: string, opportunities: RawOpportunity[]) {
       location: extractLocation(title + ' ' + blockText),
     })
   }
-}
-
-function stripTags(html: string): string {
-  return html
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
-
-function parseNgoboxDate(text: string): string | null {
-  if (!text) return null
-  const cleaned = text.replace(/\./g, '').trim()
-  // Try: "16 Feb 2026" or "28 March 2026"
-  const match = cleaned.match(/(\d{1,2})\s+(\w+)\s+(\d{4})/)
-  if (match) {
-    const d = new Date(`${match[2]} ${match[1]}, ${match[3]}`)
-    if (!isNaN(d.getTime())) return d.toISOString().split('T')[0]
-  }
-  const d = new Date(cleaned)
-  if (!isNaN(d.getTime())) return d.toISOString().split('T')[0]
-  return null
-}
-
-function formatAmount(raw: string | null): string | null {
-  if (!raw) return null
-  const cleaned = raw.trim()
-  const usd = cleaned.match(/(\d[\d,.]+)\s*(?:USD|US\s*Dollar)/i)
-  if (usd) return `$${usd[1]}`
-  const eur = cleaned.match(/(\d[\d,.]+)\s*(?:EUR|Euro)/i)
-  if (eur) return `€${eur[1]}`
-  const gbp = cleaned.match(/(\d[\d,.]+)\s*(?:GBP|Pound)/i)
-  if (gbp) return `£${gbp[1]}`
-  const jpy = cleaned.match(/(\d[\d,.]+)\s*(?:JPY|Yen)/i)
-  if (jpy) return `¥${jpy[1]}`
-  const inr = cleaned.match(/(?:INR|₹)\s*(\d[\d,.]+)/i)
-  if (inr) return `₹${inr[1]}`
-  if (cleaned.length < 60 && cleaned.length > 1) return cleaned
-  return null
-}
-
-const EDUCATION_KEYWORDS = ['education', 'school', 'learning', 'teacher', 'literacy', 'numeracy', 'edtech', 'classroom', 'child', 'youth', 'fln', 'stem', 'skill', 'training', 'fellowship', 'scholarship']
-
-function extractTags(text: string): string[] {
-  const lower = text.toLowerCase()
-  const tags: string[] = []
-  if (lower.match(/edtech|ed-tech|digital\s+learning|ict/)) tags.push('EdTech')
-  if (lower.match(/fln|foundational\s+lit|foundational\s+num|foundational\s+learn/)) tags.push('Foundational Literacy')
-  if (lower.match(/teacher|educator|pedagog/)) tags.push('Teacher Training')
-  if (lower.match(/early\s+childhood|ecce|anganwadi|pre-?school/)) tags.push('Early Childhood')
-  if (lower.match(/school\s+governance|school\s+management|school\s+leader/)) tags.push('School Governance')
-  if (lower.match(/classroom|instruction|curriculum/)) tags.push('Classroom Instruction')
-  if (tags.length === 0 && EDUCATION_KEYWORDS.some(k => lower.includes(k))) tags.push('Education')
-  if (tags.length === 0) tags.push('Education')
-  return tags
-}
-
-const STATES = ['Uttar Pradesh', 'Madhya Pradesh', 'Haryana', 'Gujarat', 'Rajasthan', 'Odisha', 'Jharkhand', 'Himachal Pradesh', 'Maharashtra', 'Bihar', 'Tamil Nadu', 'Karnataka', 'Andhra Pradesh', 'Telangana', 'Kerala', 'West Bengal', 'Punjab', 'Assam', 'Chhattisgarh']
-
-function extractLocation(text: string): string | null {
-  const lower = text.toLowerCase()
-  for (const state of STATES) {
-    if (lower.includes(state.toLowerCase())) return state
-  }
-  if (lower.includes('india') || lower.includes('national')) return 'India'
-  return null
-}
-
-function dedup(opps: RawOpportunity[]): RawOpportunity[] {
-  const seen = new Set<string>()
-  return opps.filter(o => {
-    if (seen.has(o.source_url)) return false
-    seen.add(o.source_url)
-    return true
-  })
 }

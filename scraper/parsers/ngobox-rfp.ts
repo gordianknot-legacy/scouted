@@ -1,4 +1,6 @@
 import type { RawOpportunity } from '../scoring.js'
+import { stripTags, extractTags, extractLocation, parseDate, dedup } from './utils.js'
+import { enrichWithDetails } from './detail-fetcher.js'
 
 /**
  * Parser for NGOBox RFP/EOI page. Same flat structure as grants
@@ -42,7 +44,8 @@ export async function parseNgoboxRfp(url: string): Promise<RawOpportunity[]> {
     console.error('Error parsing NGOBox RFP:', err)
   }
 
-  return dedup(opportunities)
+  const deduped = dedup(opportunities)
+  return enrichWithDetails(deduped, { sourceName: 'NGOBox RFP' })
 }
 
 function parseRfpsFromHtml(html: string, opportunities: RawOpportunity[]) {
@@ -83,57 +86,4 @@ function parseRfpsFromHtml(html: string, opportunities: RawOpportunity[]) {
       location: extractLocation(title + ' ' + blockText),
     })
   }
-}
-
-function stripTags(html: string): string {
-  return html
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
-
-function parseDate(text: string): string | null {
-  if (!text) return null
-  const cleaned = text.replace(/\./g, '').trim()
-  const match = cleaned.match(/(\d{1,2})\s+(\w+)\s+(\d{4})/)
-  if (match) {
-    const d = new Date(`${match[2]} ${match[1]}, ${match[3]}`)
-    if (!isNaN(d.getTime())) return d.toISOString().split('T')[0]
-  }
-  return null
-}
-
-function extractTags(text: string): string[] {
-  const lower = text.toLowerCase()
-  const tags: string[] = []
-  if (lower.match(/edtech|ed-tech|digital\s+learning|ict/)) tags.push('EdTech')
-  if (lower.match(/fln|foundational\s+lit|foundational\s+num/)) tags.push('Foundational Literacy')
-  if (lower.match(/teacher|educator|pedagog/)) tags.push('Teacher Training')
-  if (lower.match(/early\s+childhood|ecce|anganwadi|pre-?school/)) tags.push('Early Childhood')
-  if (lower.match(/school\s+governance|school\s+management/)) tags.push('School Governance')
-  if (tags.length === 0) tags.push('Education')
-  return tags
-}
-
-const STATES = ['Uttar Pradesh', 'Madhya Pradesh', 'Haryana', 'Gujarat', 'Rajasthan', 'Odisha', 'Jharkhand', 'Himachal Pradesh', 'Maharashtra', 'Bihar', 'Tamil Nadu', 'Karnataka', 'Punjab', 'Assam', 'Telangana', 'Kerala', 'West Bengal']
-
-function extractLocation(text: string): string | null {
-  const lower = text.toLowerCase()
-  for (const state of STATES) {
-    if (lower.includes(state.toLowerCase())) return state
-  }
-  if (lower.includes('india') || lower.includes('national')) return 'India'
-  return null
-}
-
-function dedup(opps: RawOpportunity[]): RawOpportunity[] {
-  const seen = new Set<string>()
-  return opps.filter(o => {
-    if (seen.has(o.source_url)) return false
-    seen.add(o.source_url)
-    return true
-  })
 }

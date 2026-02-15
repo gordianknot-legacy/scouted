@@ -1,5 +1,7 @@
 import * as cheerio from 'cheerio'
 import type { RawOpportunity } from '../scoring.js'
+import { extractTags, extractLocation, extractAmount, parseDate, dedup, isEducationRelevant } from './utils.js'
+import { enrichWithDetails } from './detail-fetcher.js'
 
 /**
  * Parser for FundsForNGOs — WordPress Genesis framework.
@@ -42,14 +44,10 @@ export async function parseFundsForNgos(url: string): Promise<RawOpportunity[]> 
       const deadlineMatch = desc.match(/Deadline:\s*(\d{1,2}-\w{3}-\d{2,4})/i)
       let deadline: string | null = null
       if (deadlineMatch) {
-        deadline = parseFfnDate(deadlineMatch[1])
+        deadline = parseDate(deadlineMatch[1])
       }
       // Also check for "Ongoing" to flag as no deadline
       const isOngoing = desc.match(/Deadline:\s*Ongoing/i)
-
-      // Date from time element or .entry-date
-      const postDate = $el.find('time, .entry-date, .published').first().attr('datetime') ||
-                       $el.find('time, .entry-date, .published').first().text().trim()
 
       // Extract category from URL path
       const category = link.split('/').filter(Boolean)[3] || ''
@@ -78,56 +76,6 @@ export async function parseFundsForNgos(url: string): Promise<RawOpportunity[]> 
     console.error('Error parsing FundsForNGOs:', err)
   }
 
-  return opportunities
-}
-
-function parseFfnDate(text: string): string | null {
-  if (!text) return null
-  // Format: "14-Jan-2026" or "28-Feb-2026"
-  const parts = text.split('-')
-  if (parts.length === 3) {
-    const d = new Date(`${parts[1]} ${parts[0]}, ${parts[2]}`)
-    if (!isNaN(d.getTime())) return d.toISOString().split('T')[0]
-  }
-  return null
-}
-
-function isEducationRelevant(text: string): boolean {
-  const lower = text.toLowerCase()
-  return ['education', 'school', 'learning', 'teacher', 'literacy', 'numeracy', 'edtech', 'classroom', 'child', 'youth', 'fln', 'stem', 'scholarship', 'fellowship', 'training', 'anganwadi', 'early childhood'].some(k => lower.includes(k))
-}
-
-function extractTags(text: string): string[] {
-  const lower = text.toLowerCase()
-  const tags: string[] = []
-  if (lower.match(/edtech|ed-tech|digital\s+learning|ict|technology/)) tags.push('EdTech')
-  if (lower.match(/fln|foundational\s+lit|foundational\s+num|foundational\s+learn/)) tags.push('Foundational Literacy')
-  if (lower.match(/teacher|educator|pedagog/)) tags.push('Teacher Training')
-  if (lower.match(/early\s+childhood|ecce|anganwadi|pre-?school/)) tags.push('Early Childhood')
-  if (lower.match(/school\s+governance|school\s+management|school\s+leader/)) tags.push('School Governance')
-  if (lower.match(/classroom|instruction|curriculum/)) tags.push('Classroom Instruction')
-  if (tags.length === 0) tags.push('Education')
-  return tags
-}
-
-function extractAmount(text: string): string | null {
-  const crore = text.match(/₹?\s*(\d[\d,.]*)\s*(?:crore|cr)/i)
-  if (crore) return `₹${crore[1]} Crore`
-  const lakh = text.match(/₹?\s*(\d[\d,.]*)\s*(?:lakh|lac)/i)
-  if (lakh) return `₹${lakh[1]} Lakh`
-  const dollar = text.match(/\$\s*(\d[\d,.]*)\s*(million|m\b|billion|b\b|thousand|k\b)?/i)
-  if (dollar) return `$${dollar[1]}${dollar[2] ? ' ' + dollar[2] : ''}`
-  const euro = text.match(/€\s*(\d[\d,.]*)\s*(million|m\b)?/i)
-  if (euro) return `€${euro[1]}${euro[2] ? ' ' + euro[2] : ''}`
-  return null
-}
-
-function extractLocation(text: string): string | null {
-  const states = ['Uttar Pradesh', 'Madhya Pradesh', 'Haryana', 'Gujarat', 'Rajasthan', 'Odisha', 'Jharkhand', 'Himachal Pradesh', 'Maharashtra', 'Bihar', 'Tamil Nadu', 'Karnataka', 'Punjab', 'Assam', 'Telangana', 'Kerala', 'West Bengal', 'Andhra Pradesh']
-  const lower = text.toLowerCase()
-  for (const state of states) {
-    if (lower.includes(state.toLowerCase())) return state
-  }
-  if (lower.includes('india')) return 'India'
-  return null
+  const deduped = dedup(opportunities)
+  return enrichWithDetails(deduped, { sourceName: 'FundsForNGOs' })
 }

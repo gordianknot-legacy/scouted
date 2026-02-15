@@ -27,6 +27,14 @@ CREATE INDEX IF NOT EXISTS idx_opportunities_score ON opportunities (relevance_s
 CREATE INDEX IF NOT EXISTS idx_opportunities_deadline ON opportunities (deadline);
 CREATE INDEX IF NOT EXISTS idx_opportunities_created ON opportunities (created_at DESC);
 
+-- Decayed score function for server-side sorting
+CREATE OR REPLACE FUNCTION decayed_score(opp opportunities)
+RETURNS integer AS $$
+  SELECT GREATEST(0, opp.relevance_score -
+    (EXTRACT(EPOCH FROM (NOW() - opp.created_at)) / 604800)::int * 5
+  )::integer;
+$$ LANGUAGE SQL STABLE;
+
 -- ======================
 -- Table: user_actions
 -- ======================
@@ -46,6 +54,7 @@ CREATE INDEX IF NOT EXISTS idx_user_actions_user ON user_actions (user_id);
 CREATE TABLE IF NOT EXISTS subscribers (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
+  unsubscribe_token UUID DEFAULT uuid_generate_v4() NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -53,34 +62,37 @@ CREATE TABLE IF NOT EXISTS subscribers (
 -- Row Level Security
 -- ======================
 
--- Opportunities: public read, service_role insert/update
+-- Opportunities: anon can SELECT only. Scraper uses service_role (bypasses RLS).
 ALTER TABLE opportunities ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Public read opportunities"
+DROP POLICY IF EXISTS "Public read opportunities" ON opportunities;
+DROP POLICY IF EXISTS "Service role insert opportunities" ON opportunities;
+DROP POLICY IF EXISTS "Service role update opportunities" ON opportunities;
+
+CREATE POLICY "Anon read opportunities"
   ON opportunities FOR SELECT
   USING (true);
 
-CREATE POLICY "Service role insert opportunities"
-  ON opportunities FOR INSERT
-  WITH CHECK (true);
+-- No INSERT/UPDATE/DELETE policies for anon — service_role bypasses RLS for scraper writes.
 
-CREATE POLICY "Service role update opportunities"
-  ON opportunities FOR UPDATE
-  USING (true);
-
--- Subscribers: service_role manages, anon can insert (subscribe)
+-- Subscribers: anon can INSERT only (subscribe). No SELECT for anon (prevents email harvesting).
+-- Service_role reads for digest (bypasses RLS).
 ALTER TABLE subscribers ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Anyone can subscribe"
+DROP POLICY IF EXISTS "Anyone can subscribe" ON subscribers;
+DROP POLICY IF EXISTS "Service role read subscribers" ON subscribers;
+
+CREATE POLICY "Anon insert subscribers"
   ON subscribers FOR INSERT
   WITH CHECK (true);
 
-CREATE POLICY "Service role read subscribers"
-  ON subscribers FOR SELECT
-  USING (true);
+-- No SELECT/UPDATE/DELETE policies for anon.
 
--- User actions: users manage their own
+-- User actions: open for now — TODO: lock to auth.uid() once Supabase Auth is added.
+-- Currently managed via localStorage user_id on the client.
 ALTER TABLE user_actions ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users manage own actions" ON user_actions;
 
 CREATE POLICY "Users manage own actions"
   ON user_actions FOR ALL

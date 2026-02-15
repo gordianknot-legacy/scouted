@@ -29,7 +29,7 @@ export default function App() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [selectedOpportunity, setSelectedOpportunity] = useState<Opportunity | null>(null)
 
-  const { data: opportunities = [], isLoading, error } = useOpportunities(filters)
+  const { data: opportunities = [], isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useOpportunities(filters)
   const { isBookmarked, toggleBookmark, isHidden, toggleHidden, bookmarks } = useBookmarks()
   const { showOnboarding, completeOnboarding } = useOnboarding()
 
@@ -187,6 +187,19 @@ export default function App() {
             />
           ))}
         </div>
+
+        {/* Load More */}
+        {hasNextPage && (
+          <div className="text-center mt-8">
+            <button
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+              className="px-6 py-2.5 bg-white border border-gray-200 rounded-xl font-heading text-sm font-semibold text-csf-blue hover:bg-csf-blue hover:text-white transition-all shadow-sm disabled:opacity-50"
+            >
+              {isFetchingNextPage ? 'Loading...' : 'Load More'}
+            </button>
+          </div>
+        )}
       </div>
     )
   }
