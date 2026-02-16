@@ -203,10 +203,7 @@ async function main() {
     year: 'numeric',
   })
 
-  // Use sandbox sender unless domain is verified in Resend
-  const fromAddress = process.env.RESEND_DOMAIN_VERIFIED === 'true'
-    ? 'ScoutEd <digest@scouted.whybe.ai>'
-    : 'ScoutEd <onboarding@resend.dev>'
+  const fromAddress = 'ScoutEd <scouted-digest@whybe.ai>'
 
   // Build personalised emails with per-subscriber unsubscribe links
   const emailPayloads = (subscribers as Subscriber[]).map(sub => {
