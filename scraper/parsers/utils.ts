@@ -136,3 +136,43 @@ export function isEducationRelevant(text: string): boolean {
     'fellowship', 'training', 'anganwadi', 'early childhood',
   ].some(k => lower.includes(k))
 }
+
+// ─── Actionable Funding Check ───
+// Used by news parsers (IDR, Devex, Alliance) to filter out opinion/analysis articles
+// and only keep items that describe actual funding opportunities, grants, or donor activity.
+
+// Strong signals: phrases that almost always indicate an actual opportunity or donor action
+const STRONG_FUNDING_SIGNALS = [
+  'call for proposal', 'call for application', 'request for proposal',
+  'request for application', 'invit', 'accepting proposal',
+  'grants available', 'open for application', 'apply now', 'apply by',
+  'rfp', 'eoi', 'expression of interest',
+  'committed ₹', 'committed rs', 'committed inr', 'committed $',
+  'announced ₹', 'announced rs', 'announced $',
+  'launched a fund', 'launches fund', 'new fund',
+  'pledged ₹', 'pledged $', 'pledged rs',
+  'awarded ₹', 'awarded $', 'awarded rs',
+  'disbursed', 'sanctioned ₹', 'sanctioned rs',
+]
+
+// Amount patterns: specific monetary amounts strongly suggest real funding, not opinion
+const AMOUNT_PATTERN = /(?:₹|rs\.?|inr|\$|€|£)\s*[\d,.]+\s*(?:crore|cr|lakh|lac|million|billion|m\b|bn\b|k\b)?/i
+const CRORE_LAKH_PATTERN = /\d[\d,.]*\s*(?:crore|cr|lakh|lac)\b/i
+
+/**
+ * Check if text describes an actionable funding opportunity rather than
+ * a general opinion/analysis article. Requires either:
+ * 1. A strong funding signal phrase, OR
+ * 2. A specific monetary amount mention
+ */
+export function isActionableFunding(text: string): boolean {
+  const lower = text.toLowerCase()
+
+  // Check for strong signal phrases
+  if (STRONG_FUNDING_SIGNALS.some(s => lower.includes(s))) return true
+
+  // Check for specific monetary amounts
+  if (AMOUNT_PATTERN.test(text) || CRORE_LAKH_PATTERN.test(lower)) return true
+
+  return false
+}

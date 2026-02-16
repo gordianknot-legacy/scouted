@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio'
 import type { RawOpportunity } from '../scoring.js'
-import { extractTags, extractLocation, extractAmount, dedup, stripTags } from './utils.js'
+import { extractTags, extractLocation, extractAmount, dedup, stripTags, isActionableFunding } from './utils.js'
 
 /**
  * Parser for Devex — devex.com.
@@ -63,10 +63,11 @@ export async function parseDevex(_url: string): Promise<RawOpportunity[]> {
 
     console.log(`[Devex] RSS returned ${rssItems.length} items`)
 
-    // Filter for India + education/funding relevance
-    const relevant = rssItems.filter(item =>
-      isRelevant(`${item.title} ${item.description}`)
-    )
+    // Filter for India + education/funding relevance + actionable funding
+    const relevant = rssItems.filter(item => {
+      const text = `${item.title} ${item.description}`
+      return isRelevant(text) && isActionableFunding(text)
+    })
 
     console.log(`[Devex] After relevance filter: ${relevant.length}`)
 

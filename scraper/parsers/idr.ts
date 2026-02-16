@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio'
 import type { RawOpportunity } from '../scoring.js'
-import { extractTags, extractLocation, extractAmount, dedup, stripTags } from './utils.js'
+import { extractTags, extractLocation, extractAmount, dedup, stripTags, isActionableFunding } from './utils.js'
 
 /**
  * Parser for IDR (India Development Review) — idronline.org.
@@ -18,18 +18,9 @@ const HEADERS = {
   'Accept': 'application/rss+xml, application/xml, text/xml',
 }
 
-// Keywords that indicate a funding/grant/CSR opportunity (not just a news article)
-const FUNDING_KEYWORDS = [
-  'grant', 'funding', 'fund ', 'csr', 'philanthrop', 'donat', 'invest',
-  'partnership', 'commit', 'million', 'crore', 'lakh', 'foundation',
-  'initiative', 'programme', 'launch', 'announce', 'award', 'fellowship',
-  'scholarship', 'endow', 'sponsor', 'pledge', 'allocat',
-]
-
-function isFundingRelated(text: string): boolean {
-  const lower = text.toLowerCase()
-  return FUNDING_KEYWORDS.some(k => lower.includes(k))
-}
+// Uses isActionableFunding() from utils.ts — requires strong funding signals
+// (e.g., "call for proposals", "committed ₹X Crore") or specific monetary amounts.
+// This filters out opinion/analysis articles that merely discuss education.
 
 export async function parseIdr(_url: string): Promise<RawOpportunity[]> {
   const allItems: RawOpportunity[] = []
@@ -63,8 +54,8 @@ export async function parseIdr(_url: string): Promise<RawOpportunity[]> {
 
         const fullText = `${title} ${description} ${categories.join(' ')}`
 
-        // Only keep items that mention funding/grants/CSR/philanthropy
-        if (!isFundingRelated(fullText)) return
+        // Only keep items that describe actionable funding (not opinion/analysis)
+        if (!isActionableFunding(fullText)) return
 
         // Extract description from content:encoded or description
         const descText = contentEncoded

@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio'
 import type { RawOpportunity } from '../scoring.js'
-import { extractTags, extractLocation, extractAmount, dedup, stripTags } from './utils.js'
+import { extractTags, extractLocation, extractAmount, dedup, stripTags, isActionableFunding } from './utils.js'
 
 /**
  * Parser for Alliance Magazine — alliancemagazine.org.
@@ -62,6 +62,7 @@ export async function parseAlliance(_url: string): Promise<RawOpportunity[]> {
 
         const fullText = `${title} ${description} ${categories.join(' ')}`
         if (!isRelevant(fullText)) return
+        if (!isActionableFunding(fullText)) return
 
         const descText = contentEncoded
           ? stripTags(contentEncoded).substring(0, 2000)
@@ -104,6 +105,8 @@ export async function parseAlliance(_url: string): Promise<RawOpportunity[]> {
 
         const excerpt = $el.find('.entry-summary, .entry-content, .excerpt, p').first().text().trim()
         const fullText = `${title} ${excerpt}`
+
+        if (!isActionableFunding(fullText)) return
 
         allItems.push({
           title: title.substring(0, 300),

@@ -1,6 +1,7 @@
 import { SOURCES } from './config.js'
 import { calculateScore, type RawOpportunity } from './scoring.js'
 import { upsertOpportunities, type DbOpportunity } from './supabase.js'
+import { classifyWithLlm } from './llm-filter.js'
 import { parseNgobox } from './parsers/ngobox.js'
 import { parseNgoboxRfp } from './parsers/ngobox-rfp.js'
 import { parseFundsForNgos } from './parsers/fundsforngos.js'
@@ -34,21 +35,25 @@ const INDIA_MARKERS = [
   'niti aayog', 'samagra shiksha', 'nep 2020', 'sarva shiksha', 'mid-day meal', 'icds',
 ]
 
-// Multi-word phrases checked with includes()
+// Multi-word phrases checked with includes() — restricted to K-12 terms
 const EDUCATION_PHRASES = [
   'education', 'school', 'teacher', 'literacy', 'numeracy', 'edtech', 'ed-tech',
-  'classroom', 'scholarship', 'fellowship', 'anganwadi', 'early childhood', 'ecce',
-  'pedagog', 'curriculum', 'skill development', 'k-12', 'foundational learning',
+  'classroom', 'anganwadi', 'early childhood', 'ecce',
+  'pedagog', 'curriculum', 'k-12', 'foundational learning',
   'foundational literacy', 'foundational numeracy',
   'school governance', 'high potential', 'national education policy', 'nep',
   'samagra shiksha', 'pre-primary',
 ]
 
 // Short keywords that need word-boundary matching to avoid false positives
-const EDUCATION_REGEX = /\b(fln|stem|learning|student|academic|training)\b/i
+const EDUCATION_REGEX = /\b(fln|stem|student|academic)\b/i
 
 // Negative keywords — reject titles containing these (unless also education-related)
-const NEGATIVE_KEYWORDS = ['veterinary', 'petroleum', 'mining', 'military']
+const NEGATIVE_KEYWORDS = [
+  'veterinary', 'petroleum', 'mining', 'military',
+  'women empowerment', 'livelihood', 'self-help group',
+  'healthcare', 'sanitation', 'agriculture', 'climate change', 'tribal welfare',
+]
 
 function isIndiaRelevant(opp: RawOpportunity): boolean {
   const text = `${opp.title} ${opp.description} ${opp.location || ''} ${opp.tags.join(' ')}`.toLowerCase()
@@ -189,9 +194,13 @@ async function main() {
   console.log(`Total parsed: ${totalParsed}`)
   console.log(`Unique after dedup: ${unique.length}`)
 
+  // LLM classification — filters out non-K-12-education items
+  const classified = await classifyWithLlm(unique)
+  console.log(`After LLM filter: ${classified.length}`)
+
   // Upsert to Supabase
-  if (unique.length > 0) {
-    const inserted = await upsertOpportunities(unique)
+  if (classified.length > 0) {
+    const inserted = await upsertOpportunities(classified)
     console.log(`Upserted ${inserted} opportunities to Supabase`)
   } else {
     console.log('No relevant opportunities found.')
