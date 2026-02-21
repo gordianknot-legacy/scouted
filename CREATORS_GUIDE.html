@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScoutEd — Creator's Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --csf-blue: #00316B;
+    --csf-yellow: #FFD400;
+    --csf-light-blue: #8FBAFF;
+    --csf-orange: #C93F13;
+    --csf-lime: #87FF38;
+    --csf-purple: #7030A0;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--gray-800);
+    line-height: 1.7;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Print Styles ─── */
+  @media print {
+    body { font-size: 11pt; }
+    .cover-page { page-break-after: always; }
+    .toc-page { page-break-after: always; }
+    h2 { page-break-before: always; }
+    pre, .diagram-box, table { page-break-inside: avoid; }
+    .no-print { display: none; }
+  }
+
+  /* ─── Cover Page ─── */
+  .cover-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--csf-blue) 0%, #001a3a 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-page::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: var(--csf-yellow);
+    opacity: 0.04;
+  }
+  .cover-page::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -150px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: var(--csf-light-blue);
+    opacity: 0.05;
+  }
+  .cover-logo {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--csf-yellow);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-title {
+    font-size: 52px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-title span {
+    color: var(--csf-yellow);
+  }
+  .cover-subtitle {
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    max-width: 560px;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-meta {
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-meta strong { color: rgba(255,255,255,0.6); }
+  .cover-badge {
+    display: inline-block;
+    background: var(--csf-yellow);
+    color: var(--csf-blue);
+    font-weight: 700;
+    font-size: 11px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── Table of Contents ─── */
+  .toc-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+  .toc-page h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--csf-blue);
+    margin-bottom: 30px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--csf-yellow);
+  }
+  .toc-list { list-style: none; }
+  .toc-list li {
+    border-bottom: 1px solid var(--gray-100);
+    padding: 10px 0;
+  }
+  .toc-list a {
+    text-decoration: none;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: color 0.2s;
+  }
+  .toc-list a:hover { color: var(--csf-blue); }
+  .toc-num {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--csf-blue);
+    background: rgba(0,49,107,0.06);
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .toc-label { font-weight: 500; font-size: 15px; }
+
+  /* ─── Content ─── */
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 40px 80px;
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--csf-blue);
+    margin: 60px 0 20px;
+    padding-top: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--csf-yellow);
+  }
+  h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 12px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin: 24px 0 8px;
+  }
+  p { margin: 10px 0; color: var(--gray-700); }
+
+  /* ─── Code Blocks ─── */
+  pre {
+    background: var(--gray-900);
+    color: #e5e7eb;
+    border-radius: 10px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    position: relative;
+  }
+  pre .comment { color: #6b7280; }
+  pre .keyword { color: #93c5fd; }
+  pre .string { color: #86efac; }
+  pre .prompt { color: var(--csf-yellow); }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--gray-100);
+    padding: 2px 7px;
+    border-radius: 5px;
+    color: var(--csf-blue);
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  /* ─── Tables ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: var(--csf-blue);
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  th:first-child { border-radius: 8px 0 0 0; }
+  th:last-child { border-radius: 0 8px 0 0; }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+  }
+  tr:hover td { background: var(--gray-50); }
+
+  /* ─── Callout Boxes ─── */
+  .callout {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .callout-title {
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .callout-info {
+    background: #eff6ff;
+    border-left: 4px solid var(--csf-light-blue);
+  }
+  .callout-info .callout-title { color: var(--csf-blue); }
+  .callout-warn {
+    background: #fffbeb;
+    border-left: 4px solid var(--csf-yellow);
+  }
+  .callout-warn .callout-title { color: #92400e; }
+  .callout-danger {
+    background: #fef2f2;
+    border-left: 4px solid var(--csf-orange);
+  }
+  .callout-danger .callout-title { color: var(--csf-orange); }
+  .callout-success {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+  }
+  .callout-success .callout-title { color: #166534; }
+
+  /* ─── Lists ─── */
+  ul, ol {
+    margin: 10px 0 10px 24px;
+    color: var(--gray-700);
+  }
+  li { margin: 6px 0; font-size: 15px; }
+  li code { font-size: 12px; }
+
+  /* ─── Diagram Box ─── */
+  .diagram-box {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+  .diagram-box pre {
+    background: none;
+    color: var(--gray-800);
+    padding: 0;
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  /* ─── Step Indicators ─── */
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .step-num {
+    background: var(--csf-blue);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+
+  /* ─── Separator ─── */
+  hr {
+    border: none;
+    height: 1px;
+    background: var(--gray-200);
+    margin: 40px 0;
+  }
+
+  /* ─── Analogy Box ─── */
+  .analogy {
+    background: linear-gradient(135deg, #f8faff 0%, #fff8e1 100%);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .analogy::before {
+    content: 'Think of it this way';
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--csf-blue);
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .analogy p { color: var(--gray-600); font-size: 14px; margin: 0; }
+
+  /* ─── Adapt Box ─── */
+  .adapt-box {
+    background: #f0fdf4;
+    border: 1px dashed #86efac;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .adapt-box::before {
+    content: 'Adapting this for your own project';
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #166534;
+    margin-bottom: 8px;
+  }
+  .adapt-box p, .adapt-box li { font-size: 14px; }
+
+  /* ─── Jargon Definition ─── */
+  .jargon {
+    display: inline;
+    border-bottom: 1px dashed var(--csf-light-blue);
+    cursor: help;
+  }
+
+  /* ─── Cost Tag ─── */
+  .cost-free {
+    display: inline-block;
+    background: #d1fae5;
+    color: #065f46;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── File Tree ─── */
+  .file-tree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--gray-700);
+  }
+  .file-tree .folder { color: var(--csf-blue); font-weight: 600; }
+  .file-tree .note { color: var(--gray-400); font-style: italic; }
+
+  /* ─── Phase Labels ─── */
+  .phase-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .phase-plan { background: #dbeafe; color: #1e40af; }
+  .phase-build { background: #fef3c7; color: #92400e; }
+  .phase-launch { background: #d1fae5; color: #065f46; }
+  .phase-maintain { background: #ede9fe; color: #5b21b6; }
+</style>
+</head>
+<body>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━ COVER PAGE ━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="cover-page">
+  <div class="cover-logo">Central Square Foundation</div>
+  <div class="cover-badge">Creator's Guide v2.0</div>
+  <h1 class="cover-title">Scout<span>Ed</span></h1>
+  <p class="cover-subtitle">
+    A step-by-step guide to building your own automated opportunity discovery platform &mdash; no prior coding experience required.
+  </p>
+  <div class="cover-meta">
+    <strong>Partnerships & Strategic Initiatives Team</strong><br>
+    Total running cost: &#8377;0/month &middot; Built entirely with free tools<br><br>
+    February 2026
+  </div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━ TABLE OF CONTENTS ━━━━━━━━━━━━━━━━━━ -->
+<div class="toc-page">
+  <h2>Table of Contents</h2>
+  <ol class="toc-list">
+    <li><a href="#ch1"><span class="toc-num">1</span><span class="toc-label">What Is ScoutEd & Why Does It Exist?</span></a></li>
+    <li><a href="#ch2"><span class="toc-num">2</span><span class="toc-label">Key Concepts (Jargon-Free)</span></a></li>
+    <li><a href="#ch3"><span class="toc-num">3</span><span class="toc-label">The Big Picture: How Everything Connects</span></a></li>
+    <li><a href="#ch4"><span class="toc-num">4</span><span class="toc-label">The Free Services You'll Need (Accounts)</span></a></li>
+    <li><a href="#ch5"><span class="toc-num">5</span><span class="toc-label">Installing the Tools on Your Computer</span></a></li>
+    <li><a href="#ch6"><span class="toc-num">6</span><span class="toc-label">Setting Up the Database (Supabase)</span></a></li>
+    <li><a href="#ch7"><span class="toc-num">7</span><span class="toc-label">Running ScoutEd on Your Computer</span></a></li>
+    <li><a href="#ch8"><span class="toc-num">8</span><span class="toc-label">Understanding the Dashboard (Frontend)</span></a></li>
+    <li><a href="#ch9"><span class="toc-num">9</span><span class="toc-label">Understanding the Scraper (Data Collection)</span></a></li>
+    <li><a href="#ch10"><span class="toc-num">10</span><span class="toc-label">How Relevance Scoring Works</span></a></li>
+    <li><a href="#ch11"><span class="toc-num">11</span><span class="toc-label">The Daily Email Digest</span></a></li>
+    <li><a href="#ch12"><span class="toc-num">12</span><span class="toc-label">Publishing to the Web (Deployment)</span></a></li>
+    <li><a href="#ch13"><span class="toc-num">13</span><span class="toc-label">Automating the Daily Scrape (GitHub Actions)</span></a></li>
+    <li><a href="#ch14"><span class="toc-num">14</span><span class="toc-label">Making Changes with Claude Code (AI Assistant)</span></a></li>
+    <li><a href="#ch15"><span class="toc-num">15</span><span class="toc-label">Customising ScoutEd for Your Own Use Case</span></a></li>
+    <li><a href="#ch16"><span class="toc-num">16</span><span class="toc-label">When Things Go Wrong (Troubleshooting)</span></a></li>
+    <li><a href="#ch17"><span class="toc-num">17</span><span class="toc-label">Full Architecture Diagram</span></a></li>
+  </ol>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━ CONTENT BEGINS ━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="content">
+
+<!-- ── Chapter 1 ── -->
+<h2 id="ch1">1. What Is ScoutEd & Why Does It Exist?</h2>
+
+<h3>The Problem</h3>
+<p>
+  The Partnerships team at CSF tracks education grants and funding opportunities across dozens of websites.
+  Every day, someone has to manually visit NGOBox, FundsForNGOs, CSRBox, and many other sites,
+  scroll through listings, and decide which ones matter for CSF's mission.
+</p>
+<p>
+  This takes hours. Opportunities get missed. Deadlines pass. And the team's time is better spent
+  building actual partnerships &mdash; not browsing the web.
+</p>
+
+<h3>The Solution</h3>
+<p>
+  <strong>ScoutEd</strong> is a tool that does all of this automatically:
+</p>
+<ol>
+  <li><strong>Every morning at 8:00 AM</strong>, a program visits 10+ grant websites and collects new listings</li>
+  <li>Each listing is <strong>scored from 0 to 100</strong> based on how relevant it is to CSF (sector, geography, funding size, etc.)</li>
+  <li>The results appear on a <strong>clean, branded dashboard</strong> where the team can search, filter, and bookmark</li>
+  <li>At <strong>8:30 AM</strong>, the top results are emailed to subscribers as a daily digest</li>
+</ol>
+<p>
+  The entire system runs for free. No servers to pay for. No subscriptions. No IT team needed.
+</p>
+
+<h3>Who Is This Guide For?</h3>
+<p>
+  This guide is written for someone who wants to <strong>understand how ScoutEd works</strong> and,
+  more importantly, <strong>build something similar for their own use case</strong>. You don't need to be a
+  programmer &mdash; the AI assistant (Claude Code) handles the actual coding. But you do need to understand
+  the building blocks so you can direct it effectively.
+</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">You can adapt this for any domain</div>
+  <p>
+    ScoutEd tracks education grants, but the same architecture works for tracking job postings,
+    research papers, government tenders, startup funding, policy changes, or anything else
+    that appears on websites and needs to be monitored daily. Chapter 15 explains how to customise it.
+  </p>
+</div>
+
+<!-- ── Chapter 2 ── -->
+<h2 id="ch2">2. Key Concepts (Jargon-Free)</h2>
+
+<p>
+  Before we begin, here are the key terms you'll encounter in this guide, explained in plain language.
+  Refer back to this section whenever you see an unfamiliar word.
+</p>
+
+<table>
+  <tr><th>Term</th><th>What It Actually Means</th></tr>
+  <tr>
+    <td><strong>Frontend</strong></td>
+    <td>The part of ScoutEd that users see and interact with &mdash; the dashboard with cards, filters, and buttons. Think of it as the "shop window" of the application.</td>
+  </tr>
+  <tr>
+    <td><strong>Scraper</strong></td>
+    <td>A program that automatically visits websites and extracts information from them. Think of it as a very fast intern who reads 10 websites every morning and takes notes.</td>
+  </tr>
+  <tr>
+    <td><strong>Database</strong></td>
+    <td>A structured place to store information. Think of it as a giant, organised spreadsheet in the cloud that the dashboard and scraper both read from and write to.</td>
+  </tr>
+  <tr>
+    <td><strong>Supabase</strong></td>
+    <td>The specific free database service we use. It's like Google Sheets, but designed for applications to read from. It also has built-in security rules.</td>
+  </tr>
+  <tr>
+    <td><strong>Vercel</strong></td>
+    <td>The free service that puts our dashboard on the internet so anyone with the link can access it. Think of it as the "web host" &mdash; like renting a shop space, but free.</td>
+  </tr>
+  <tr>
+    <td><strong>GitHub</strong></td>
+    <td>A website where the project's code is stored. Think of it as Google Drive for code. It also has "Actions" &mdash; automated tasks that run on a schedule (like our daily scraper).</td>
+  </tr>
+  <tr>
+    <td><strong>GitHub Actions</strong></td>
+    <td>A free feature of GitHub that can run programs on a schedule. We use it to run the scraper every morning at 8 AM and send the email digest at 8:30 AM. Think of it as a robot alarm clock.</td>
+  </tr>
+  <tr>
+    <td><strong>API</strong></td>
+    <td>A way for two programs to talk to each other. When our dashboard asks Supabase for data, it uses an API. Think of it as a waiter taking your order to the kitchen and bringing back food.</td>
+  </tr>
+  <tr>
+    <td><strong>Environment Variables</strong></td>
+    <td>Secret settings (like passwords and connection details) that are stored separately from the code. Think of them as the combination to a safe &mdash; they're never written in the recipe book itself.</td>
+  </tr>
+  <tr>
+    <td><strong>Terminal / Command Line</strong></td>
+    <td>A text-based way to give instructions to your computer. Instead of clicking buttons, you type commands. You'll paste a few commands from this guide into the terminal.</td>
+  </tr>
+  <tr>
+    <td><strong>Claude Code</strong></td>
+    <td>An AI assistant that lives in your terminal. You describe what you want in plain English, and it writes the code for you, reads files, and runs commands &mdash; with your approval.</td>
+  </tr>
+  <tr>
+    <td><strong>Node.js / npm</strong></td>
+    <td>Node.js is the engine that runs our scraper and builds our dashboard. npm is its companion tool that installs the building blocks (libraries) our code depends on. You install it once and mostly forget about it.</td>
+  </tr>
+  <tr>
+    <td><strong>LLM (Large Language Model)</strong></td>
+    <td>An AI that understands text. We use a free one (via OpenRouter) to double-check whether a scraped listing is actually about K&ndash;12 education. It reads each listing and says "yes" or "no".</td>
+  </tr>
+  <tr>
+    <td><strong>Resend</strong></td>
+    <td>A free email-sending service. Our daily digest emails are sent through Resend. It handles the technical parts of email delivery so our emails don't end up in spam.</td>
+  </tr>
+</table>
+
+<div class="analogy">
+  <p>
+    <strong>Imagine a newspaper.</strong> The <em>scraper</em> is the team of journalists who go out and collect stories each morning.
+    The <em>database</em> is the newsroom filing cabinet where all the stories are stored.
+    The <em>frontend</em> is the printed newspaper that readers see.
+    <em>GitHub Actions</em> is the alarm clock that wakes the journalists up at 8 AM.
+    <em>Vercel</em> is the delivery truck that brings the newspaper to people's doorsteps.
+    And <em>Resend</em> is the email edition sent to subscribers.
+  </p>
+</div>
+
+
+<!-- ── Chapter 3 ── -->
+<h2 id="ch3">3. The Big Picture: How Everything Connects</h2>
+
+<p>
+  Before diving into setup, let's understand how all the pieces fit together.
+  ScoutEd has <strong>four main parts</strong>, and they work together like a relay race:
+</p>
+
+<div class="diagram-box">
+<pre>
+  HOW SCOUTED WORKS (Simplified)
+
+
+     EVERY MORNING AT 8:00 AM, THIS HAPPENS AUTOMATICALLY:
+
+     ┌──────────────────┐
+     │  10+ WEBSITES    │   The scraper visits grant websites
+     │  (NGOBox, CSRBox,│   and collects new listings
+     │   FundsForNGOs,  │
+     │   IDR, Devex...) │
+     └────────┬─────────┘
+              │
+              ▼
+     ┌──────────────────┐
+     │  THE SCRAPER     │   Each listing is checked:
+     │                  │   - Is it about education? (keyword filter)
+     │  "Is this        │   - Is it relevant to India? (geography filter)
+     │   relevant?"     │   - Does an AI confirm it's K-12? (LLM filter)
+     │                  │   Non-relevant results are discarded.
+     └────────┬─────────┘
+              │
+              ▼
+     ┌──────────────────┐
+     │  SCORING         │   Each surviving listing gets a score (0-100):
+     │                  │   +30 if it matches CSF's sectors
+     │  "How relevant   │   +20 if it's in a priority state
+     │   is this?"      │   +20 if funding is large (>₹1 Crore)
+     │                  │   +15 if it's from a known funder
+     │                  │   +10 if it's a long-term project
+     └────────┬─────────┘
+              │
+              ▼
+     ┌──────────────────┐
+     │  DATABASE        │   Scored listings are saved to the
+     │  (Supabase)      │   cloud database where the dashboard
+     │                  │   and email system can access them.
+     └────────┬─────────┘
+              │
+       ┌──────┴──────┐
+       ▼             ▼
+  ┌─────────┐  ┌──────────┐
+  │DASHBOARD│  │  EMAIL   │   Users see results on the dashboard.
+  │(Website)│  │  DIGEST  │   Subscribers also receive the top
+  │         │  │ (8:30 AM)│   results in their inbox.
+  └─────────┘  └──────────┘
+</pre>
+</div>
+
+<h3>The Five Free Services</h3>
+<p>ScoutEd runs entirely on free tiers of five services. You'll create accounts on each one:</p>
+
+<table>
+  <tr><th>Service</th><th>Role</th><th>Free Tier Limit</th><th>Cost</th></tr>
+  <tr>
+    <td><strong>GitHub</strong></td>
+    <td>Stores the code; runs the scraper on a schedule</td>
+    <td>2,000 minutes/month of automation</td>
+    <td><span class="cost-free">Free</span></td>
+  </tr>
+  <tr>
+    <td><strong>Supabase</strong></td>
+    <td>Cloud database that stores all the opportunities</td>
+    <td>500 MB storage, 50,000 rows</td>
+    <td><span class="cost-free">Free</span></td>
+  </tr>
+  <tr>
+    <td><strong>Vercel</strong></td>
+    <td>Hosts the dashboard website on the internet</td>
+    <td>100 GB bandwidth/month</td>
+    <td><span class="cost-free">Free</span></td>
+  </tr>
+  <tr>
+    <td><strong>Resend</strong></td>
+    <td>Sends the daily email digest</td>
+    <td>100 emails/day, 3,000/month</td>
+    <td><span class="cost-free">Free</span></td>
+  </tr>
+  <tr>
+    <td><strong>OpenRouter</strong></td>
+    <td>Provides the AI model that filters listings for relevance</td>
+    <td>Free-tier AI models</td>
+    <td><span class="cost-free">Free</span></td>
+  </tr>
+</table>
+
+<div class="callout callout-success">
+  <div class="callout-title">Total monthly cost: &#8377;0</div>
+  <p>
+    For a 3-person team with daily scraping and email digests, all five services comfortably stay within
+    their free tiers. You only pay if you scale significantly (thousands of users or millions of listings).
+  </p>
+</div>
+
+
+<!-- ── Chapter 4 ── -->
+<h2 id="ch4">4. The Free Services You'll Need (Accounts)</h2>
+
+<p>
+  Before touching any code, you need to create accounts on these services.
+  This takes about 15 minutes. All you need is an email address.
+</p>
+
+<h3>Account 1: GitHub</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to <strong>github.com</strong> and click "Sign Up". Create a free account.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    Once signed in, create a new repository (think of this as a folder for your project).
+    Click the <strong>"+"</strong> icon in the top right &rarr; <strong>"New repository"</strong>.
+    Name it something like <code>my-scouted</code>. Choose "Private" if you don't want it public.
+  </div>
+</div>
+
+<h3>Account 2: Supabase (Database)</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to <strong>supabase.com</strong> and sign up (you can use your GitHub account to log in).</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">Click <strong>"New Project"</strong>. Give it a name (e.g., "scouted"), pick a region close to you (Mumbai or Singapore for India), and set a database password. <strong>Save this password somewhere safe.</strong></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    After the project is created, go to <strong>Settings &rarr; API</strong>.
+    You'll see three important values:
+    <ul>
+      <li><strong>Project URL</strong> &mdash; the address of your database</li>
+      <li><strong>anon (public) key</strong> &mdash; a key the dashboard uses to read data</li>
+      <li><strong>service_role key</strong> &mdash; a powerful key the scraper uses to write data</li>
+    </ul>
+    Copy all three and save them somewhere safe. You'll need them later.
+  </div>
+</div>
+
+<div class="callout callout-danger">
+  <div class="callout-title">Keep the service_role key secret</div>
+  <p>
+    The <strong>service_role key</strong> has full access to your database. Never share it publicly,
+    never put it in your code, and never commit it to GitHub. It goes only in secret settings (Environment Variables),
+    which you'll set up later.
+  </p>
+</div>
+
+<h3>Account 3: Vercel (Website Hosting)</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to <strong>vercel.com</strong> and sign up with your GitHub account.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">You'll connect it to your GitHub repository later (Chapter 12).</div>
+</div>
+
+<h3>Account 4: Resend (Email Sending)</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to <strong>resend.com</strong> and sign up.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">In the dashboard, create an <strong>API Key</strong>. Save it securely.</div>
+</div>
+
+<h3>Account 5: OpenRouter (AI Filtering) &mdash; Optional</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to <strong>openrouter.ai</strong> and sign up.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">Create an API Key. This enables the AI to double-check whether scraped listings are truly relevant.</div>
+</div>
+<p><em>This step is optional. Without it, ScoutEd still works &mdash; it just relies on keyword-based filtering instead of AI filtering.</em></p>
+
+
+<!-- ── Chapter 5 ── -->
+<h2 id="ch5">5. Installing the Tools on Your Computer</h2>
+
+<p>
+  You need three things installed on your computer. Think of these as the workshop tools you need
+  before you can start building. You install them once, and then you rarely think about them again.
+</p>
+
+<h3>Tool 1: Node.js (The Engine)</h3>
+<p>
+  Node.js is the program that runs all the code behind ScoutEd &mdash; both the dashboard builder
+  and the scraper. It comes bundled with <strong>npm</strong>, which is a tool that installs the
+  ready-made building blocks (called "libraries") that our code depends on.
+</p>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    Go to <strong>nodejs.org</strong> and download the <strong>LTS</strong> version (the one recommended for most users).
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    Run the installer. Accept all the defaults. Click "Next" through everything.
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    To verify it worked, open your <strong>terminal</strong> (on Windows, search for "Terminal" or "PowerShell"; on Mac, search for "Terminal") and type:
+    <pre><code><span class="prompt">$</span> node --version
+<span class="comment"># You should see something like: v20.11.0</span>
+
+<span class="prompt">$</span> npm --version
+<span class="comment"># You should see something like: 10.2.0</span></code></pre>
+    <p>If you see version numbers, it's installed correctly. If you see an error, try restarting your computer and running the commands again.</p>
+  </div>
+</div>
+
+<h3>Tool 2: Git (Version Control)</h3>
+<p>
+  Git keeps track of every change ever made to your project, like an infinite "undo" history.
+  It also lets you upload your code to GitHub.
+</p>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to <strong>git-scm.com/downloads</strong> and download the installer for your operating system.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    Run the installer. Accept all defaults. Verify with:
+    <pre><code><span class="prompt">$</span> git --version
+<span class="comment"># You should see something like: git version 2.43.0</span></code></pre>
+  </div>
+</div>
+
+<h3>Tool 3: VS Code (Code Editor) &mdash; Recommended</h3>
+<p>
+  VS Code is a free text editor built for working with code. You don't <em>need</em> it (any text editor works),
+  but it makes everything easier with syntax highlighting, error detection, and a built-in terminal.
+</p>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to <strong>code.visualstudio.com</strong> and download it.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">Install it. Then open it and install these helpful extensions (via the Extensions sidebar icon):
+    <ul>
+      <li><strong>ESLint</strong> &mdash; highlights mistakes in code</li>
+      <li><strong>Tailwind CSS IntelliSense</strong> &mdash; helps with styling</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Tool 4: Claude Code (AI Coding Assistant)</h3>
+<p>
+  This is the most important tool. <strong>Claude Code is an AI that writes code for you.</strong>
+  You describe what you want in plain English, and it reads your project, writes the code,
+  runs it, and fixes errors &mdash; all with your approval. It's how ScoutEd was built.
+</p>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    Open your terminal and run:
+    <pre><code><span class="prompt">$</span> npm install -g @anthropic-ai/claude-code</code></pre>
+    <p>This installs Claude Code on your computer. The <code>-g</code> means "install globally" (available everywhere, not just in one project).</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    Navigate to your project folder and launch it:
+    <pre><code><span class="prompt">$</span> cd path/to/your/project
+<span class="prompt">$</span> claude</code></pre>
+    <p>The first time you run this, it will open your web browser and ask you to log in with an Anthropic account. Follow the prompts.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    Once authenticated, you'll see a chat interface in your terminal. You can now type things like:
+    <pre><code><span class="comment">"Add a new source that scrapes XYZ website"</span>
+<span class="comment">"Change the scoring to give more points for Rajasthan"</span>
+<span class="comment">"Fix the bug where the search bar doesn't clear"</span>
+<span class="comment">"Explain what the scraper/index.ts file does"</span></code></pre>
+    <p>Claude Code reads your project files, understands the context, and makes changes. It always asks for your approval before modifying anything.</p>
+  </div>
+</div>
+
+<div class="analogy">
+  <p>
+    <strong>Claude Code is like having a senior developer sitting next to you.</strong>
+    You say "I want a filter for deadline", and it reads the existing code, figures out where to add it,
+    writes the code, and shows you what it did. You say "yes" to accept or "no" to try a different approach.
+  </p>
+</div>
+
+<div class="callout callout-info">
+  <div class="callout-title">The CLAUDE.md file is your project's instruction manual</div>
+  <p>
+    ScoutEd includes a file called <code>CLAUDE.md</code> in the project root.
+    Claude Code reads this file automatically every time you start it.
+    It contains all the rules: brand colours, scoring logic, architecture decisions, and more.
+    This is why Claude Code "knows" about ScoutEd without you having to re-explain it each time.
+    <strong>If you build your own tool, write your own <code>CLAUDE.md</code> describing your project's rules.</strong>
+  </p>
+</div>
+
+
+<!-- ── Chapter 6 ── -->
+<h2 id="ch6">6. Setting Up the Database (Supabase)</h2>
+
+<p>
+  The database is where all the scraped opportunities are stored.
+  Think of it as a cloud-based spreadsheet with three sheets (tables):
+</p>
+
+<table>
+  <tr><th>Table (Sheet)</th><th>What It Stores</th><th>Example Row</th></tr>
+  <tr>
+    <td><strong>opportunities</strong></td>
+    <td>Every grant/funding listing the scraper finds</td>
+    <td>"FLN Grant for Haryana Schools" &mdash; Score: 85, Deadline: March 2026, Amount: ₹2 Crore</td>
+  </tr>
+  <tr>
+    <td><strong>subscribers</strong></td>
+    <td>Email addresses of people who signed up for the daily digest</td>
+    <td>someone@csf.org, signed up 15 Feb 2026</td>
+  </tr>
+  <tr>
+    <td><strong>user_actions</strong></td>
+    <td>Which opportunities each user bookmarked or hid</td>
+    <td>User A bookmarked "EdTech Innovation Fund"</td>
+  </tr>
+</table>
+
+<h3>Creating the Tables</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Log in to your Supabase dashboard at <strong>supabase.com</strong></div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">Open your project and click <strong>"SQL Editor"</strong> in the left sidebar</div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    Open the file <code>supabase/schema.sql</code> from the project folder (you can open it in VS Code or any text editor).
+    <strong>Copy the entire contents</strong> of this file and <strong>paste</strong> it into the SQL Editor.
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">Click the green <strong>"Run"</strong> button. This creates all three tables and sets up security rules.</div>
+</div>
+
+<div class="callout callout-success">
+  <div class="callout-title">That's it!</div>
+  <p>
+    Your database is ready. You don't need to understand the SQL code &mdash; it's a one-time setup.
+    The tables are now waiting to receive data from the scraper and serve it to the dashboard.
+  </p>
+</div>
+
+<h3>How Security Works (Simple Version)</h3>
+<p>
+  The database has built-in security rules called <strong>Row Level Security (RLS)</strong>.
+  In plain terms, here's what they do:
+</p>
+<ul>
+  <li><strong>Opportunities:</strong> Anyone can <em>read</em> them (view on the dashboard), but only the scraper can <em>write</em> new ones</li>
+  <li><strong>Subscribers:</strong> Anyone can <em>add</em> their email (subscribe), but no one can see other people's emails (prevents harvesting)</li>
+  <li><strong>User Actions:</strong> Bookmarks and hidden items are currently open &mdash; since there are only 3 users, this is fine for now</li>
+</ul>
+
+<div class="adapt-box">
+  <p>
+    <strong>If you're building for a different domain:</strong> The table structure will change.
+    For example, if you're tracking job postings instead of grants, you'd replace fields like
+    <code>poc_email</code> with <code>company_name</code> and <code>amount</code> with <code>salary_range</code>.
+    Use Claude Code to modify the schema: tell it "change the opportunities table to track job postings instead of grants"
+    and it will rewrite the SQL for you.
+  </p>
+</div>
+
+
+<!-- ── Chapter 7 ── -->
+<h2 id="ch7">7. Running ScoutEd on Your Computer</h2>
+
+<p>
+  Before publishing to the web, you'll want to run ScoutEd on your own computer first (this is called "local development").
+  This lets you see changes instantly as you make them.
+</p>
+
+<h3>Getting the Code</h3>
+<pre><code><span class="comment"># Open your terminal and clone (download) the project:</span>
+<span class="prompt">$</span> git clone https://github.com/your-org/Scouted.git
+
+<span class="comment"># Go into the project folder:</span>
+<span class="prompt">$</span> cd Scouted</code></pre>
+
+<h3>Installing the Building Blocks</h3>
+<p>The project depends on ready-made libraries for things like UI components, database connections, and icons. Install them all with two commands:</p>
+<pre><code><span class="comment"># Install the dashboard's building blocks:</span>
+<span class="prompt">$</span> npm install
+
+<span class="comment"># Install the scraper's building blocks:</span>
+<span class="prompt">$</span> cd scraper
+<span class="prompt">$</span> npm install
+<span class="prompt">$</span> cd ..</code></pre>
+
+<h3>Connecting to Your Database (Optional for First Look)</h3>
+<p>
+  Create a file called <code>.env</code> in the project root (this is where secret settings go).
+  Add these two lines, replacing the placeholder values with the ones you saved from Supabase:
+</p>
+<pre><code>VITE_SUPABASE_URL=<span class="string">paste_your_project_url_here</span>
+VITE_SUPABASE_ANON_KEY=<span class="string">paste_your_anon_key_here</span></code></pre>
+
+<div class="callout callout-info">
+  <div class="callout-title">You can skip this step for a first look</div>
+  <p>
+    If you just want to see the dashboard without setting up the database, <strong>skip the <code>.env</code> file entirely</strong>.
+    ScoutEd is designed to detect when there's no database connection and will
+    automatically show realistic sample data (mock data) so you can explore the full interface.
+  </p>
+</div>
+
+<h3>Starting the Dashboard</h3>
+<pre><code><span class="prompt">$</span> npm run dev</code></pre>
+
+<p>You'll see output like:</p>
+<pre><code><span class="comment">VITE v7.3.1  ready in 300 ms</span>
+<span class="comment">  ➜  Local:   http://localhost:5173/</span></code></pre>
+
+<p>
+  <strong>Open your web browser</strong> and go to <code>http://localhost:5173</code>.
+  You should see the ScoutEd dashboard with a welcome tour. Congratulations &mdash; it's running!
+</p>
+
+<p>
+  The development server has <strong>hot reload</strong>: any time you change a file and save it,
+  the browser automatically refreshes to show your changes. No need to restart anything.
+</p>
+
+
+<!-- ── Chapter 8 ── -->
+<h2 id="ch8">8. Understanding the Dashboard (Frontend)</h2>
+
+<p>
+  The dashboard is the part users interact with. Here's what each part does and how it's organised:
+</p>
+
+<h3>What the User Sees</h3>
+
+<table>
+  <tr><th>Feature</th><th>What It Does</th><th>Where to Find It</th></tr>
+  <tr>
+    <td><strong>Onboarding Tour</strong></td>
+    <td>A 3-step welcome popup that explains ScoutEd to first-time visitors. Appears only once (remembered in the browser).</td>
+    <td>Appears automatically on first visit</td>
+  </tr>
+  <tr>
+    <td><strong>Dashboard Tab</strong></td>
+    <td>The main view. Shows a grid of opportunity cards, sorted by relevance score (highest first). Includes a search bar and filter sidebar.</td>
+    <td>Default view / bottom nav "Dashboard" icon</td>
+  </tr>
+  <tr>
+    <td><strong>Filter Sidebar</strong></td>
+    <td>Narrow down results by: Score level (High/Medium/Low), Sector (EdTech, FLN, etc.), State (Haryana, UP, etc.), and Deadline.</td>
+    <td>Left sidebar on desktop, drawer on mobile</td>
+  </tr>
+  <tr>
+    <td><strong>Opportunity Cards</strong></td>
+    <td>Each card shows: title, organisation, coloured relevance score circle (green/yellow/red), sector tags, amount, deadline, and a brief description.</td>
+    <td>Main grid area</td>
+  </tr>
+  <tr>
+    <td><strong>Preview Panel</strong></td>
+    <td>Click any card to open a slide-over panel with the full details, including external link, POC email, and all tags.</td>
+    <td>Right side (desktop) or bottom sheet (mobile)</td>
+  </tr>
+  <tr>
+    <td><strong>Bookmarks</strong></td>
+    <td>Click the bookmark icon on any card to save it. Bookmarks persist across browser sessions (saved in your browser's storage).</td>
+    <td>"Bookmarks" tab in bottom nav</td>
+  </tr>
+  <tr>
+    <td><strong>Hide/Irrelevant</strong></td>
+    <td>Click the hide icon to remove a card from your feed. Useful for dismissing irrelevant results.</td>
+    <td>Icon on each card</td>
+  </tr>
+  <tr>
+    <td><strong>Email Subscribe</strong></td>
+    <td>Enter your email to receive the daily digest at 8:30 AM IST.</td>
+    <td>"Subscribe" tab or sidebar widget</td>
+  </tr>
+</table>
+
+<h3>How the Dashboard Gets Its Data</h3>
+<div class="diagram-box">
+<pre>
+  User opens the website
+        │
+        ▼
+  Dashboard sends a request to Supabase:
+  "Give me opportunities, sorted by score, page 1 (20 items)"
+        │
+        ▼
+  Supabase returns the data
+        │
+        ▼
+  Dashboard applies "decay":
+  Older items lose 5 points per week, so fresh results rise to the top
+        │
+        ▼
+  Dashboard applies your filters (sector, state, search text)
+        │
+        ▼
+  Cards are displayed on screen
+        │
+        ▼
+  When you scroll to the bottom → "Load More" fetches the next 20 items
+</pre>
+</div>
+
+<h3>How the Files Are Organised</h3>
+<p>If you open the <code>src/</code> folder, here's what's inside (you don't need to memorise this &mdash; Claude Code navigates these files for you):</p>
+
+<div class="diagram-box">
+<pre class="file-tree">
+<span class="folder">src/</span>
+├── App.tsx                    <span class="note"># The main page — assembles all parts together</span>
+├── <span class="folder">components/</span>
+│   ├── <span class="folder">cards/</span>               <span class="note"># The opportunity cards</span>
+│   ├── <span class="folder">filters/</span>             <span class="note"># The sidebar and mobile filter drawer</span>
+│   ├── <span class="folder">layout/</span>              <span class="note"># Header bar and mobile navigation</span>
+│   ├── <span class="folder">onboarding/</span>          <span class="note"># The 3-step welcome tour</span>
+│   ├── <span class="folder">preview/</span>             <span class="note"># The detail panel that slides in</span>
+│   ├── <span class="folder">subscription/</span>        <span class="note"># The email signup form</span>
+│   └── <span class="folder">ui/</span>                  <span class="note"># Small reusable parts: badges, score circles, search bar</span>
+├── <span class="folder">hooks/</span>                   <span class="note"># Logic for fetching data, bookmarks, onboarding state</span>
+├── <span class="folder">lib/</span>                     <span class="note"># Configuration: scoring rules, database connection, mock data</span>
+└── <span class="folder">types/</span>                   <span class="note"># Definitions of what an "opportunity" looks like in code</span>
+</pre>
+</div>
+
+<div class="adapt-box">
+  <p><strong>Adapting the dashboard:</strong> To change the visual design, brand colours, or layout,
+  tell Claude Code what you want. For example: "Change the primary colour from blue to green"
+  or "Add a column for company size to the cards". Claude Code will find the right files and
+  make the changes for you.</p>
+</div>
+
+
+<!-- ── Chapter 9 ── -->
+<h2 id="ch9">9. Understanding the Scraper (Data Collection)</h2>
+
+<p>
+  The scraper is the workhorse of ScoutEd. It runs every morning, visits 10+ websites,
+  extracts grant listings, checks if they're relevant, scores them, and saves them to the database.
+  Here's how it works, step by step:
+</p>
+
+<h3>Step 1: Visit Websites and Extract Data</h3>
+<p>
+  Each website has its own "parser" &mdash; a small program that knows how to read that specific website's layout.
+  For example, the NGOBox parser knows that grant titles are in specific HTML tags, deadlines are in a certain format, etc.
+</p>
+
+<table>
+  <tr><th>Website</th><th>What It Provides</th><th>How Many Results (per run)</th></tr>
+  <tr><td>NGOBox (3 pages)</td><td>Indian education grants and RFPs</td><td>5&ndash;20</td></tr>
+  <tr><td>FundsForNGOs (2 pages)</td><td>International grants for education</td><td>3&ndash;10</td></tr>
+  <tr><td>CSRBox</td><td>Corporate social responsibility data from Indian companies</td><td>10&ndash;30</td></tr>
+  <tr><td>IDR (India Development Review)</td><td>Education articles and opportunity mentions</td><td>5&ndash;10</td></tr>
+  <tr><td>Devex</td><td>International development news</td><td>2&ndash;5</td></tr>
+  <tr><td>Alliance Magazine</td><td>Philanthropy news</td><td>2&ndash;5</td></tr>
+  <tr><td>Google Custom Search</td><td>Discovers new sources via targeted search queries</td><td>5&ndash;20</td></tr>
+</table>
+
+<h3>Step 2: Filter Out Irrelevant Results</h3>
+<p>
+  Most websites contain content about many topics. The scraper uses three filters in sequence:
+</p>
+<ol>
+  <li><strong>Keyword filter:</strong> Checks if the listing mentions education-related terms (school, literacy, teacher, EdTech, etc.)</li>
+  <li><strong>Geography filter:</strong> Checks if the listing is relevant to India (mentions Indian states, cities, or "India")</li>
+  <li><strong>Negative keyword filter:</strong> Rejects listings about clearly unrelated topics (veterinary, petroleum, mining, military, etc.)</li>
+</ol>
+
+<h3>Step 3: AI Double-Check (LLM Filter)</h3>
+<p>
+  Even after keyword filtering, some irrelevant listings sneak through.
+  So we send the remaining items to a free AI model (via OpenRouter) with a simple question:
+  <em>"Is this about K&ndash;12 education in India?"</em>
+</p>
+<p>
+  The AI reads each listing and responds "YES" or "NO". Only the "YES" items proceed.
+  If the AI is unavailable (free quota exhausted), all items are accepted &mdash;
+  the system is designed to never lose data, just occasionally let through a few extra results.
+</p>
+
+<h3>Step 4: Score and Save</h3>
+<p>
+  Each surviving listing is scored (0&ndash;100) based on five criteria (see Chapter 10),
+  then saved to the Supabase database. If a listing with the same URL already exists,
+  it's updated rather than duplicated.
+</p>
+
+<h3>Scraper Rate Limiting (Being Polite)</h3>
+<p>
+  The scraper is designed to be respectful to the websites it visits:
+</p>
+<ul>
+  <li>Only 3 pages are fetched at a time (not hundreds simultaneously)</li>
+  <li>There's a 1-second pause between batches</li>
+  <li>Each page gets a maximum of 10 seconds to load before being skipped</li>
+  <li>Devex gets a 10-second delay between requests (as requested by their website rules)</li>
+</ul>
+
+<div class="analogy">
+  <p>
+    <strong>The scraper is like a polite research assistant.</strong> They visit each website one at a time,
+    take careful notes, check with a senior colleague (the AI) whether the notes are relevant,
+    assign a priority score, and file everything neatly in the cabinet (database) before going home.
+    They never overload a website with too many requests at once.
+  </p>
+</div>
+
+
+<!-- ── Chapter 10 ── -->
+<h2 id="ch10">10. How Relevance Scoring Works</h2>
+
+<p>
+  Every opportunity gets a score from 0 to 100. Higher scores mean more relevant to CSF's mission.
+  The score is calculated by adding points across five categories:
+</p>
+
+<div class="diagram-box">
+<pre>
+  RELEVANCE SCORE CALCULATION (Max: 100 points)
+
+  ┌───────────────────────────────────────────────────────┐
+  │                                                       │
+  │  SECTOR MATCH                             +30 points  │
+  │  Does it mention FLN, EdTech, School                  │
+  │  Governance, Early Childhood, Classroom               │
+  │  Instruction, or similar topics?                      │
+  │                                                       │
+  ├───────────────────────────────────────────────────────┤
+  │                                                       │
+  │  GEOGRAPHY MATCH                          +20 points  │
+  │  Is it in a CSF priority state?                       │
+  │  (Haryana, UP, Gujarat, Bihar, Odisha,                │
+  │   Telangana, Punjab, HP, Assam)                       │
+  │                                                       │
+  ├───────────────────────────────────────────────────────┤
+  │                                                       │
+  │  FUNDING SIZE                             +20 points  │
+  │  Is the grant worth ₹1 Crore or more                  │
+  │  (or the international equivalent)?                   │
+  │                                                       │
+  ├───────────────────────────────────────────────────────┤
+  │                                                       │
+  │  KNOWN FUNDER                             +15 points  │
+  │  Is the organisation a known education                │
+  │  funder? (e.g. Gates Foundation, Tata                 │
+  │  Trusts, Wipro, Dell Foundation, etc.                 │
+  │  — about 80 organisations are listed)                 │
+  │                                                       │
+  ├───────────────────────────────────────────────────────┤
+  │                                                       │
+  │  DURATION                                 +10 points  │
+  │  Is the project 2 years or longer?                    │
+  │                                                       │
+  ├───────────────────────────────────────────────────────┤
+  │                                                       │
+  │  MAXIMUM POSSIBLE SCORE                  = 100 points │
+  │                                                       │
+  └───────────────────────────────────────────────────────┘
+</pre>
+</div>
+
+<h3>Score Decay (Keeping Results Fresh)</h3>
+<p>
+  Older opportunities gradually lose points so that fresh results always appear first.
+  The rule is simple: <strong>an opportunity loses 5 points for every week since it was posted.</strong>
+</p>
+<p>
+  For example, a listing scored at 85 that was posted 3 weeks ago would display as 85 &minus; (3 &times; 5) = <strong>70</strong> on the dashboard.
+</p>
+
+<h3>Score Colour Coding</h3>
+<table>
+  <tr><th>Score</th><th>Colour on Dashboard</th><th>Meaning</th></tr>
+  <tr><td>75 &ndash; 100</td><td style="color: #22c55e; font-weight:700;">Green</td><td>Highly relevant &mdash; look at this first</td></tr>
+  <tr><td>50 &ndash; 74</td><td style="color: #eab308; font-weight:700;">Yellow</td><td>Moderately relevant &mdash; worth reviewing</td></tr>
+  <tr><td>0 &ndash; 49</td><td style="color: #ef4444; font-weight:700;">Red</td><td>Low relevance &mdash; possibly tangential</td></tr>
+</table>
+
+<div class="adapt-box">
+  <p><strong>Customising the scoring for your domain:</strong> The scoring categories and point values live in
+  <code>scraper/config.ts</code> and <code>scraper/scoring.ts</code>. To change them, tell Claude Code
+  something like: "Change the geography scoring to prioritise Southeast Asian countries instead of Indian states"
+  or "Add a new scoring category: +25 points if the posting mentions machine learning".</p>
+</div>
+
+
+<!-- ── Chapter 11 ── -->
+<h2 id="ch11">11. The Daily Email Digest</h2>
+
+<p>The email system has three parts: subscribing, sending, and unsubscribing.</p>
+
+<h3>How Subscribing Works</h3>
+<ol>
+  <li>A user types their email into the subscription form on the dashboard and clicks "Go"</li>
+  <li>The email is saved to the <code>subscribers</code> table in the database</li>
+  <li>A branded confirmation email is sent to them immediately (via Resend)</li>
+</ol>
+
+<h3>How the Daily Digest Works</h3>
+<ol>
+  <li>Every day at 8:30 AM IST, a GitHub Actions job starts automatically</li>
+  <li>It queries the database for the <strong>top 10 opportunities from the last 48 hours</strong></li>
+  <li>It queries all subscribers from the database</li>
+  <li>For each subscriber, it builds a personalised HTML email with:
+    <ul>
+      <li>A branded header with the ScoutEd name and date</li>
+      <li>Up to 10 opportunity summaries with score badges, titles, descriptions, and links</li>
+      <li>A "View All on ScoutEd" button linking to the dashboard</li>
+      <li>A personalised unsubscribe link in the footer</li>
+    </ul>
+  </li>
+  <li>Emails are sent via the Resend API</li>
+</ol>
+
+<h3>How Unsubscribing Works</h3>
+<p>
+  Each subscriber gets a unique unsubscribe token (a random ID) when they sign up.
+  The unsubscribe link in every email includes this token. When clicked:
+</p>
+<ol>
+  <li>The link goes to a page on your website (<code>/api/unsubscribe?token=...</code>)</li>
+  <li>The page deletes the subscriber from the database</li>
+  <li>A confirmation message is shown: "You've been unsubscribed successfully"</li>
+</ol>
+
+<div class="callout callout-warn">
+  <div class="callout-title">Email compliance</div>
+  <p>
+    Including an unsubscribe link in every email is not just good practice &mdash; it's a legal requirement
+    in most countries. ScoutEd handles this automatically.
+  </p>
+</div>
+
+
+<!-- ── Chapter 12 ── -->
+<h2 id="ch12">12. Publishing to the Web (Deployment)</h2>
+
+<p>
+  Once everything looks good on your computer, it's time to put it on the internet so your team can access it from anywhere.
+  This is called "deployment", and Vercel makes it remarkably simple.
+</p>
+
+<h3>Option A: Automatic Deployment (Recommended)</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <strong>Push your code to GitHub.</strong>
+    If you haven't already, upload your project to the GitHub repository you created earlier:
+    <pre><code><span class="prompt">$</span> git add .
+<span class="prompt">$</span> git commit -m "Initial project setup"
+<span class="prompt">$</span> git push origin master</code></pre>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <strong>Log in to Vercel</strong> (vercel.com) and click <strong>"Add New Project"</strong>.
+    Select <strong>"Import Git Repository"</strong> and choose your GitHub repository.
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <strong>Set the Environment Variables.</strong> Before clicking "Deploy", go to the
+    "Environment Variables" section and add:
+    <table>
+      <tr><th>Name</th><th>Value</th><th>What It's For</th></tr>
+      <tr><td><code>VITE_SUPABASE_URL</code></td><td>(your Supabase URL)</td><td>Dashboard reads from database</td></tr>
+      <tr><td><code>VITE_SUPABASE_ANON_KEY</code></td><td>(your anon key)</td><td>Dashboard reads from database</td></tr>
+      <tr><td><code>SUPABASE_URL</code></td><td>(your Supabase URL)</td><td>Email functions access database</td></tr>
+      <tr><td><code>SUPABASE_SERVICE_ROLE_KEY</code></td><td>(your service role key)</td><td>Email functions write to database</td></tr>
+      <tr><td><code>RESEND_API_KEY</code></td><td>(your Resend API key)</td><td>Sending confirmation & digest emails</td></tr>
+    </table>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <strong>Click "Deploy".</strong> Vercel will build your project and put it on a live URL
+    (something like <code>your-project.vercel.app</code>). This takes about 1&ndash;2 minutes.
+  </div>
+</div>
+
+<div class="callout callout-success">
+  <div class="callout-title">Automatic updates</div>
+  <p>
+    From now on, every time you push code changes to GitHub, Vercel will automatically rebuild and redeploy your site.
+    You never have to manually deploy again &mdash; just push your changes and the live site updates within minutes.
+  </p>
+</div>
+
+<h3>Option B: Manual Deployment (via Terminal)</h3>
+<p>If you prefer using the command line instead of the Vercel website:</p>
+<pre><code><span class="comment"># Install the Vercel command-line tool:</span>
+<span class="prompt">$</span> npm install -g vercel
+
+<span class="comment"># Link your project and deploy:</span>
+<span class="prompt">$</span> vercel
+
+<span class="comment"># For the production (live) version:</span>
+<span class="prompt">$</span> vercel --prod</code></pre>
+
+
+<!-- ── Chapter 13 ── -->
+<h2 id="ch13">13. Automating the Daily Scrape (GitHub Actions)</h2>
+
+<p>
+  The scraper doesn't run on your computer &mdash; that would require leaving your computer on 24/7.
+  Instead, it runs on <strong>GitHub's servers</strong>, triggered by a schedule. This feature is called <strong>GitHub Actions</strong>.
+</p>
+
+<div class="analogy">
+  <p>
+    <strong>Think of GitHub Actions as a robot alarm clock.</strong> You set the time (8:00 AM IST),
+    and every day at that time, GitHub wakes up a temporary computer, runs your scraper,
+    and shuts down. You don't have to do anything &mdash; it just works.
+  </p>
+</div>
+
+<h3>The Two Scheduled Jobs</h3>
+<table>
+  <tr><th>Job</th><th>Schedule</th><th>What It Does</th><th>Time Limit</th></tr>
+  <tr>
+    <td><strong>Daily Scraper</strong></td>
+    <td>8:00 AM IST (every day)</td>
+    <td>Visits websites, filters, scores, and saves opportunities to the database</td>
+    <td>10 minutes</td>
+  </tr>
+  <tr>
+    <td><strong>Daily Digest</strong></td>
+    <td>8:30 AM IST (every day)</td>
+    <td>Reads top opportunities from the database and emails them to subscribers</td>
+    <td>5 minutes</td>
+  </tr>
+</table>
+
+<h3>Setting Up the Secrets</h3>
+<p>
+  The scraper and digest need database and API access, but you can't put passwords directly in the code
+  (it's on GitHub where others might see it). Instead, you store them as <strong>GitHub Secrets</strong>:
+</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">Go to your GitHub repository &rarr; click <strong>"Settings"</strong> (tab at the top)</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">In the left sidebar, click <strong>"Secrets and variables"</strong> &rarr; <strong>"Actions"</strong></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    Click <strong>"New repository secret"</strong> and add each of these:
+    <table>
+      <tr><th>Secret Name</th><th>What to Paste</th></tr>
+      <tr><td><code>SUPABASE_URL</code></td><td>Your Supabase Project URL</td></tr>
+      <tr><td><code>SUPABASE_SERVICE_ROLE_KEY</code></td><td>Your Supabase service_role key</td></tr>
+      <tr><td><code>RESEND_API_KEY</code></td><td>Your Resend API key</td></tr>
+      <tr><td><code>OPENROUTER_API_KEY</code></td><td>Your OpenRouter API key (optional)</td></tr>
+    </table>
+  </div>
+</div>
+
+<h3>Testing Manually</h3>
+<p>
+  You don't have to wait until 8 AM to test. You can trigger both jobs manually:
+</p>
+<ol>
+  <li>Go to your repository on GitHub</li>
+  <li>Click the <strong>"Actions"</strong> tab</li>
+  <li>Select the workflow (e.g., "ScoutEd Daily Scraper")</li>
+  <li>Click <strong>"Run workflow"</strong> &rarr; <strong>"Run workflow"</strong></li>
+</ol>
+<p>You'll see a progress indicator. Click on the running job to watch the logs in real time.</p>
+
+
+<!-- ── Chapter 14 ── -->
+<h2 id="ch14">14. Making Changes with Claude Code (AI Assistant)</h2>
+
+<p>
+  This is the most powerful part of the system. Claude Code lets you modify ScoutEd by
+  <strong>describing what you want in plain English</strong>. Here are examples of real tasks
+  you can give it:
+</p>
+
+<h3>Common Tasks You Can Ask Claude Code</h3>
+
+<h4>Changing the Dashboard</h4>
+<table>
+  <tr><th>What You Want</th><th>What to Tell Claude Code</th></tr>
+  <tr><td>Change the brand colours</td><td>"Change the primary colour from #00316B to #1a5276 and the accent colour to #f39c12"</td></tr>
+  <tr><td>Add a new filter</td><td>"Add a filter for opportunity type: grant, CSR, RFP"</td></tr>
+  <tr><td>Change the card layout</td><td>"Show the deadline more prominently on each card, make it bigger and in red if it's within 7 days"</td></tr>
+  <tr><td>Change the onboarding text</td><td>"Update the welcome tour to explain our new scoring system"</td></tr>
+</table>
+
+<h4>Changing the Scraper</h4>
+<table>
+  <tr><th>What You Want</th><th>What to Tell Claude Code</th></tr>
+  <tr><td>Add a new website to scrape</td><td>"Add NITI Aayog (niti.gov.in) as a new source for the scraper"</td></tr>
+  <tr><td>Change the scoring rules</td><td>"Give +25 points for Rajasthan and +25 for Jharkhand in the geography scoring"</td></tr>
+  <tr><td>Add a known funder</td><td>"Add 'Rohini Nilekani Philanthropies' to the known education funders list"</td></tr>
+  <tr><td>Change the scraping schedule</td><td>"Change the scraper to run at 7 AM IST instead of 8 AM"</td></tr>
+</table>
+
+<h4>Fixing Issues</h4>
+<table>
+  <tr><th>Problem</th><th>What to Tell Claude Code</th></tr>
+  <tr><td>A source stopped working</td><td>"The NGOBox parser is returning 0 results. Can you check if the website changed its layout?"</td></tr>
+  <tr><td>Emails aren't sending</td><td>"Debug why the daily digest isn't sending. Check the send-digest.ts file."</td></tr>
+  <tr><td>Wrong data appearing</td><td>"Some opportunities are showing up with empty descriptions. Find and fix the bug."</td></tr>
+</table>
+
+<h3>Saving Your Changes</h3>
+<p>
+  After Claude Code makes changes, you need to save them to GitHub so they take effect on the live site.
+  You can ask Claude Code to do this for you:
+</p>
+<pre><code><span class="comment"># Type this in the Claude Code chat:</span>
+/commit</code></pre>
+<p>
+  Claude Code will review all the changes, write a descriptive message about what was changed,
+  and create a "commit" (a saved checkpoint in Git). You can then push it to GitHub:
+</p>
+<pre><code><span class="prompt">$</span> git push</code></pre>
+<p>
+  This will automatically trigger a redeployment on Vercel, and your live site will update within a few minutes.
+</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">The CLAUDE.md file keeps Claude Code on track</div>
+  <p>
+    The file <code>CLAUDE.md</code> in the project root is like a briefing document for Claude Code.
+    It contains all the rules: brand colours, scoring logic, database schema, security policies,
+    and architecture decisions. When you tell Claude Code to make a change, it reads this file
+    first and ensures its changes are consistent with the project's design.
+  </p>
+  <p>
+    <strong>If you build your own tool</strong>, write your own <code>CLAUDE.md</code>
+    describing your project's rules, conventions, and constraints. This is the single most
+    important thing you can do to get good results from Claude Code.
+  </p>
+</div>
+
+
+<!-- ── Chapter 15 ── -->
+<h2 id="ch15">15. Customising ScoutEd for Your Own Use Case</h2>
+
+<p>
+  ScoutEd was built for tracking education grants, but the same architecture works for
+  <strong>any domain where you need to monitor websites and surface relevant information daily</strong>.
+  Here's how to adapt each part:
+</p>
+
+<h3>Step 1: Define Your Domain</h3>
+<p>Answer these questions to define your version of ScoutEd:</p>
+<table>
+  <tr><th>Question</th><th>ScoutEd's Answer</th><th>Your Answer (fill in)</th></tr>
+  <tr><td>What are you tracking?</td><td>Education grants and funding</td><td></td></tr>
+  <tr><td>Which websites have this info?</td><td>NGOBox, FundsForNGOs, CSRBox, IDR, etc.</td><td></td></tr>
+  <tr><td>What makes a result "relevant"?</td><td>Matches CSF's education sectors</td><td></td></tr>
+  <tr><td>What geography matters?</td><td>Indian states, especially priority states</td><td></td></tr>
+  <tr><td>What's a "high-value" result?</td><td>Funding ≥ ₹1 Crore</td><td></td></tr>
+  <tr><td>Who are the key organisations?</td><td>Gates Foundation, Tata Trusts, etc.</td><td></td></tr>
+  <tr><td>How should results be scored?</td><td>Sector + Geography + Funding + Donor + Duration</td><td></td></tr>
+</table>
+
+<h3>Step 2: Modify the Config File</h3>
+<p>
+  The file <code>scraper/config.ts</code> is the "control centre" of the scraper.
+  It defines which websites to scrape, which sectors to look for, which states are priorities,
+  and which organisations are known funders. To customise it for your domain, tell Claude Code:
+</p>
+<pre><code><span class="comment">"I want to track climate tech startup funding instead of education grants.</span>
+<span class="comment"> Replace the sectors with: CleanTech, Carbon Capture, Renewable Energy,</span>
+<span class="comment"> EV, Green Hydrogen, Sustainable Agriculture.</span>
+<span class="comment"> Replace the priority states with countries: India, US, UK, Germany, China.</span>
+<span class="comment"> Replace the known funders with: Breakthrough Energy, ARPA-E,</span>
+<span class="comment"> Sequoia Climate Fund, Khosla Ventures..."</span></code></pre>
+
+<h3>Step 3: Add Your Sources</h3>
+<p>
+  Tell Claude Code which websites to scrape. For each website, it will:
+</p>
+<ol>
+  <li>Visit the website and understand its structure (HTML layout)</li>
+  <li>Write a parser that extracts the right data fields</li>
+  <li>Add it to the scraper's source list</li>
+  <li>Set up appropriate filtering (is this source pre-filtered or does it need keyword checks?)</li>
+</ol>
+<pre><code><span class="comment">"Add crunchbase.com/lists/climate-tech-startups as a new source.</span>
+<span class="comment"> Extract: company name, funding amount, stage, location, and description."</span></code></pre>
+
+<h3>Step 4: Adjust the Scoring</h3>
+<p>
+  Modify the scoring weights based on what matters for your domain.
+  The scoring lives in <code>scraper/scoring.ts</code>:
+</p>
+<pre><code><span class="comment">"Change the scoring to:</span>
+<span class="comment"> +35 points for sector match (CleanTech, Renewables, etc.)</span>
+<span class="comment"> +25 points for funding over $10M</span>
+<span class="comment"> +20 points for known investors</span>
+<span class="comment"> +10 points for India-based companies</span>
+<span class="comment"> +10 points for Series B or later"</span></code></pre>
+
+<h3>Step 5: Modify the Database Schema</h3>
+<p>If your data fields are different (e.g., you need "company_stage" instead of "deadline"),
+  tell Claude Code to update the schema and run the new SQL in Supabase:</p>
+<pre><code><span class="comment">"Update the opportunities table: remove 'poc_email' and 'deadline',</span>
+<span class="comment"> add 'company_stage' (text), 'founded_year' (integer), and</span>
+<span class="comment"> 'investor_names' (text array)"</span></code></pre>
+
+<h3>Step 6: Update the Dashboard</h3>
+<p>Finally, update the UI to match your domain. Change the branding, labels, filter options, and card layout:</p>
+<pre><code><span class="comment">"Rebrand the dashboard:</span>
+<span class="comment"> - Change the name from 'ScoutEd' to 'ClimateRadar'</span>
+<span class="comment"> - Change primary colour to dark green #1a472a</span>
+<span class="comment"> - Replace sector filter options with our CleanTech categories</span>
+<span class="comment"> - Show 'Funding Stage' instead of 'Deadline' on cards"</span></code></pre>
+
+<div class="callout callout-info">
+  <div class="callout-title">Write a new CLAUDE.md</div>
+  <p>
+    After making these changes, update the <code>CLAUDE.md</code> file to reflect your new project.
+    This ensures that future Claude Code sessions understand your project's rules.
+    You can even ask Claude Code to write it: "Update CLAUDE.md to reflect that this project now tracks
+    climate tech funding instead of education grants."
+  </p>
+</div>
+
+
+<!-- ── Chapter 16 ── -->
+<h2 id="ch16">16. When Things Go Wrong (Troubleshooting)</h2>
+
+<p>
+  Here are the most common problems and how to fix them. For most of these,
+  you can simply describe the problem to Claude Code and it will diagnose and fix it.
+</p>
+
+<h3>The dashboard shows no data</h3>
+<table>
+  <tr><th>Possible Cause</th><th>Solution</th></tr>
+  <tr>
+    <td>Database is empty (scraper hasn't run yet)</td>
+    <td>Go to GitHub &rarr; Actions &rarr; "ScoutEd Daily Scraper" &rarr; "Run workflow" to trigger a manual scrape</td>
+  </tr>
+  <tr>
+    <td>Environment variables not set</td>
+    <td>Check that <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> are set in your <code>.env</code> file (locally) or in Vercel settings (production)</td>
+  </tr>
+  <tr>
+    <td>Environment variables are wrong</td>
+    <td>Double-check the values against your Supabase project's Settings &rarr; API page</td>
+  </tr>
+</table>
+
+<h3>The scraper returns 0 results</h3>
+<table>
+  <tr><th>Possible Cause</th><th>Solution</th></tr>
+  <tr>
+    <td>A website changed its layout</td>
+    <td>Tell Claude Code: "The [website] parser is broken. Check if the site changed its HTML structure and fix the parser."</td>
+  </tr>
+  <tr>
+    <td>Secrets not set in GitHub</td>
+    <td>Go to GitHub repo &rarr; Settings &rarr; Secrets and variables &rarr; Actions. Verify all secrets are present.</td>
+  </tr>
+  <tr>
+    <td>The scraper timed out</td>
+    <td>Check the GitHub Actions log for errors. The scraper has a 10-minute timeout; if a website is very slow, it may need to be skipped.</td>
+  </tr>
+</table>
+
+<h3>Emails aren't being sent</h3>
+<table>
+  <tr><th>Possible Cause</th><th>Solution</th></tr>
+  <tr>
+    <td>No subscribers in the database</td>
+    <td>Check the <code>subscribers</code> table in Supabase. Someone needs to subscribe first.</td>
+  </tr>
+  <tr>
+    <td>No recent opportunities</td>
+    <td>The digest only includes opportunities from the last 48 hours. Run the scraper first.</td>
+  </tr>
+  <tr>
+    <td>Resend API key is invalid</td>
+    <td>Check your Resend dashboard for error logs. Regenerate the API key if needed.</td>
+  </tr>
+  <tr>
+    <td>Emails going to spam</td>
+    <td>In Resend, verify your sending domain (follow their DNS setup guide). This significantly improves deliverability.</td>
+  </tr>
+</table>
+
+<h3>The AI filter is rejecting everything</h3>
+<table>
+  <tr><th>Possible Cause</th><th>Solution</th></tr>
+  <tr>
+    <td>Free AI quota exhausted</td>
+    <td>This is normal. When the quota is exhausted, the system accepts all remaining items (fail-safe design). It resets daily.</td>
+  </tr>
+  <tr>
+    <td>The AI is too strict</td>
+    <td>Tell Claude Code: "The LLM filter is rejecting too many valid results. Make the system prompt more lenient."</td>
+  </tr>
+</table>
+
+<h3>How to Read GitHub Actions Logs</h3>
+<ol>
+  <li>Go to your GitHub repository</li>
+  <li>Click the <strong>"Actions"</strong> tab</li>
+  <li>Click on a recent run (green = success, red = failure)</li>
+  <li>Click on the job name (e.g., "scrape")</li>
+  <li>Expand each step to see detailed logs</li>
+</ol>
+<p>If you see an error you don't understand, copy the error message and paste it into Claude Code:
+  <em>"I got this error in the scraper: [paste error]. What does it mean and how do I fix it?"</em></p>
+
+
+<!-- ── Chapter 17 ── -->
+<h2 id="ch17">17. Full Architecture Diagram</h2>
+
+<p>
+  This diagram shows the complete system &mdash; every service, every connection, and how data flows
+  from the websites you're monitoring all the way to the user's browser and inbox.
+</p>
+
+<div class="diagram-box">
+<pre>
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   WEBSITES BEING MONITORED (data enters the system here)   ║
+  ║                                                            ║
+  ║   NGOBox  ·  FundsForNGOs  ·  CSRBox  ·  IDR  ·  Devex   ║
+  ║   Alliance Magazine  ·  Google Custom Search               ║
+  ╚═══════════════════════════════╤════════════════════════════╝
+                                  │
+                                  │ The scraper visits these
+                                  │ websites every morning
+                                  ▼
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   GITHUB ACTIONS  (the automation engine)                   ║
+  ║                                                            ║
+  ║   ┌─────────────────────┐    ┌─────────────────────────┐   ║
+  ║   │  DAILY SCRAPER      │    │  DAILY EMAIL DIGEST     │   ║
+  ║   │  Runs at 8:00 AM    │    │  Runs at 8:30 AM        │   ║
+  ║   │                     │    │                         │   ║
+  ║   │  1. Fetch listings  │    │  1. Get top 10 results  │   ║
+  ║   │  2. Filter noise    │    │  2. Get subscriber list │   ║
+  ║   │  3. AI check (K-12) │    │  3. Build email         │   ║
+  ║   │  4. Score (0-100)   │    │  4. Send via Resend     │   ║
+  ║   │  5. Save to DB      │    │                         │   ║
+  ║   └──────────┬──────────┘    └────────────┬────────────┘   ║
+  ║              │                            │                ║
+  ╚══════════════╪════════════════════════════╪════════════════╝
+                 │                            │
+                 │  Writes data               │  Reads data
+                 ▼                            ▼
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   SUPABASE  (the cloud database — think of it as a         ║
+  ║              giant cloud spreadsheet)                       ║
+  ║                                                            ║
+  ║   Sheet 1: "opportunities"                                 ║
+  ║   ┌────────────────────────────────────────────────────┐   ║
+  ║   │ Title │ Score │ Deadline │ Amount │ Tags │ URL ... │   ║
+  ║   │ FLN.. │  85   │ Mar 2026 │ ₹2 Cr  │ FLN  │ ngo... │   ║
+  ║   │ EdTe..│  70   │ Apr 2026 │ $500K  │ EdTe │ fun... │   ║
+  ║   │ ...   │  ...  │ ...      │ ...    │ ...  │ ...    │   ║
+  ║   └────────────────────────────────────────────────────┘   ║
+  ║                                                            ║
+  ║   Sheet 2: "subscribers"     Sheet 3: "user_actions"       ║
+  ║   ┌──────────────────────┐   ┌──────────────────────┐      ║
+  ║   │ Email    │ Token     │   │ User │ Bookmarked?  │      ║
+  ║   │ a@csf.in │ abc-123.. │   │ U1   │ Opp #3 ✓    │      ║
+  ║   └──────────────────────┘   └──────────────────────┘      ║
+  ║                                                            ║
+  ╚═════════════════╤══════════════════════════════════════════╝
+                    │
+                    │  Dashboard reads data
+                    ▼
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   VERCEL  (hosts the website on the internet)               ║
+  ║                                                            ║
+  ║   ┌──────────────────────────────────────────────────────┐ ║
+  ║   │           THE SCOUTED DASHBOARD                      │ ║
+  ║   │                                                      │ ║
+  ║   │   ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │ ║
+  ║   │   │ FILTERS  │  │ CARD     │  │ DETAIL PREVIEW   │  │ ║
+  ║   │   │          │  │ GRID     │  │                  │  │ ║
+  ║   │   │ Score    │  │ ┌──────┐ │  │ Full description │  │ ║
+  ║   │   │ Sector   │  │ │Card 1│ │  │ External link    │  │ ║
+  ║   │   │ State    │  │ │ 85 ● │ │  │ POC email        │  │ ║
+  ║   │   │ Deadline │  │ └──────┘ │  │ Bookmark/Hide    │  │ ║
+  ║   │   │          │  │ ┌──────┐ │  │                  │  │ ║
+  ║   │   │ Search   │  │ │Card 2│ │  └──────────────────┘  │ ║
+  ║   │   │ bar      │  │ │ 70 ● │ │                        │ ║
+  ║   │   │          │  │ └──────┘ │                        │ ║
+  ║   │   └──────────┘  └──────────┘                        │ ║
+  ║   └──────────────────────────────────────────────────────┘ ║
+  ║                                                            ║
+  ║   Also hosts:                                              ║
+  ║   /api/subscribe → saves email to database                 ║
+  ║   /api/unsubscribe → removes email from database           ║
+  ║                                                            ║
+  ╚═════════════════╤══════════════════════════════════════════╝
+                    │
+                    │  Users access via web browser
+                    ▼
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   USERS                                                     ║
+  ║                                                            ║
+  ║   👤 Browse the dashboard, filter, search, bookmark        ║
+  ║   📧 Receive daily digest in their inbox at 8:30 AM       ║
+  ║   🔗 Click through to original grant pages                ║
+  ║                                                            ║
+  ╚════════════════════════════════════════════════════════════╝
+</pre>
+</div>
+
+<h3>Data Flow in One Sentence</h3>
+<p style="font-size: 16px; font-weight: 600; color: var(--csf-blue); text-align: center; padding: 20px 0;">
+  Websites &rarr; Scraper (filter + score) &rarr; Database &rarr; Dashboard + Email &rarr; User
+</p>
+
+<hr>
+
+<div style="text-align: center; padding: 40px 0; color: var(--gray-500); font-size: 14px;">
+  <div style="font-size: 20px; font-weight: 800; color: var(--csf-blue); margin-bottom: 8px;">
+    Scout<span style="color: var(--csf-yellow);">Ed</span>
+  </div>
+  <p>Built for the Partnerships & Strategic Initiatives Team</p>
+  <p>Central Square Foundation</p>
+  <p style="margin-top: 16px; font-size: 12px; color: var(--gray-400);">
+    This guide was generated with Claude Code &middot; February 2026
+  </p>
+</div>
+
+</div>
+</body>
+</html>
