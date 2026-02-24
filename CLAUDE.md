@@ -51,7 +51,7 @@ Each opportunity gets a score (0-100).
 * **Sector Match (+30pts):** If description contains: "FLN", "Foundational Literacy", "School Governance", "EdTech", "Early Childhood", "Classroom Instruction", "High Potential Students".
 * **Geography Match (+20pts):** If location matches CSF Priority States (e.g., Uttar Pradesh, Madhya Pradesh, Haryana, Gujarat).
 * **Funding Size (+20pts):** > ₹1 Crore or equivalent.
-* **Duration (+10pts):** > 2 Years.
+* **Duration (+15pts):** > 2 Years.
 * **Decay:** Score decreases by 5 points for every week since posting.
 
 ### B. User Interface
@@ -147,7 +147,7 @@ Each source is classified for filtering:
 - **Geography match (+20)**: Location or text mentions CSF priority state
 - **Funding size (+20)**: Amount >= ₹1 Crore or equivalent international currency
 - **Known donor (+15)**: Organisation matches `KNOWN_EDUCATION_FUNDERS` list in config.ts
-- **Duration (+10)**: Project >= 2 years
+- **Duration (+15)**: Project >= 2 years
 - **Decay**: Frontend applies -5 per week since creation
 
 ### Known Education Funders (`config.ts`)

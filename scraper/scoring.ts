@@ -41,10 +41,10 @@ export function calculateScore(opp: RawOpportunity): number {
     score += 15
   }
 
-  // Duration (+10)
+  // Duration (+15)
   const yearMatch = text.match(/(\d+)\s*(?:year|yr)/i)
   if (yearMatch && parseInt(yearMatch[1]) >= 2) {
-    score += 10
+    score += 15
   }
 
   return Math.min(100, score)
