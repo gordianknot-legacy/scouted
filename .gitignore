@@ -43,3 +43,6 @@ pnpm-debug.log*
 nul
 
 .vercel
+
+# OpenClaw temp output
+scraper/openclaw-results.json

@@ -3,11 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "scrape": "tsx index.ts"
+    "scrape": "tsx index.ts",
+    "upsert:openclaw": "tsx openclaw-upsert.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",
     "cheerio": "^1.0.0",
+    "dotenv": "^16.6.1",
     "scouted": "file:.."
   },
   "devDependencies": {
