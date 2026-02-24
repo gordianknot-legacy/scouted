@@ -5,7 +5,8 @@
   "scripts": {
     "scrape": "tsx index.ts",
     "upsert:openclaw": "tsx openclaw-upsert.ts",
-    "digest:openclaw": "tsx openclaw-digest.ts"
+    "digest:openclaw": "tsx openclaw-digest.ts",
+    "upsert:csr": "tsx csr-upsert.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",

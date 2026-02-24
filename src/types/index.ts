@@ -35,3 +35,13 @@ export interface Filters {
   deadlineBefore: string | null
   search: string
 }
+
+export interface CsrSpendingRecord {
+  id: string
+  company: string
+  cin: string
+  field: string
+  spend_inr: number
+  fiscal_year: string
+  created_at: string
+}

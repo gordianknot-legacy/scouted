@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FunnelIcon, BookOpenIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { FunnelIcon, BookOpenIcon, ChartBarIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Header } from './components/layout/Header'
 import { MobileNav, type Tab } from './components/layout/MobileNav'
 import { OpportunityCard } from './components/cards/OpportunityCard'
@@ -8,6 +8,7 @@ import { MobileFilterDrawer } from './components/filters/MobileFilterDrawer'
 import { OnboardingModal } from './components/onboarding/OnboardingModal'
 import { EmailSubscribe } from './components/subscription/EmailSubscribe'
 import { PreviewPane } from './components/preview/PreviewPane'
+import { CsrPage } from './components/csr/CsrPage'
 import { SearchBar } from './components/ui/SearchBar'
 import { useOpportunities } from './hooks/useOpportunities'
 import { useBookmarks } from './hooks/useBookmarks'
@@ -110,6 +111,10 @@ export default function App() {
           )}
         </div>
       )
+    }
+
+    if (activeTab === 'csr') {
+      return <CsrPage onBack={() => setActiveTab('dashboard')} />
     }
 
     if (activeTab === 'guide') {
@@ -244,6 +249,18 @@ export default function App() {
                   <FilterSidebar filters={filters} onChange={setFilters} />
                 </div>
                 <EmailSubscribe />
+                <button
+                  onClick={() => setActiveTab('csr')}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-csf-blue/20 hover:shadow-md transition-all group"
+                >
+                  <div className="w-9 h-9 bg-csf-yellow/20 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-yellow/30 transition-colors">
+                    <ChartBarIcon className="w-5 h-5 text-csf-blue" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-heading text-sm font-bold text-gray-900">CSR Data</p>
+                    <p className="font-body text-[11px] text-gray-400">Company CSR spending</p>
+                  </div>
+                </button>
                 <button
                   onClick={() => setActiveTab('guide')}
                   className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-csf-blue/20 hover:shadow-md transition-all group"

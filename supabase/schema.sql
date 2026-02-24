@@ -97,3 +97,28 @@ DROP POLICY IF EXISTS "Users manage own actions" ON user_actions;
 CREATE POLICY "Users manage own actions"
   ON user_actions FOR ALL
   USING (true);
+
+-- ======================
+-- Table: csr_spending
+-- ======================
+CREATE TABLE IF NOT EXISTS csr_spending (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  company TEXT NOT NULL,
+  cin TEXT NOT NULL,
+  field TEXT NOT NULL,
+  spend_inr NUMERIC(15,2) NOT NULL DEFAULT 0,
+  fiscal_year TEXT NOT NULL DEFAULT '2023-24',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (cin, field, fiscal_year)
+);
+
+CREATE INDEX IF NOT EXISTS idx_csr_company ON csr_spending (company);
+CREATE INDEX IF NOT EXISTS idx_csr_fiscal_year ON csr_spending (fiscal_year);
+CREATE INDEX IF NOT EXISTS idx_csr_spend ON csr_spending (spend_inr DESC);
+
+-- CSR Spending: anon can SELECT only. Upload uses service_role (bypasses RLS).
+ALTER TABLE csr_spending ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anon read csr_spending"
+  ON csr_spending FOR SELECT
+  USING (true);
