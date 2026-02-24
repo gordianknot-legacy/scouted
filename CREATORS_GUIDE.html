@@ -477,7 +477,8 @@
     <li><a href="#ch14"><span class="toc-num">14</span><span class="toc-label">Making Changes with Claude Code (AI Assistant)</span></a></li>
     <li><a href="#ch15"><span class="toc-num">15</span><span class="toc-label">Customising ScoutEd for Your Own Use Case</span></a></li>
     <li><a href="#ch16"><span class="toc-num">16</span><span class="toc-label">When Things Go Wrong (Troubleshooting)</span></a></li>
-    <li><a href="#ch17"><span class="toc-num">17</span><span class="toc-label">Full Architecture Diagram</span></a></li>
+    <li><a href="#ch17"><span class="toc-num">17</span><span class="toc-label">The WhatsApp Bot (OpenClaw AI Agent)</span></a></li>
+    <li><a href="#ch18"><span class="toc-num">18</span><span class="toc-label">Full Architecture Diagram</span></a></li>
   </ol>
 </div>
 
@@ -1766,7 +1767,180 @@ VITE_SUPABASE_ANON_KEY=<span class="string">paste_your_anon_key_here</span></cod
 
 
 <!-- ── Chapter 17 ── -->
-<h2 id="ch17">17. Full Architecture Diagram</h2>
+<!-- ── Chapter 17 ── -->
+<h2 id="ch17">17. The WhatsApp Bot (OpenClaw AI Agent)</h2>
+
+<p>
+  The daily scraper visits the same fixed websites every morning. But what about grants that appear on
+  sites the scraper doesn't know about? Or opportunities described in a way the keyword filters don't
+  recognise (e.g., "improving reading competency among Class 3 students" instead of "FLN")?
+</p>
+
+<p>
+  That's where the <strong>WhatsApp Bot</strong> comes in. It's an AI agent (powered by
+  <a href="https://openclaw.ai/" target="_blank">OpenClaw</a>) that you can message on WhatsApp to
+  discover new grants on demand. Think of it as a smart research assistant that searches the entire
+  web, understands what it reads, and adds relevant results to ScoutEd automatically.
+</p>
+
+<h3>What Can You Ask It?</h3>
+
+<table>
+  <thead><tr><th>You Send on WhatsApp</th><th>What Happens</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>"What grants are in ScoutEd?"</strong></td>
+      <td>The bot pulls the latest opportunities from the database and sends them to you, formatted for WhatsApp.</td>
+    </tr>
+    <tr>
+      <td><strong>"Show me recent grants"</strong></td>
+      <td>Same as above &mdash; shows what's already been collected.</td>
+    </tr>
+    <tr>
+      <td><strong>"Find new education grants"</strong></td>
+      <td>The bot <em>searches the web</em> for new India K-12 education grants, scores them, adds them to the database, and reports what it found.</td>
+    </tr>
+    <tr>
+      <td><strong>"Scout for grants"</strong></td>
+      <td>Same as above &mdash; triggers a full discovery run.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>How Does It Work? (Simple Version)</h3>
+
+<div class="diagram-box">
+<pre>
+  You send a WhatsApp message
+       │
+       ▼
+  OpenClaw Gateway (running on your computer)
+       │
+       ▼
+  AI Agent reads the message and decides what to do
+       │
+       ├── "Show grants" → Pulls from database → Sends list on WhatsApp
+       │
+       └── "Find grants" → Searches the web (8+ Google queries)
+                               │
+                               ▼
+                          Visits promising pages
+                               │
+                               ▼
+                          Filters for India K-12 only
+                          (rejects US, healthcare, etc.)
+                               │
+                               ▼
+                          Scores each opportunity (same 0-100 system)
+                               │
+                               ▼
+                          Saves to database → Reports on WhatsApp
+</pre>
+</div>
+
+<h3>What Makes It Different from the Daily Scraper?</h3>
+
+<table>
+  <thead><tr><th>Feature</th><th>Daily Scraper</th><th>WhatsApp Bot</th></tr></thead>
+  <tbody>
+    <tr><td>When it runs</td><td>Automatically at 8 AM every day</td><td>Whenever you ask it</td></tr>
+    <tr><td>Where it looks</td><td>7 fixed websites</td><td>The entire web (via Google Search)</td></tr>
+    <tr><td>How it finds grants</td><td>HTML patterns + keywords</td><td>AI reads and understands pages</td></tr>
+    <tr><td>Can it understand context?</td><td>No (keyword matching only)</td><td>Yes (understands "reading competency" = FLN)</td></tr>
+    <tr><td>Cost</td><td>Free</td><td>~₹8-40 per run (LLM cost via OpenRouter)</td></tr>
+  </tbody>
+</table>
+
+<p>
+  They work together &mdash; the scraper handles the daily baseline, and the bot fills in gaps when
+  you want fresh discovery.
+</p>
+
+<h3>Setting Up the WhatsApp Bot</h3>
+
+<p>This is a one-time setup on the computer that runs ScoutEd.</p>
+
+<h4>Step 1: Install OpenClaw</h4>
+<pre><code>npm install -g openclaw</code></pre>
+
+<h4>Step 2: Run the Setup Wizard</h4>
+<pre><code>openclaw onboard</code></pre>
+<p>
+  This will ask you to:
+</p>
+<ul>
+  <li><strong>Choose an LLM provider</strong> &mdash; select OpenRouter (it can use many AI models). You'll need an API key from <a href="https://openrouter.ai/" target="_blank">openrouter.ai</a>.</li>
+  <li><strong>Link your WhatsApp</strong> &mdash; it shows a QR code. Scan it with WhatsApp on your phone (like WhatsApp Web). The bot uses your own number in "self-chat" mode.</li>
+</ul>
+
+<h4>Step 3: Set Up Web Search</h4>
+<p>The bot needs a search engine. We use Google's Gemini (free):</p>
+<ol>
+  <li>Get a free API key from <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a></li>
+  <li>Configure it:
+    <pre><code>openclaw config set tools.web.search.provider gemini
+openclaw config set tools.web.search.gemini.apiKey YOUR_KEY_HERE</code></pre>
+  </li>
+</ol>
+
+<h4>Step 4: Start the Gateway</h4>
+<pre><code>openclaw gateway</code></pre>
+<p>
+  This needs to keep running in the background for the bot to receive WhatsApp messages.
+  The bot lives at <code>http://127.0.0.1:18789</code> on your machine.
+</p>
+
+<h4>Step 5: Test It</h4>
+<p>
+  Open WhatsApp, go to your own chat (self-chat), and send:
+</p>
+<pre><code>What grants are in ScoutEd?</code></pre>
+<p>
+  The bot should reply with a formatted list of opportunities from the database.
+</p>
+
+<h3>The Bot's Identity</h3>
+<p>
+  The bot identifies itself as <strong>ScoutEd Bot</strong>. Its personality and behaviour are
+  defined in text files on your computer:
+</p>
+<ul>
+  <li><code>~/.openclaw/workspace/SOUL.md</code> &mdash; Who the bot is (ScoutEd Bot, India K-12 focus)</li>
+  <li><code>~/.openclaw/workspace/TOOLS.md</code> &mdash; What commands it responds to</li>
+  <li><code>~/.openclaw/workspace/skills/scouted-scout/SKILL.md</code> &mdash; Full search and extraction instructions</li>
+</ul>
+<p>
+  You can edit these files to change how the bot behaves. After editing, clear old sessions and
+  restart the gateway for changes to take effect.
+</p>
+
+<h3>How Much Does It Cost?</h3>
+<table>
+  <thead><tr><th>Component</th><th>Cost</th></tr></thead>
+  <tbody>
+    <tr><td>OpenClaw software</td><td>Free (self-hosted, open source)</td></tr>
+    <tr><td>Google Search (via Gemini)</td><td>Free tier</td></tr>
+    <tr><td>AI model (via OpenRouter)</td><td>~₹8&ndash;40 per search run</td></tr>
+    <tr><td>WhatsApp</td><td>Free (uses your existing account)</td></tr>
+    <tr><td>Supabase</td><td>No additional cost (same free tier)</td></tr>
+  </tbody>
+</table>
+
+<h3>Customising for Your Own Use Case</h3>
+<p>
+  If you're adapting ScoutEd for a different domain (see Chapter 15), you'll want to update the
+  bot's skill file too:
+</p>
+<ol>
+  <li>Edit <code>~/.openclaw/workspace/skills/scouted-scout/SKILL.md</code></li>
+  <li>Change the search queries to match your domain</li>
+  <li>Update the "allowed tags" list</li>
+  <li>Adjust the relevance filter (what to include/exclude)</li>
+  <li>Update <code>SOUL.md</code> with your bot's new identity</li>
+</ol>
+
+<!-- ── Chapter 18 ── -->
+<h2 id="ch18">18. Full Architecture Diagram</h2>
 
 <p>
   This diagram shows the complete system &mdash; every service, every connection, and how data flows
@@ -1854,11 +2028,30 @@ VITE_SUPABASE_ANON_KEY=<span class="string">paste_your_anon_key_here</span></cod
                     │  Users access via web browser
                     ▼
   ╔══════════════════════════════════════════════════════════════╗
+  ║   OPENCLAW  (WhatsApp AI Bot — on-demand discovery)         ║
+  ║                                                            ║
+  ║   ┌─────────────────────────────────────────────────────┐  ║
+  ║   │  SCOUTED BOT (WhatsApp)                             │  ║
+  ║   │                                                     │  ║
+  ║   │  "Show grants" → runs digest script → sends list    │  ║
+  ║   │  "Find grants" → web search → extract → upsert DB  │  ║
+  ║   │                                                     │  ║
+  ║   │  Uses: Gemini Search + OpenRouter LLM               │  ║
+  ║   └───────────────────────┬─────────────────────────────┘  ║
+  ║                           │                                ║
+  ║                           │ Reads from / writes to DB      ║
+  ║                           ▼                                ║
+  ║                      SUPABASE (same database as above)     ║
+  ║                                                            ║
+  ╚════════════════════════════════════════════════════════════╝
+
+  ╔══════════════════════════════════════════════════════════════╗
   ║   USERS                                                     ║
   ║                                                            ║
   ║   👤 Browse the dashboard, filter, search, bookmark        ║
   ║   📧 Receive daily digest in their inbox at 8:30 AM       ║
   ║   🔗 Click through to original grant pages                ║
+  ║   💬 Message the WhatsApp bot for on-demand discovery      ║
   ║                                                            ║
   ╚════════════════════════════════════════════════════════════╝
 </pre>
@@ -1866,7 +2059,7 @@ VITE_SUPABASE_ANON_KEY=<span class="string">paste_your_anon_key_here</span></cod
 
 <h3>Data Flow in One Sentence</h3>
 <p style="font-size: 16px; font-weight: 600; color: var(--csf-blue); text-align: center; padding: 20px 0;">
-  Websites &rarr; Scraper (filter + score) &rarr; Database &rarr; Dashboard + Email &rarr; User
+  Websites &rarr; Scraper (filter + score) &rarr; Database &rarr; Dashboard + Email + WhatsApp Bot &rarr; User
 </p>
 
 <hr>

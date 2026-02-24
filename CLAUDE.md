@@ -198,3 +198,89 @@ Note: Google Custom Search JSON API sunsets **1 Jan 2027**. The scraper graceful
 - **Give2Asia** — Asia-focused philanthropy grants
 - **data.gov.in** — Open government CSR expenditure datasets (Dataset 1612)
 - **csr.gov.in** — National CSR Portal (requires browser automation)
+
+## 13. OpenClaw Integration (AI-Powered Grant Discovery)
+
+### Overview
+OpenClaw is a self-hosted AI agent platform that adds on-demand, semantic grant discovery via WhatsApp. It complements the daily scraper (which uses fixed sources + rule-based parsing) by searching the entire web with LLM understanding. The existing scraper runs unchanged.
+
+### Architecture
+```
+User sends WhatsApp message → OpenClaw Gateway → AI Agent
+  → web_search (Gemini-powered Google Search)
+  → web_fetch (promising pages)
+  → LLM reasoning (filter for India K-12, extract structured data)
+  → exec: npx tsx openclaw-upsert.ts --file openclaw-results.json
+  → Results appear in ScoutEd dashboard
+  → Agent reports summary back to user on WhatsApp
+```
+
+### New Files
+| File | Purpose |
+|------|---------|
+| `scraper/openclaw-upsert.ts` | CLI script — reads JSON from OpenClaw, validates, deduplicates, scores via `calculateScore()`, upserts to Supabase |
+| `scraper/openclaw-digest.ts` | CLI script — queries Supabase for opportunities, outputs WhatsApp-formatted text |
+| `~/.openclaw/workspace/skills/scouted-scout/SKILL.md` | OpenClaw skill definition — search strategy, extraction rules, output format |
+| `~/.openclaw/workspace/SOUL.md` | Agent identity — configured as "ScoutEd Bot" |
+| `~/.openclaw/workspace/TOOLS.md` | Agent commands — digest and scout triggers |
+
+### OpenClaw Upsert Script (`scraper/openclaw-upsert.ts`)
+- Reads JSON from `--file <path>` or stdin
+- Validates each item (requires `title` + valid `source_url`)
+- Deduplicates by `source_url`
+- Scores using `calculateScore()` from `scoring.ts` (reuses existing code)
+- Upserts using `upsertOpportunities()` from `supabase.ts` (reuses existing code)
+- Loads `.env` via dynamic `import()` after `dotenv.config()` to handle ESM import hoisting
+
+### OpenClaw Digest Script (`scraper/openclaw-digest.ts`)
+- Queries Supabase `opportunities` table sorted by `relevance_score` DESC
+- Flags: `--days N` (default 2), `--limit N` (default 10), `--all`
+- Outputs WhatsApp-formatted text (bold headings, no tables)
+
+### OpenClaw Skill (`scouted-scout`)
+Two modes:
+1. **Scout** — Searches web for India K-12 education grants (8+ queries across 4 tiers), extracts structured JSON, upserts to DB
+2. **Digest** — Pulls existing opportunities from Supabase, sends formatted list
+
+**Strict filters:**
+- India only — every opportunity must mention India, an Indian state, or an Indian city
+- K-12 school education only — Classes 1-12, primary, secondary
+- Actionable funding only — grants, RFPs, EOIs, CSR commitments, government schemes
+- Max 30 items per scout run
+
+### WhatsApp Bot Commands
+| User Message | What Happens |
+|---|---|
+| "Find new education grants" | Agent searches web, discovers grants, upserts to DB |
+| "What grants are in ScoutEd?" | Agent runs digest script, sends formatted list |
+| "Show me recent grants" | Same as above |
+| `/scouted-scout` | Triggers full scout mode |
+
+### Environment & Setup
+| Component | Detail |
+|-----------|--------|
+| OpenClaw | `npm i -g openclaw`, then `openclaw onboard` |
+| Search provider | Gemini (free via Google AI Studio) — configured via `openclaw config set tools.web.search.provider gemini` |
+| LLM provider | OpenRouter (`openrouter/auto`) |
+| WhatsApp | Linked via `openclaw channels login` (uses WhatsApp Web, self-chat mode) |
+| Gateway | Must be running: `openclaw gateway` |
+
+### Cost Per Run
+| Component | Cost |
+|-----------|------|
+| OpenClaw | Free (self-hosted) |
+| Gemini Search | Free tier |
+| LLM (OpenRouter) | ~$0.10-0.50/run |
+| Supabase | No additional cost |
+
+### OpenClaw Workspace Files
+The agent's identity and behaviour are defined in `~/.openclaw/workspace/`:
+- **SOUL.md** — Identifies as "ScoutEd Bot", enforces India-only K-12 focus
+- **TOOLS.md** — Maps user messages to exec commands (digest/scout)
+- **IDENTITY.md** — Name, emoji, vibe
+- **skills/scouted-scout/SKILL.md** — Full skill definition with search queries, extraction rules, filters
+
+**Important:** After editing workspace files, you must:
+1. Clear sessions: delete entries from `~/.openclaw/agents/main/sessions/sessions.json`
+2. Restart gateway: kill the process, then `openclaw gateway`
+3. The next WhatsApp message will start a fresh session with updated files
