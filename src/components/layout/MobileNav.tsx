@@ -2,14 +2,16 @@ import {
   HomeIcon,
   BookmarkIcon,
   EnvelopeIcon,
+  BookOpenIcon,
 } from '@heroicons/react/24/outline'
 import {
   HomeIcon as HomeIconSolid,
   BookmarkIcon as BookmarkIconSolid,
   EnvelopeIcon as EnvelopeIconSolid,
+  BookOpenIcon as BookOpenIconSolid,
 } from '@heroicons/react/24/solid'
 
-export type Tab = 'dashboard' | 'bookmarks' | 'subscribe'
+export type Tab = 'dashboard' | 'bookmarks' | 'subscribe' | 'guide'
 
 interface MobileNavProps {
   activeTab: Tab
@@ -20,6 +22,7 @@ const tabs: { id: Tab; label: string; icon: typeof HomeIcon; activeIcon: typeof 
   { id: 'dashboard', label: 'Dashboard', icon: HomeIcon, activeIcon: HomeIconSolid },
   { id: 'bookmarks', label: 'Bookmarks', icon: BookmarkIcon, activeIcon: BookmarkIconSolid },
   { id: 'subscribe', label: 'Subscribe', icon: EnvelopeIcon, activeIcon: EnvelopeIconSolid },
+  { id: 'guide', label: 'Guide', icon: BookOpenIcon, activeIcon: BookOpenIconSolid },
 ]
 
 export function MobileNav({ activeTab, onTabChange }: MobileNavProps) {

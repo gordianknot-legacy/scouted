@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FunnelIcon } from '@heroicons/react/24/outline'
+import { FunnelIcon, BookOpenIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Header } from './components/layout/Header'
 import { MobileNav, type Tab } from './components/layout/MobileNav'
 import { OpportunityCard } from './components/cards/OpportunityCard'
@@ -112,6 +112,32 @@ export default function App() {
       )
     }
 
+    if (activeTab === 'guide') {
+      return (
+        <div className="animate-fade-in">
+          <div className="flex items-center gap-3 mb-4">
+            <button
+              onClick={() => setActiveTab('dashboard')}
+              className="p-2 rounded-xl hover:bg-gray-200/60 transition-colors"
+              aria-label="Back to dashboard"
+            >
+              <ArrowLeftIcon className="w-5 h-5 text-gray-600" />
+            </button>
+            <h2 className="font-heading text-xl font-bold text-gray-900">
+              Creator's Guide
+            </h2>
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
+            <iframe
+              src="/ScoutEd_Creator_Guide.pdf"
+              title="ScoutEd Creator's Guide"
+              className="w-full h-full border-0"
+            />
+          </div>
+        </div>
+      )
+    }
+
     // Dashboard (default)
     return (
       <div className="animate-fade-in">
@@ -218,6 +244,18 @@ export default function App() {
                   <FilterSidebar filters={filters} onChange={setFilters} />
                 </div>
                 <EmailSubscribe />
+                <button
+                  onClick={() => setActiveTab('guide')}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-csf-blue/20 hover:shadow-md transition-all group"
+                >
+                  <div className="w-9 h-9 bg-csf-yellow/20 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-yellow/30 transition-colors">
+                    <BookOpenIcon className="w-5 h-5 text-csf-blue" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-heading text-sm font-bold text-gray-900">Creator's Guide</p>
+                    <p className="font-body text-[11px] text-gray-400">How ScoutEd works</p>
+                  </div>
+                </button>
               </div>
             </aside>
           )}
