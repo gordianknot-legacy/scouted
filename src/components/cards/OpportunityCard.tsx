@@ -6,6 +6,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 import { Badge } from '../ui/Badge'
+import { DownloadDropdown } from '../ui/DownloadDropdown'
 import { RelevanceScore } from '../ui/RelevanceScore'
 import { applyDecay } from '../../lib/scoring'
 import type { Opportunity } from '../../types'
@@ -126,6 +127,7 @@ export function OpportunityCard({
           >
             <EyeSlashIcon className="w-4.5 h-4.5 text-gray-400" />
           </button>
+          <DownloadDropdown opportunity={opportunity} size="sm" />
         </div>
 
         <a

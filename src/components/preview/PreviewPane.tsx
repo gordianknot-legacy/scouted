@@ -12,6 +12,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 import { Badge } from '../ui/Badge'
+import { DownloadDropdown } from '../ui/DownloadDropdown'
 import { RelevanceScore } from '../ui/RelevanceScore'
 import { applyDecay } from '../../lib/scoring'
 import type { Opportunity } from '../../types'
@@ -313,6 +314,7 @@ function ActionFooter({ opportunity, isBookmarked, onToggleBookmark, onHide }: {
         >
           <EyeSlashIcon className="w-5 h-5 text-gray-400" />
         </button>
+        <DownloadDropdown opportunity={opportunity} size="md" />
       </div>
       <a
         href={opportunity.source_url}
