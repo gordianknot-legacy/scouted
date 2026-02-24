@@ -18,8 +18,8 @@ import { config } from 'dotenv'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 config({ path: resolve(__dirname, '..', '.env') })
 
-import { calculateScore, type RawOpportunity } from './scoring.js'
-import { upsertOpportunities, type DbOpportunity } from './supabase.js'
+import type { RawOpportunity } from './scoring.js'
+import type { DbOpportunity } from './supabase.js'
 
 interface OpenClawItem {
   title?: string
@@ -128,14 +128,16 @@ async function main() {
   const unique = dedup(valid)
   console.log(`After dedup: ${unique.length} items`)
 
-  // 4. Score
+  // 4. Score (dynamic import so dotenv loads first)
+  const { calculateScore } = await import('./scoring.js')
   const scored: DbOpportunity[] = unique.map(opp => {
     const score = calculateScore(opp)
     console.log(`  [${String(score).padStart(3)}] ${opp.title.slice(0, 70)}`)
     return { ...opp, relevance_score: score }
   })
 
-  // 5. Upsert to Supabase
+  // 5. Upsert to Supabase (dynamic import so dotenv loads first)
+  const { upsertOpportunities } = await import('./supabase.js')
   console.log(`\nUpserting ${scored.length} opportunities...`)
   const count = await upsertOpportunities(scored)
   console.log(`Upserted: ${count} rows`)
