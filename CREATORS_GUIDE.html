@@ -1915,16 +1915,36 @@ openclaw config set tools.web.search.gemini.apiKey YOUR_KEY_HERE</code></pre>
 </p>
 
 <h3>How Much Does It Cost?</h3>
+
+<p>
+  <strong>Viewing grants is completely free.</strong> When you ask "What grants are in ScoutEd?" or
+  "Show me recent grants", the bot simply reads from your existing database and sends the results.
+  No AI model is involved &mdash; zero cost.
+</p>
+
+<p>
+  <strong>Discovering new grants has a small cost.</strong> When you ask "Find new education grants",
+  the bot uses an AI model (via OpenRouter) to search the web, read pages, and understand them.
+  This costs roughly <strong>&#8377;8&ndash;40 per run</strong> depending on how many pages it reads.
+  Even if you ran it every single day, that would be approximately &#8377;250&ndash;1,200 per month.
+</p>
+
 <table>
-  <thead><tr><th>Component</th><th>Cost</th></tr></thead>
+  <thead><tr><th>Action</th><th>Cost</th><th>Why</th></tr></thead>
   <tbody>
-    <tr><td>OpenClaw software</td><td>Free (self-hosted, open source)</td></tr>
-    <tr><td>Google Search (via Gemini)</td><td>Free tier</td></tr>
-    <tr><td>AI model (via OpenRouter)</td><td>~₹8&ndash;40 per search run</td></tr>
-    <tr><td>WhatsApp</td><td>Free (uses your existing account)</td></tr>
-    <tr><td>Supabase</td><td>No additional cost (same free tier)</td></tr>
+    <tr><td><strong>"Show me grants"</strong> (view existing)</td><td>Free</td><td>Just reads from database &mdash; no AI needed</td></tr>
+    <tr><td><strong>"Find new grants"</strong> (web discovery)</td><td>~&#8377;8&ndash;40 per run</td><td>AI model searches and reads web pages</td></tr>
+    <tr><td>OpenClaw software</td><td>Free</td><td>Self-hosted, open source</td></tr>
+    <tr><td>Google Search (via Gemini)</td><td>Free</td><td>Google AI Studio free tier</td></tr>
+    <tr><td>WhatsApp</td><td>Free</td><td>Uses your existing account</td></tr>
+    <tr><td>Supabase</td><td>Free</td><td>Same free tier as the dashboard</td></tr>
   </tbody>
 </table>
+
+<p>
+  You can check your OpenRouter balance at
+  <a href="https://openrouter.ai/settings/credits" target="_blank">openrouter.ai/settings/credits</a>.
+</p>
 
 <h3>Customising for Your Own Use Case</h3>
 <p>

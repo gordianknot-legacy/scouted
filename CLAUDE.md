@@ -266,11 +266,15 @@ Two modes:
 | Gateway | Must be running: `openclaw gateway` |
 
 ### Cost Per Run
+**Digest mode** ("Show me grants") is **free** — it only reads from the database, no LLM involved.
+**Scout mode** ("Find new grants") has a small LLM cost via OpenRouter.
+
 | Component | Cost |
 |-----------|------|
+| Digest (view existing grants) | Free |
+| Scout (web discovery) | ~₹8-40 per run (~$0.10-0.50) |
 | OpenClaw | Free (self-hosted) |
 | Gemini Search | Free tier |
-| LLM (OpenRouter) | ~$0.10-0.50/run |
 | Supabase | No additional cost |
 
 ### OpenClaw Workspace Files
