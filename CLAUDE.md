@@ -266,16 +266,17 @@ Two modes:
 | Gateway | Must be running: `openclaw gateway` |
 
 ### Cost Per Run
-**Digest mode** ("Show me grants") is **free** — it only reads from the database, no LLM involved.
-**Scout mode** ("Find new grants") has a small LLM cost via OpenRouter.
+**Both modes are completely free.** The default model is `openrouter/free`, which automatically routes to free LLMs with tool-calling support (e.g. GPT-OSS-20B, Gemma 3, Trinity Mini).
 
 | Component | Cost |
 |-----------|------|
 | Digest (view existing grants) | Free |
-| Scout (web discovery) | ~₹8-40 per run (~$0.10-0.50) |
+| Scout (web discovery) | Free (`openrouter/free` router) |
 | OpenClaw | Free (self-hosted) |
 | Gemini Search | Free tier |
 | Supabase | No additional cost |
+
+To switch to a paid model for better quality: `openclaw models set openrouter/auto`
 
 ### OpenClaw Workspace Files
 The agent's identity and behaviour are defined in `~/.openclaw/workspace/`:
