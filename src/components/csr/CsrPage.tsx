@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react'
-import { ArrowLeftIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { ArrowLeftIcon, MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/outline'
+import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { useCsrData } from '../../hooks/useCsrData'
-import { CsrSummaryCards } from './CsrSummaryCards'
-import { CsrTable } from './CsrTable'
-import { CsrSpendBar } from './CsrSpendBar'
+import { useCsrShortlist } from '../../hooks/useCsrShortlist'
+import { CsrCompanyTable } from './CsrCompanyTable'
 import { formatINR } from '../../lib/formatters'
 
 interface CsrPageProps {
@@ -12,35 +12,90 @@ interface CsrPageProps {
 
 const FISCAL_YEARS = ['2023-24']
 
+const EDU_SPEND_THRESHOLDS = [
+  { label: 'All', value: 0 },
+  { label: '₹10 Cr+', value: 10_00_00_000 },
+  { label: '₹50 Cr+', value: 50_00_00_000 },
+  { label: '₹100 Cr+', value: 100_00_00_000 },
+]
+
 export function CsrPage({ onBack }: CsrPageProps) {
   const [fiscalYear, setFiscalYear] = useState('2023-24')
   const [search, setSearch] = useState('')
+  const [minEduSpend, setMinEduSpend] = useState(0)
+  const [showShortlistedOnly, setShowShortlistedOnly] = useState(false)
+  const [page, setPage] = useState(0)
 
   const { data: records = [], isLoading, error } = useCsrData(fiscalYear)
+  const shortlist = useCsrShortlist()
 
-  const filtered = useMemo(() => {
-    if (!search.trim()) return records
-    const q = search.toLowerCase()
-    return records.filter(r => r.company.toLowerCase().includes(q))
-  }, [records, search])
+  // Aggregate records into company-level summaries
+  const companies = useMemo(() => {
+    const map = new Map<string, {
+      company: string
+      cin: string
+      totalSpend: number
+      eduSpend: number
+      eduProjects: { field: string; spend: number }[]
+    }>()
 
-  // Get unique companies with their total education spend for the bar chart
-  const companyBreakdowns = useMemo(() => {
-    const map = new Map<string, { company: string; eduSpend: number; totalSpend: number }>()
     for (const r of records) {
-      const existing = map.get(r.company) || { company: r.company, eduSpend: 0, totalSpend: 0 }
+      const existing = map.get(r.cin) || {
+        company: r.company,
+        cin: r.cin,
+        totalSpend: 0,
+        eduSpend: 0,
+        eduProjects: [],
+      }
       const amount = Number(r.spend_inr)
       existing.totalSpend += amount
-      if (r.field.toLowerCase() !== 'other') {
+      if (r.field.toLowerCase().startsWith('education')) {
         existing.eduSpend += amount
+        existing.eduProjects.push({ field: r.field, spend: amount })
       }
-      map.set(r.company, existing)
+      map.set(r.cin, existing)
     }
+
+    // Sort edu projects by spend desc within each company
+    for (const c of map.values()) {
+      c.eduProjects.sort((a, b) => b.spend - a.spend)
+    }
+
     return [...map.values()]
-      .filter(c => c.totalSpend > 0)
-      .sort((a, b) => b.eduSpend - a.eduSpend)
-      .slice(0, 10)
   }, [records])
+
+  // Stats
+  const companiesWithEdu = companies.filter(c => c.eduSpend > 0).length
+  const totalEduSpend = companies.reduce((sum, c) => sum + c.eduSpend, 0)
+
+  // Filter
+  const filtered = useMemo(() => {
+    let result = companies
+
+    // Search
+    if (search.trim()) {
+      const q = search.toLowerCase()
+      result = result.filter(c => c.company.toLowerCase().includes(q))
+    }
+
+    // Min education spend
+    if (minEduSpend > 0) {
+      result = result.filter(c => c.eduSpend >= minEduSpend)
+    }
+
+    // Shortlisted only
+    if (showShortlistedOnly) {
+      result = result.filter(c => shortlist.isShortlisted(c.cin))
+    }
+
+    return result
+  }, [companies, search, minEduSpend, showShortlistedOnly, shortlist])
+
+  // Reset page when filters change
+  const updateFilter = (fn: () => void) => {
+    fn()
+    setPage(0)
+  }
 
   return (
     <div className="animate-fade-in">
@@ -55,10 +110,10 @@ export function CsrPage({ onBack }: CsrPageProps) {
         </button>
         <div className="flex-1 min-w-0">
           <h2 className="font-heading text-xl font-bold text-gray-900">
-            CSR Spending Data
+            CSR Partnership Prospects
           </h2>
           <p className="font-body text-xs text-gray-400 mt-0.5">
-            Company-wise CSR expenditure from MCA portal
+            Identify companies for education CSR outreach &middot; FY {fiscalYear}
           </p>
         </div>
         <select
@@ -104,63 +159,96 @@ export function CsrPage({ onBack }: CsrPageProps) {
 
       {/* Data loaded */}
       {!isLoading && !error && records.length > 0 && (
-        <div className="space-y-6">
-          {/* Summary cards */}
-          <CsrSummaryCards data={records} />
-
-          {/* Top 10 education spenders bar chart */}
-          {companyBreakdowns.length > 0 && (
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-              <h3 className="font-heading text-sm font-bold text-gray-900 mb-4">
-                Top Education Spenders (Education vs Other)
-              </h3>
-              <div className="space-y-3">
-                {companyBreakdowns.map(c => (
-                  <div key={c.company}>
-                    <div className="flex items-center justify-between mb-1">
-                      <p className="font-heading text-xs font-medium text-gray-700 truncate max-w-[60%]">
-                        {c.company}
-                      </p>
-                      <p className="font-heading text-xs text-csf-blue font-semibold">
-                        {formatINR(c.eduSpend)}
-                      </p>
-                    </div>
-                    <CsrSpendBar records={records} company={c.company} />
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-gray-100">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-sm bg-csf-yellow" />
-                  <span className="font-body text-[11px] text-gray-500">Education</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-sm bg-csf-blue/20" />
-                  <span className="font-body text-[11px] text-gray-500">Other CSR</span>
-                </div>
+        <div className="space-y-5">
+          {/* Stats bar */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
+              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+                Companies with Edu CSR
+              </p>
+              <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
+                {companiesWithEdu}
+                <span className="text-sm font-normal text-gray-400 ml-1">/ {companies.length}</span>
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl border border-csf-yellow shadow-sm px-4 py-3">
+              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+                Total Education CSR
+              </p>
+              <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
+                {formatINR(totalEduSpend)}
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
+              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+                Shortlisted
+              </p>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <StarIconSolid className="w-5 h-5 text-csf-yellow" />
+                <p className="font-heading text-xl font-bold text-csf-blue">
+                  {shortlist.count}
+                </p>
               </div>
             </div>
-          )}
-
-          {/* Search */}
-          <div className="relative">
-            <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search by company name..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl font-body text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-csf-blue/20 focus:border-csf-blue/30 transition-all"
-            />
           </div>
 
-          {/* Results count */}
-          <p className="text-xs font-heading text-gray-400 uppercase tracking-wider">
-            {filtered.length} {filtered.length === 1 ? 'record' : 'records'} found
-          </p>
+          {/* Filters */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            {/* Search */}
+            <div className="relative flex-1">
+              <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search company..."
+                value={search}
+                onChange={e => updateFilter(() => setSearch(e.target.value))}
+                className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl font-body text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-csf-blue/20 focus:border-csf-blue/30 transition-all"
+              />
+            </div>
 
-          {/* Table */}
-          <CsrTable data={filtered} />
+            {/* Min edu spend chips */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {EDU_SPEND_THRESHOLDS.map(t => (
+                <button
+                  key={t.value}
+                  onClick={() => updateFilter(() => setMinEduSpend(t.value))}
+                  className={`px-3 py-1.5 rounded-lg font-heading text-xs font-medium transition-all ${
+                    minEduSpend === t.value
+                      ? 'bg-csf-blue text-white shadow-sm'
+                      : 'bg-white border border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Shortlisted toggle */}
+            <button
+              onClick={() => updateFilter(() => setShowShortlistedOnly(!showShortlistedOnly))}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-heading text-xs font-medium transition-all shrink-0 ${
+                showShortlistedOnly
+                  ? 'bg-csf-yellow text-gray-900 shadow-sm'
+                  : 'bg-white border border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700'
+              }`}
+            >
+              {showShortlistedOnly ? (
+                <StarIconSolid className="w-3.5 h-3.5" />
+              ) : (
+                <StarIcon className="w-3.5 h-3.5" />
+              )}
+              Shortlisted
+            </button>
+          </div>
+
+          {/* Company table */}
+          <CsrCompanyTable
+            companies={filtered}
+            shortlist={shortlist}
+            page={page}
+            pageSize={15}
+            onPageChange={setPage}
+          />
         </div>
       )}
     </div>

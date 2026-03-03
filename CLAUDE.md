@@ -171,6 +171,7 @@ The `KNOWN_EDUCATION_FUNDERS` array contains ~80 organisations including:
 | `GOOGLE_CSE_API_KEY` | No | Google Custom Search API key (100 free queries/day) |
 | `GOOGLE_CSE_ID` | No | Programmable Search Engine ID (50-domain limit) |
 | `RESEND_API_KEY` | Yes (digest) | Resend email API key |
+| `OPENROUTER_API_KEY` | No (CSR fallback) | OpenRouter API key — only needed if MCA API returns 403 and CAPTCHA fallback triggers |
 
 Note: Google Custom Search JSON API sunsets **1 Jan 2027**. The scraper gracefully skips if env vars are not set.
 
@@ -289,3 +290,70 @@ The agent's identity and behaviour are defined in `~/.openclaw/workspace/`:
 1. Clear sessions: delete entries from `~/.openclaw/agents/main/sessions/sessions.json`
 2. Restart gateway: kill the process, then `openclaw gateway`
 3. The next WhatsApp message will start a fresh session with updated files
+
+## 14. CSR Spending Data Pipeline
+
+### Overview
+The CSR Data page (`/csr-data`) shows company-wise Corporate Social Responsibility spending from MCA filings. Data is stored in the `csr_spending` Supabase table with columns: `company`, `cin`, `field`, `spend_inr`, `fiscal_year`.
+
+### Data Source: MCA Portal via Live Search (Primary)
+The scraper uses Playwright with persistent browser context. It exploits the MCA portal's **live search** feature: typing >= 3 characters triggers a keyup-driven AJAX call that populates the company table — **no CAPTCHA needed**. Multiple search prefixes are used to maximise company coverage, with CIN deduplication. Then fetches the CSR detail API for each unique CIN via `page.evaluate(fetch())`.
+
+### Pipeline
+1. `cd scraper && node csr-scraper.js` — opens browser, harvests CINs via live search, calls API for each
+2. `npx tsx csr-upsert.ts --file csr_report_23_24.json --fy 2023-24` — upserts to Supabase
+3. Supports `--resume` (reuse saved CINs + progress) and `--prefixes lim,ind,tat` (custom prefix list)
+4. If API returns 403, falls back to CAPTCHA solving via OpenRouter vision model (needs `OPENROUTER_API_KEY`)
+
+### Alternative Data Source: Dataful.in
+If MCA scraping fails, Dataful.in has pre-compiled CSR datasets:
+- **Dataset 1614**: Company + CIN + total amount. No sector breakdown. Reported as free but may require payment.
+- **Dataset 1612** (₹999): Full detail with sector, project, state, district. — upserts to Supabase
+
+### Upsert Script (`scraper/csr-upsert.ts`)
+- Reads JSON array of `{ Company, CIN, Field, Spend_INR }`
+- Validates (requires Company + CIN + Field), deduplicates by `cin|field|fiscal_year`
+- Upserts in batches of 50 to Supabase `csr_spending` table
+- Conflict resolution on `(cin, field, fiscal_year)` composite key
+
+### MCA Portal Research (Feb 2026) — Why Direct Scraping Failed
+The MCA portal at `mca.gov.in/content/csr/global/master/home/ExploreCsrData/company-wise.html`:
+- **Akamai CDN** blocks all direct HTTP requests (403)
+- **CAPTCHA** required for every search; uses AES-GCM encryption (hardcoded passphrase: `d6163f0659cfe4196dc03c2c29aab06f10cb0a79cdfc74a45da2d72358712e80`)
+- **Company name is mandatory** — blank search rejected with "Kindly enter company Name to proceed"
+- **Each company click** triggers `companyNameClickHandler()` which regenerates the CAPTCHA — NOT a one-captcha-for-all flow
+- The actual data API is at: `/content/csr/global/master/home/home/csr-expenditure--geographical-distribution/state/district/company.companyReportAPI.html?cin={CIN}&fy=FY%202023-24`
+- Response shape: `{ cmpny_csr_detail: { data: { cmpny_csr_detail_data: [...] } } }`
+- Each record has: `cin`, `amnt_spent`, `sector`, `csr_prjct`, `state`, `district`, `fncl_yr`, `mode`, `outlay`
+- JS files: `clientlib-all.min.js` (main), `clientlibs-gcmencrypt.min.js` (crypto), `companyWiseDynamicReport/clientlibs.min.js` (business logic)
+
+### Other Sources Investigated and Ruled Out
+| Source | Status | Why |
+|--------|--------|-----|
+| **csrxchange.gov.in** | Not viable | Project marketplace only, no company-wise spending data. Has public JSON API at `/Frontend/home_project_list` for CSR projects but no spending amounts in list view |
+| **data.gov.in** | Not viable | CSR dataset pages exist but NO working APIs. MCA explicitly refuses to publish CSR data on OGD platform. Datasets stop at 2020-21 |
+| **csr.gov.in** | Same as MCA | Same portal different URL, same Akamai + CAPTCHA protection |
+| **mcacdm.nic.in** | Untested | MCA CDM portal, SSL certificate issues. May have downloadable CSR analytics |
+| **GitHub scrapers** | All abandoned | 6+ repos (spfrantz/MCA-CSR-Scraper, sushantMoon/Captcha-Solver, etc.), all target old V2 portal, none work with current V3 |
+| **Commercial APIs** | No CSR data | SurePass, Sandbox, CompData.in — all offer CIN/DIN lookup only, none expose CSR spending |
+| **Kaggle** | Nothing | No India CSR spending dataset exists |
+
+### Scraper Implementation Details (`scraper/csr-scraper.js`)
+- Uses `chromium.launchPersistentContext()` at `./mca-browser-profile/` for session persistence
+- **Live search harvesting**: types 20 strategic prefixes (e.g. `lim`, `ind`, `pri`, `cor`, `tat`, `rel`) via `pressSequentially()` to trigger keyup → AJAX
+- Waits for table to stabilise (4+ seconds of no row count change), clicks `#show_all` for full results
+- Extracts `{ name, cin }` from `#myTable #geoTBody tr` (data-company, data-cin attributes)
+- Deduplicates by CIN across all prefix searches
+- `page.evaluate(fetch(API_PATH + '?cin=X&fy=FY 2023-24'))` for each CIN — stays within Akamai session
+- 800ms delay between API calls; saves progress every 25 companies
+- Stops after 10 consecutive errors (session likely expired)
+- **CAPTCHA fallback**: if API returns 403, uses OpenRouter vision model (`google/gemini-2.0-flash-001`) to read CAPTCHA from screenshot — no 2Captcha dependency
+- `--resume` flag: skips live search, loads `csr_companies.json`, continues API calls from progress file
+- `--prefixes` flag: override default prefix list (e.g. `--prefixes lim,tat,rel`)
+
+### Search Prefixes (Default)
+```
+lim, ind, pri, cor, ent, pow, ste, ban, pha, ene,
+oil, inf, tat, rel, fin, ins, tec, cem, aut, che
+```
+These 20 prefixes are designed to cover virtually all CSR-filing companies in India. Each triggers the MCA portal's live search AJAX, and results are deduplicated by CIN.
