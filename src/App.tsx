@@ -10,6 +10,9 @@ import { EmailSubscribe } from './components/subscription/EmailSubscribe'
 import { PreviewPane } from './components/preview/PreviewPane'
 import { CsrPage } from './components/csr/CsrPage'
 import { SearchBar } from './components/ui/SearchBar'
+import { LoginPage } from './components/auth/LoginPage'
+import { AuthLoadingScreen } from './components/auth/AuthLoadingScreen'
+import { useAuth } from './contexts/AuthContext'
 import { useOpportunities } from './hooks/useOpportunities'
 import { useBookmarks } from './hooks/useBookmarks'
 import { useOnboarding } from './hooks/useOnboarding'
@@ -24,6 +27,9 @@ const defaultFilters: Filters = {
 }
 
 export default function App() {
+  const { user, loading } = useAuth()
+  if (loading) return <AuthLoadingScreen />
+  if (!user) return <LoginPage />
   const [activeTab, setActiveTab] = useState<Tab>('dashboard')
   const [filters, setFilters] = useState<Filters>(defaultFilters)
   const [showMobileFilters, setShowMobileFilters] = useState(false)

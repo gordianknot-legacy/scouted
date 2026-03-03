@@ -178,7 +178,7 @@ Note: Google Custom Search JSON API sunsets **1 Jan 2027**. The scraper graceful
 ## 10. Security: RLS Policy Rationale
 - **opportunities**: anon can `SELECT` only. No `INSERT`/`UPDATE` for anon. Scraper uses `service_role` key which bypasses RLS.
 - **subscribers**: anon can `INSERT` only (to subscribe). No `SELECT` for anon (prevents email harvesting). `service_role` reads for digest.
-- **user_actions**: open `USING(true)` — TODO: lock to `auth.uid()` when Supabase Auth is added. Currently uses localStorage `user_id`.
+- **user_actions**: open `USING(true)` — uses localStorage `user_id`. Auth is now handled at the app level via Supabase Auth + Google OAuth (see Section 15).
 
 ## 11. Email Compliance: Unsubscribe Mechanism
 - Each subscriber gets a unique `unsubscribe_token` (UUID) on creation
@@ -357,3 +357,34 @@ lim, ind, pri, cor, ent, pow, ste, ban, pha, ene,
 oil, inf, tat, rel, fin, ins, tec, cem, aut, che
 ```
 These 20 prefixes are designed to cover virtually all CSR-filing companies in India. Each triggers the MCA portal's live search AJAX, and results are deduplicated by CIN.
+
+## 15. Authentication (Google OAuth)
+
+### Provider
+Supabase Auth with Google OAuth (PKCE flow). No new packages — uses the auth module built into `@supabase/supabase-js`.
+
+### Domain Restriction
+Only `@centralsquarefoundation.org` Google accounts can access the app.
+- **Google `hd` hint**: `signInWithOAuth` passes `hd: 'centralsquarefoundation.org'` so Google pre-selects the CSF account
+- **Client-side enforcement**: After every sign-in, `AuthContext` checks `user.email?.endsWith('@centralsquarefoundation.org')` — mismatch triggers immediate `signOut()` with error message
+
+### Key Files
+| File | Purpose |
+|------|---------|
+| `src/contexts/AuthContext.tsx` | `AuthProvider` + `useAuth()` hook — manages session, domain validation, sign-in/out |
+| `src/components/auth/LoginPage.tsx` | Full-screen branded login page with "Sign in with Google" button |
+| `src/components/auth/AuthLoadingScreen.tsx` | Branded spinner shown during initial session check |
+
+### Auth Flow
+1. User visits site → `AuthProvider` calls `getSession()` (also handles PKCE code exchange from OAuth redirect)
+2. No session → `LoginPage` shown
+3. Click "Sign in with Google" → `supabase.auth.signInWithOAuth({ provider: 'google' })` → redirect to Google → Supabase callback → app with `?code=...`
+4. Supabase JS auto-exchanges code for session → `onAuthStateChange` fires `SIGNED_IN`
+5. Domain check: `@centralsquarefoundation.org` → dashboard; other → `signOut()` → error on `LoginPage`
+
+### Session Persistence
+Supabase stores auth tokens in `localStorage` automatically. Refresh does not require re-login. Token refresh is handled by `onAuthStateChange`.
+
+### Manual Setup Required
+1. **Google Cloud Console**: Create OAuth 2.0 Client ID with redirect URI `https://<supabase-project>.supabase.co/auth/v1/callback`
+2. **Supabase Dashboard**: Authentication → Providers → Enable Google, paste Client ID + Secret; set Site URL and Redirect URLs
