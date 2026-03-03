@@ -37,6 +37,8 @@ export function CsrPage({ onBack }: CsrPageProps) {
       totalSpend: number
       eduSpend: number
       eduProjects: { field: string; spend: number }[]
+      vocSpend: number
+      vocProjects: { field: string; spend: number }[]
     }>()
 
     for (const r of records) {
@@ -46,27 +48,34 @@ export function CsrPage({ onBack }: CsrPageProps) {
         totalSpend: 0,
         eduSpend: 0,
         eduProjects: [],
+        vocSpend: 0,
+        vocProjects: [],
       }
       const amount = Number(r.spend_inr)
       existing.totalSpend += amount
       if (r.field.toLowerCase().startsWith('education')) {
         existing.eduSpend += amount
         existing.eduProjects.push({ field: r.field, spend: amount })
+      } else if (r.field.toLowerCase().startsWith('vocational')) {
+        existing.vocSpend += amount
+        existing.vocProjects.push({ field: r.field, spend: amount })
       }
       map.set(r.cin, existing)
     }
 
-    // Sort edu projects by spend desc within each company
+    // Sort projects by spend desc within each company
     for (const c of map.values()) {
       c.eduProjects.sort((a, b) => b.spend - a.spend)
+      c.vocProjects.sort((a, b) => b.spend - a.spend)
     }
 
     return [...map.values()]
   }, [records])
 
   // Stats
-  const companiesWithEdu = companies.filter(c => c.eduSpend > 0).length
+  const companiesWithEdu = companies.filter(c => c.eduSpend > 0 || c.vocSpend > 0).length
   const totalEduSpend = companies.reduce((sum, c) => sum + c.eduSpend, 0)
+  const totalVocSpend = companies.reduce((sum, c) => sum + c.vocSpend, 0)
 
   // Filter
   const filtered = useMemo(() => {
@@ -161,10 +170,10 @@ export function CsrPage({ onBack }: CsrPageProps) {
       {!isLoading && !error && records.length > 0 && (
         <div className="space-y-5">
           {/* Stats bar */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-4 gap-3">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
               <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
-                Companies with Edu CSR
+                Companies with Edu/Voc CSR
               </p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
                 {companiesWithEdu}
@@ -173,10 +182,18 @@ export function CsrPage({ onBack }: CsrPageProps) {
             </div>
             <div className="bg-white rounded-2xl border border-csf-yellow shadow-sm px-4 py-3">
               <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
-                Total Education CSR
+                Education CSR
               </p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
                 {formatINR(totalEduSpend)}
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
+              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+                Vocational Skills CSR
+              </p>
+              <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
+                {formatINR(totalVocSpend)}
               </p>
             </div>
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">

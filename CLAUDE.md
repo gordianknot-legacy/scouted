@@ -107,6 +107,8 @@ The project is ready when:
 
 ## 9. Scraper Architecture
 
+> **Data flow diagrams** for all three scraper pipelines (Opportunity, CSR, OpenClaw) are in [`scraper/DATA_FLOW.md`](scraper/DATA_FLOW.md).
+
 ### Shared Utilities (`scraper/parsers/utils.ts`)
 All parsers share canonical implementations of:
 - `stripTags()` — HTML to plain text
@@ -197,8 +199,8 @@ Note: Google Custom Search JSON API sunsets **1 Jan 2027**. The scraper graceful
 - **NITI Aayog** — Government of India policy think tank
 - **MyGov.in** — Government citizen engagement platform
 - **Give2Asia** — Asia-focused philanthropy grants
-- **data.gov.in** — Open government CSR expenditure datasets (Dataset 1612)
-- **csr.gov.in** — National CSR Portal (requires browser automation)
+- ~~**data.gov.in**~~ — Investigated and ruled out: no working CSR APIs, datasets stop at 2020-21 (see Section 14 "Other Sources Investigated")
+- ~~**csr.gov.in**~~ — Investigated and ruled out: same MCA portal with Akamai + CAPTCHA (see Section 14)
 
 ## 13. OpenClaw Integration (AI-Powered Grant Discovery)
 
@@ -310,11 +312,23 @@ If MCA scraping fails, Dataful.in has pre-compiled CSR datasets:
 - **Dataset 1614**: Company + CIN + total amount. No sector breakdown. Reported as free but may require payment.
 - **Dataset 1612** (₹999): Full detail with sector, project, state, district. — upserts to Supabase
 
+### Sector Classification in `transformAndSave()` (`csr-scraper.js`)
+The MCA API returns a `sector` field per record. The scraper classifies into three categories:
+- `sector.includes('education')` → `"Education: <csr_prjct>"` — core education projects
+- `sector.includes('vocational')` → `"Vocational Skills: <csr_prjct>"` — vocational/skills training
+- Everything else → summed into one `"Other CSR Fields (Cumulative)"` row per company
+
+**Important:** MCA's "Education" and "Vocational Skills" are distinct Schedule VII sectors. They must NOT be merged — the frontend displays and filters them separately. The `--rank` mode also tracks `education_spend` and `vocational_spend` as separate fields in `csr_top500.json`.
+
+### MCA API Geographic Granularity
+The API endpoint (`companyReportAPI.html`) returns data at **state/district** level. A single project (e.g., "Skill Training For Youth") running in 11 states yields 11 separate records with different `amnt_spent` values. These are **additive** — each represents actual spend in that geography. Some records also use `state: "Pan India"` for nationally-scoped spend.
+
 ### Upsert Script (`scraper/csr-upsert.ts`)
 - Reads JSON array of `{ Company, CIN, Field, Spend_INR }`
-- Validates (requires Company + CIN + Field), deduplicates by `cin|field|fiscal_year`
+- Validates (requires Company + CIN + Field)
+- **Deduplicates by `cin|field|fiscal_year` — SUMS amounts** for duplicate keys (not discards). This is critical because the MCA API returns per-state/district rows that share the same project name but have different spend amounts. Summing gives the correct total per project.
 - Upserts in batches of 50 to Supabase `csr_spending` table
-- Conflict resolution on `(cin, field, fiscal_year)` composite key
+- Conflict resolution on `(cin, field, fiscal_year)` composite key — `ignoreDuplicates: false` ensures re-runs update existing rows with corrected totals
 
 ### MCA Portal Research (Feb 2026) — Why Direct Scraping Failed
 The MCA portal at `mca.gov.in/content/csr/global/master/home/ExploreCsrData/company-wise.html`:
@@ -347,9 +361,11 @@ The MCA portal at `mca.gov.in/content/csr/global/master/home/ExploreCsrData/comp
 - `page.evaluate(fetch(API_PATH + '?cin=X&fy=FY 2023-24'))` for each CIN — stays within Akamai session
 - 800ms delay between API calls; saves progress every 25 companies
 - Stops after 10 consecutive errors (session likely expired)
+- **`transformAndSave()`**: Classifies MCA `sector` into Education / Vocational Skills / Other (see Sector Classification above)
 - **CAPTCHA fallback**: if API returns 403, uses OpenRouter vision model (`google/gemini-2.0-flash-001`) to read CAPTCHA from screenshot — no 2Captcha dependency
 - `--resume` flag: skips live search, loads `csr_companies.json`, continues API calls from progress file
 - `--prefixes` flag: override default prefix list (e.g. `--prefixes lim,tat,rel`)
+- `--rank` flag: outputs `csr_top500.json` with per-company totals for `total_spend`, `education_spend`, and `vocational_spend`
 
 ### Search Prefixes (Default)
 ```
@@ -357,6 +373,39 @@ lim, ind, pri, cor, ent, pow, ste, ban, pha, ene,
 oil, inf, tat, rel, fin, ins, tec, cem, aut, che
 ```
 These 20 prefixes are designed to cover virtually all CSR-filing companies in India. Each triggers the MCA portal's live search AJAX, and results are deduplicated by CIN.
+
+### CSR Frontend Architecture
+
+**Key Files:**
+| File | Purpose |
+|------|---------|
+| `src/components/csr/CsrPage.tsx` | Main page — fetches data, aggregates by CIN, stats bar, filters |
+| `src/components/csr/CsrCompanyTable.tsx` | Sortable table — Education, Vocational, Total CSR columns + expanded project detail |
+| `src/hooks/useCsrData.ts` | React Query hook — fetches all `csr_spending` rows for a fiscal year |
+| `src/hooks/useCsrShortlist.ts` | localStorage-based shortlist by CIN |
+
+**Aggregation Logic (`CsrPage.tsx`):**
+- Groups all `csr_spending` records by CIN
+- `field.startsWith('Education')` → `eduSpend` + `eduProjects[]`
+- `field.startsWith('Vocational')` → `vocSpend` + `vocProjects[]`
+- Everything else contributes to `totalSpend` only
+- Stats bar shows 4 cards: Companies with Edu/Voc CSR, Education CSR total, Vocational Skills CSR total, Shortlisted count
+
+**Table Columns (Desktop):**
+Star | Expand | Company | Education | Vocational | Total CSR | Edu %
+
+**Expanded Detail:**
+Shows two sections when expanded: "Education (N)" and "Vocational Skills (N)", each listing projects sorted by spend descending. Education amounts in CSF Blue, Vocational amounts in purple.
+
+**Filters:**
+- Search by company name
+- Min education spend threshold (All / ₹10 Cr+ / ₹50 Cr+ / ₹100 Cr+) — filters on `eduSpend` only
+- Shortlisted only toggle
+
+### Known Data Gotchas
+1. **MCA API returns geographic duplicates**: Same `(project, state, district)` can appear 2-3x in raw API data. The upsert dedup handles this by summing amounts per `(cin, field, fiscal_year)` key.
+2. **"Pan India" is not a summary row**: Rows with `state: "Pan India"` represent nationally-scoped spend. They are additive with state-specific rows, not summaries.
+3. **Supabase default row limit**: The Supabase JS client returns max 1000 rows by default. Current dataset (979 rows for FY 2023-24) fits within this limit. If the dataset grows beyond 1000, the `useCsrData` hook must add `.range()` or pagination.
 
 ## 15. Authentication (Google OAuth)
 

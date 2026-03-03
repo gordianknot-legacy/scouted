@@ -4,7 +4,7 @@ import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { formatINR } from '../../lib/formatters'
 
-type SortField = 'eduSpend' | 'totalSpend' | 'company' | 'eduPct'
+type SortField = 'eduSpend' | 'vocSpend' | 'totalSpend' | 'company' | 'eduPct'
 type SortDir = 'asc' | 'desc'
 
 export interface CompanySummary {
@@ -13,6 +13,8 @@ export interface CompanySummary {
   totalSpend: number
   eduSpend: number
   eduProjects: { field: string; spend: number }[]
+  vocSpend: number
+  vocProjects: { field: string; spend: number }[]
 }
 
 interface CsrCompanyTableProps {
@@ -43,6 +45,7 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
         case 'company': cmp = a.company.localeCompare(b.company); break
         case 'totalSpend': cmp = a.totalSpend - b.totalSpend; break
         case 'eduSpend': cmp = a.eduSpend - b.eduSpend; break
+        case 'vocSpend': cmp = a.vocSpend - b.vocSpend; break
         case 'eduPct': cmp = eduPct(a) - eduPct(b); break
       }
       return sortDir === 'asc' ? cmp : -cmp
@@ -104,7 +107,13 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
                 className="text-right px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors"
                 onClick={() => toggleSort('eduSpend')}
               >
-                Education Spend <SortIcon field="eduSpend" />
+                Education <SortIcon field="eduSpend" />
+              </th>
+              <th
+                className="text-right px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors"
+                onClick={() => toggleSort('vocSpend')}
+              >
+                Vocational <SortIcon field="vocSpend" />
               </th>
               <th
                 className="text-right px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors"
@@ -113,10 +122,10 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
                 Total CSR <SortIcon field="totalSpend" />
               </th>
               <th
-                className="text-center px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors w-44"
+                className="text-center px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors w-40"
                 onClick={() => toggleSort('eduPct')}
               >
-                Education % <SortIcon field="eduPct" />
+                Edu % <SortIcon field="eduPct" />
               </th>
             </tr>
           </thead>
@@ -194,6 +203,14 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
                           {formatINR(c.eduSpend)}
                         </p>
                       </div>
+                      {c.vocSpend > 0 && (
+                        <div>
+                          <p className="font-body text-[10px] text-gray-400 uppercase">Vocational</p>
+                          <p className="font-heading text-sm text-gray-600">
+                            {formatINR(c.vocSpend)}
+                          </p>
+                        </div>
+                      )}
                       <div>
                         <p className="font-body text-[10px] text-gray-400 uppercase">Total CSR</p>
                         <p className="font-heading text-sm text-gray-600">
@@ -221,7 +238,7 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
                   </div>
 
                   {/* Expand chevron */}
-                  {c.eduProjects.length > 0 && (
+                  {(c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
                     <button
                       onClick={() => setExpandedCin(isExpanded ? null : c.cin)}
                       className="mt-0.5 shrink-0 p-1"
@@ -232,9 +249,13 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
                 </div>
               </div>
 
-              {/* Expanded: education projects */}
-              {isExpanded && c.eduProjects.length > 0 && (
-                <ExpandedProjects projects={c.eduProjects} cin={c.cin} />
+              {/* Expanded: education & vocational projects */}
+              {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
+                <ExpandedProjects
+                  eduProjects={c.eduProjects}
+                  vocProjects={c.vocProjects}
+                  cin={c.cin}
+                />
               )}
             </div>
           )
@@ -313,7 +334,7 @@ function CompanyRow({
 
         {/* Expand chevron */}
         <td className="px-1 py-3 text-center">
-          {c.eduProjects.length > 0 && (
+          {(c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
             <ChevronRightIcon className={`w-3.5 h-3.5 text-gray-400 transition-transform inline ${isExpanded ? 'rotate-90' : ''}`} />
           )}
         </td>
@@ -336,6 +357,15 @@ function CompanyRow({
             c.eduSpend > 0 ? 'text-csf-blue' : 'text-gray-300'
           }`}>
             {c.eduSpend > 0 ? formatINR(c.eduSpend) : '—'}
+          </span>
+        </td>
+
+        {/* Vocational Spend */}
+        <td className="px-4 py-3 text-right">
+          <span className={`font-heading text-sm ${
+            c.vocSpend > 0 ? 'text-gray-600' : 'text-gray-300'
+          }`}>
+            {c.vocSpend > 0 ? formatINR(c.vocSpend) : '—'}
           </span>
         </td>
 
@@ -367,10 +397,14 @@ function CompanyRow({
       </tr>
 
       {/* Expanded detail */}
-      {isExpanded && c.eduProjects.length > 0 && (
+      {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
         <tr>
-          <td colSpan={6} className="p-0">
-            <ExpandedProjects projects={c.eduProjects} cin={c.cin} />
+          <td colSpan={7} className="p-0">
+            <ExpandedProjects
+              eduProjects={c.eduProjects}
+              vocProjects={c.vocProjects}
+              cin={c.cin}
+            />
           </td>
         </tr>
       )}
@@ -380,10 +414,53 @@ function CompanyRow({
 
 /* ── Shared expanded projects ── */
 
-function ExpandedProjects({ projects, cin }: { projects: { field: string; spend: number }[]; cin: string }) {
-  // Clean field names: strip "Education: " prefix
+function ExpandedProjects({
+  eduProjects,
+  vocProjects,
+  cin,
+}: {
+  eduProjects: { field: string; spend: number }[]
+  vocProjects: { field: string; spend: number }[]
+  cin: string
+}) {
+  return (
+    <div className="bg-gray-50/80 border-t border-gray-100 px-6 py-3 space-y-3">
+      <p className="font-body text-[11px] text-gray-400 font-mono text-right">{cin}</p>
+
+      {eduProjects.length > 0 && (
+        <ProjectSection
+          label="Education"
+          projects={eduProjects}
+          prefix="Education: "
+          accentClass="text-csf-blue"
+        />
+      )}
+
+      {vocProjects.length > 0 && (
+        <ProjectSection
+          label="Vocational Skills"
+          projects={vocProjects}
+          prefix="Vocational Skills: "
+          accentClass="text-purple-700"
+        />
+      )}
+    </div>
+  )
+}
+
+function ProjectSection({
+  label,
+  projects,
+  prefix,
+  accentClass,
+}: {
+  label: string
+  projects: { field: string; spend: number }[]
+  prefix: string
+  accentClass: string
+}) {
   const cleaned = projects.map(p => ({
-    name: p.field.replace(/^Education:\s*/i, ''),
+    name: p.field.replace(new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i'), ''),
     spend: p.spend,
   }))
 
@@ -391,20 +468,17 @@ function ExpandedProjects({ projects, cin }: { projects: { field: string; spend:
   const visible = showAll ? cleaned : cleaned.slice(0, 5)
 
   return (
-    <div className="bg-gray-50/80 border-t border-gray-100 px-6 py-3">
-      <div className="flex items-center justify-between mb-2">
-        <p className="font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider">
-          Education Projects ({projects.length})
-        </p>
-        <p className="font-body text-[11px] text-gray-400 font-mono">{cin}</p>
-      </div>
+    <div>
+      <p className="font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+        {label} ({projects.length})
+      </p>
       <div className="space-y-1">
         {visible.map((p, i) => (
           <div key={i} className="flex items-start justify-between gap-4">
             <p className="font-body text-xs text-gray-600 min-w-0 leading-relaxed">
               {p.name}
             </p>
-            <p className="font-heading text-xs font-semibold text-csf-blue shrink-0">
+            <p className={`font-heading text-xs font-semibold shrink-0 ${accentClass}`}>
               {formatINR(p.spend)}
             </p>
           </div>

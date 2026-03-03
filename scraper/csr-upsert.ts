@@ -92,20 +92,25 @@ function validate(items: CsrInputItem[], fiscalYear: string): CsrDbRow[] {
 }
 
 function dedup(items: CsrDbRow[]): CsrDbRow[] {
-  const seen = new Set<string>()
-  const unique: CsrDbRow[] = []
+  const map = new Map<string, CsrDbRow>()
+  let mergeCount = 0
 
   for (const item of items) {
     const key = `${item.cin.toLowerCase()}|${item.field.toLowerCase()}|${item.fiscal_year}`
-    if (seen.has(key)) {
-      console.warn(`  DEDUP: "${item.company}" / "${item.field}"`)
-      continue
+    const existing = map.get(key)
+    if (existing) {
+      existing.spend_inr += item.spend_inr
+      mergeCount++
+    } else {
+      map.set(key, { ...item })
     }
-    seen.add(key)
-    unique.push(item)
   }
 
-  return unique
+  if (mergeCount > 0) {
+    console.log(`  Merged ${mergeCount} duplicate rows (amounts summed)`)
+  }
+
+  return [...map.values()]
 }
 
 async function main() {
