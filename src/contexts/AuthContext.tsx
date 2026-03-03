@@ -35,14 +35,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
+    const client = supabase
+
     // Check existing session (also handles PKCE code exchange from OAuth redirect)
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    client.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         if (session.user.email?.endsWith(`@${ALLOWED_DOMAIN}`)) {
           setUser(session.user)
         } else {
           // Domain mismatch — sign out immediately
-          supabase.auth.signOut()
+          client.auth.signOut()
           setError(`Access restricted to @${ALLOWED_DOMAIN} accounts.`)
         }
       }
@@ -50,13 +52,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
 
     // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = client.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         if (session.user.email?.endsWith(`@${ALLOWED_DOMAIN}`)) {
           setUser(session.user)
           setError(null)
         } else {
-          supabase.auth.signOut()
+          client.auth.signOut()
           setUser(null)
           setError(`Access restricted to @${ALLOWED_DOMAIN} accounts.`)
         }
