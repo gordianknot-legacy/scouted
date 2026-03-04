@@ -53,10 +53,10 @@ export function OpportunityCard({
       {/* Score accent bar */}
       <div className="h-0.5" style={{
         background: decayedScore >= 75
-          ? 'linear-gradient(90deg, #22c55e, #4ade80)'
+          ? 'linear-gradient(90deg, #87FF38, #a8ff6e)'
           : decayedScore >= 50
-            ? 'linear-gradient(90deg, #eab308, #facc15)'
-            : 'linear-gradient(90deg, #ef4444, #f87171)',
+            ? 'linear-gradient(90deg, #FFD400, #ffe24d)'
+            : 'linear-gradient(90deg, #C93F13, #e05a33)',
       }} />
 
       <div className="p-4 sm:p-5">
@@ -99,7 +99,7 @@ export function OpportunityCard({
           </div>
           <div className="flex items-center gap-1 text-xs font-heading">
             <CalendarDaysIcon className="w-3.5 h-3.5 text-gray-400" />
-            <span className={isUrgent ? 'text-red-600 font-semibold' : 'text-gray-400'}>{deadlineText}</span>
+            <span className={isUrgent ? 'text-csf-orange font-semibold' : 'text-gray-400'}>{deadlineText}</span>
           </div>
         </div>
       </div>

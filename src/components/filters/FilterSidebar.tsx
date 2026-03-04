@@ -11,9 +11,9 @@ interface FilterSidebarProps {
 
 const SCORE_OPTIONS: { value: ScoreLevel | null; label: string; dot: string }[] = [
   { value: null, label: 'All', dot: 'bg-gray-300' },
-  { value: 'high', label: 'High (75+)', dot: 'bg-green-500' },
-  { value: 'medium', label: 'Medium (50–74)', dot: 'bg-yellow-500' },
-  { value: 'low', label: 'Low (<50)', dot: 'bg-red-500' },
+  { value: 'high', label: 'High (75+)', dot: 'bg-csf-lime' },
+  { value: 'medium', label: 'Medium (50–74)', dot: 'bg-csf-yellow' },
+  { value: 'low', label: 'Low (<50)', dot: 'bg-csf-orange' },
 ]
 
 export function FilterSidebar({ filters, onChange, onClose, isMobile }: FilterSidebarProps) {

@@ -13,7 +13,7 @@ interface CsrPipelineProps {
   onBack: () => void
 }
 
-const VISIBLE_STAGES: PipelineStage[] = ['prospect', 'researching', 'outreach', 'proposal_sent', 'won', 'lost']
+const VISIBLE_STAGES: PipelineStage[] = ['prospect', 'researching', 'outreach', 'proposal_sent', 'responded', 'won', 'lost']
 
 export function CsrPipeline({ onBack }: CsrPipelineProps) {
   const [showPaused, setShowPaused] = useState(false)
@@ -88,7 +88,7 @@ export function CsrPipeline({ onBack }: CsrPipelineProps) {
       {/* Loading */}
       {isLoading && (
         <div className="text-center py-16">
-          <div className="w-10 h-10 border-[3px] border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto" />
+          <div className="w-10 h-10 border-[3px] border-csf-purple/20 border-t-csf-purple rounded-full animate-spin mx-auto" />
           <p className="font-body text-sm text-gray-400 mt-4">Loading pipeline...</p>
         </div>
       )}
@@ -99,9 +99,9 @@ export function CsrPipeline({ onBack }: CsrPipelineProps) {
           <div className="grid grid-cols-3 gap-3 mb-5">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
               <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">Total Leads</p>
-              <p className="font-heading text-xl font-bold text-purple-700 mt-0.5">{leads.length}</p>
+              <p className="font-heading text-xl font-bold text-csf-purple mt-0.5">{leads.length}</p>
             </div>
-            <div className="bg-white rounded-2xl border border-purple-200 shadow-sm px-4 py-3">
+            <div className="bg-white rounded-2xl border border-csf-purple/20 shadow-sm px-4 py-3">
               <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">Education CSR in Pipeline</p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">{formatINR(pipelineEduSpend)}</p>
             </div>
@@ -125,8 +125,8 @@ export function CsrPipeline({ onBack }: CsrPipelineProps) {
           {/* Empty state */}
           {leads.length === 0 && (
             <div className="text-center py-16">
-              <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-purple-300" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <div className="w-16 h-16 bg-csf-purple/5 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg className="w-7 h-7 text-csf-purple/30" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m-15 0A2.25 2.25 0 0 0 3 12v5.25A2.25 2.25 0 0 0 5.25 19.5h13.5A2.25 2.25 0 0 0 21 17.25V12a2.25 2.25 0 0 0-1.5-2.122" />
                 </svg>
               </div>

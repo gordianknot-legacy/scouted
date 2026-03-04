@@ -38,8 +38,8 @@ function TriStateToggle({
         value === null
           ? 'border-gray-300 text-gray-300'
           : value
-            ? 'border-green-500 bg-green-500 text-white'
-            : 'border-red-400 bg-red-400 text-white'
+            ? 'border-csf-lime bg-csf-lime text-csf-blue'
+            : 'border-csf-orange bg-csf-orange text-white'
       }`}>
         {value === null ? '?' : value ? '\u2713' : '\u2717'}
       </span>
@@ -133,13 +133,13 @@ export function LeadDetailPanel({ lead, company, isOpen, onClose }: LeadDetailPa
                 CSR Spending
               </h4>
               <div className="grid grid-cols-3 gap-3">
-                <div className="bg-blue-50 rounded-xl px-3 py-2">
+                <div className="bg-csf-light-blue/10 rounded-xl px-3 py-2">
                   <p className="font-body text-[10px] text-gray-400 uppercase">Education</p>
                   <p className="font-heading text-sm font-bold text-csf-blue">{formatINR(company.eduSpend)}</p>
                 </div>
-                <div className="bg-purple-50 rounded-xl px-3 py-2">
+                <div className="bg-csf-purple/5 rounded-xl px-3 py-2">
                   <p className="font-body text-[10px] text-gray-400 uppercase">Vocational</p>
-                  <p className="font-heading text-sm font-bold text-purple-700">{formatINR(company.vocSpend)}</p>
+                  <p className="font-heading text-sm font-bold text-csf-purple">{formatINR(company.vocSpend)}</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl px-3 py-2">
                   <p className="font-body text-[10px] text-gray-400 uppercase">Total CSR</p>
@@ -153,7 +153,7 @@ export function LeadDetailPanel({ lead, company, isOpen, onClose }: LeadDetailPa
                     <div key={i} className="flex items-start justify-between gap-3">
                       <p className="font-body text-xs text-gray-600 min-w-0 truncate">{p.field}</p>
                       <p className={`font-heading text-xs font-semibold shrink-0 ${
-                        p.type === 'edu' ? 'text-csf-blue' : 'text-purple-700'
+                        p.type === 'edu' ? 'text-csf-blue' : 'text-csf-purple'
                       }`}>
                         {formatINR(p.spend)}
                       </p>
@@ -345,7 +345,7 @@ function ConceptNoteButtons({ company, lead }: { company: CompanySummary; lead: 
         <button
           onClick={() => handleGenerate('ai-pptx')}
           disabled={!!generating}
-          className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50 transition-colors"
+          className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-csf-purple text-white hover:bg-csf-purple/90 disabled:opacity-50 transition-colors"
         >
           {generating === 'ai-pptx' ? 'Generating...' : 'AI Draft PPTX'}
         </button>

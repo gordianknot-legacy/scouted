@@ -18,18 +18,18 @@ const tools = [
   },
   {
     id: 'pipeline' as Tab,
-    title: 'CSR Pipeline',
+    title: 'CSR Prospects',
     description: 'Track CSR partnership outreach and prospects',
     icon: RectangleStackIcon,
-    iconBg: 'bg-purple-100',
-    iconColor: 'text-purple-700',
-    hoverBorder: 'hover:border-purple-300',
+    iconBg: 'bg-csf-purple/10',
+    iconColor: 'text-csf-purple',
+    hoverBorder: 'hover:border-csf-purple/30',
     enabled: true,
   },
   {
     id: 'pipeline' as Tab, // unused — card is disabled
     title: 'Donor Newsletter',
-    description: 'Curated updates for education donors',
+    description: "Curated quarterly newsletters for CSF's donors",
     icon: NewspaperIcon,
     iconBg: 'bg-gray-100',
     iconColor: 'text-gray-400',

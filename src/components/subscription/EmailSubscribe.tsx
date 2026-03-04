@@ -36,7 +36,7 @@ export function EmailSubscribe() {
   if (status === 'success') {
     return (
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
-        <CheckCircleIcon className="w-10 h-10 text-green-500 mx-auto mb-2" />
+        <CheckCircleIcon className="w-10 h-10 text-csf-blue mx-auto mb-2" />
         <h3 className="font-heading font-bold text-base text-gray-900">Subscribed!</h3>
         <p className="font-body text-xs text-gray-500 mt-1">
           Check your inbox for a confirmation email.
@@ -84,7 +84,7 @@ export function EmailSubscribe() {
       </form>
 
       {status === 'error' && (
-        <p className="mt-2 text-xs text-red-600 font-body">{errorMsg}</p>
+        <p className="mt-2 text-xs text-csf-orange font-body">{errorMsg}</p>
       )}
     </div>
   )

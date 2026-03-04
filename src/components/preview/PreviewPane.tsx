@@ -266,10 +266,10 @@ function DetailCard({ icon: Icon, label, value, highlight }: {
   highlight?: 'urgent' | 'muted'
 }) {
   const bgClass = highlight === 'urgent'
-    ? 'bg-red-50 border-red-100'
+    ? 'bg-csf-orange/5 border-csf-orange/15'
     : 'bg-gray-50 border-gray-100'
   const textClass = highlight === 'urgent'
-    ? 'text-red-700'
+    ? 'text-csf-orange'
     : highlight === 'muted'
       ? 'text-gray-400'
       : 'text-gray-800'

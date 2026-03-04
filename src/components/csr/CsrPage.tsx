@@ -92,7 +92,7 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
         </div>
         <button
           onClick={onNavigatePipeline}
-          className="px-3 py-2 rounded-xl font-heading text-sm font-semibold bg-purple-600 text-white hover:bg-purple-700 transition-colors shadow-sm"
+          className="px-3 py-2 rounded-xl font-heading text-sm font-semibold bg-csf-purple text-white hover:bg-csf-purple/90 transition-colors shadow-sm"
         >
           Pipeline
         </button>
@@ -118,7 +118,7 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
       {/* Error */}
       {error && (
         <div className="text-center py-16">
-          <p className="font-body text-red-600">Failed to load CSR data.</p>
+          <p className="font-body text-csf-orange">Failed to load CSR data.</p>
         </div>
       )}
 
@@ -178,11 +178,11 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
                 </p>
               </div>
             </div>
-            <div className="bg-white rounded-2xl border border-purple-200 shadow-sm px-4 py-3">
+            <div className="bg-white rounded-2xl border border-csf-purple/20 shadow-sm px-4 py-3">
               <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
                 In Pipeline
               </p>
-              <p className="font-heading text-xl font-bold text-purple-700 mt-0.5">
+              <p className="font-heading text-xl font-bold text-csf-purple mt-0.5">
                 {leads.length}
               </p>
             </div>

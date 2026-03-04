@@ -197,7 +197,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                         {c.company}
                       </p>
                       {inPipeline && (
-                        <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-purple-50 text-purple-700">
+                        <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
                           Pipeline
                         </span>
                       )}
@@ -269,7 +269,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                     <button
                       onClick={() => onMoveToPipeline(c.cin, c.company)}
                       disabled={inPipeline}
-                      className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                      className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-csf-purple text-white hover:bg-csf-purple/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     >
                       {inPipeline ? 'In Pipeline' : 'Move to Pipeline'}
                     </button>
@@ -372,7 +372,7 @@ function CompanyRow({
               {c.company}
             </p>
             {lead && (
-              <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-purple-50 text-purple-700">
+              <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
                 Pipeline
               </span>
             )}
@@ -437,7 +437,7 @@ function CompanyRow({
               <button
                 onClick={(e) => { e.stopPropagation(); onMoveToPipeline() }}
                 disabled={!!lead}
-                className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-csf-purple text-white hover:bg-csf-purple/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 {lead ? 'In Pipeline' : 'Move to Pipeline'}
               </button>
@@ -478,7 +478,7 @@ function ExpandedProjects({
           label="Vocational Skills"
           projects={vocProjects}
           prefix="Vocational Skills: "
-          accentClass="text-purple-700"
+          accentClass="text-csf-purple"
         />
       )}
     </div>

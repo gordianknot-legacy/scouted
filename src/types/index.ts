@@ -48,7 +48,7 @@ export interface CsrSpendingRecord {
 
 // ── CSR Lead Pipeline ───────────────────────────────────────────────
 
-export type PipelineStage = 'prospect' | 'researching' | 'outreach' | 'proposal_sent' | 'won' | 'lost' | 'paused'
+export type PipelineStage = 'prospect' | 'researching' | 'outreach' | 'proposal_sent' | 'responded' | 'won' | 'lost' | 'paused'
 
 export interface CsrLead {
   id: string
@@ -68,10 +68,11 @@ export interface CsrLead {
 
 export const PIPELINE_STAGES: { key: PipelineStage; label: string; colour: string }[] = [
   { key: 'prospect', label: 'Prospect', colour: 'bg-gray-100 text-gray-700' },
-  { key: 'researching', label: 'Researching', colour: 'bg-blue-50 text-csf-blue' },
-  { key: 'outreach', label: 'Outreach', colour: 'bg-yellow-50 text-yellow-800' },
-  { key: 'proposal_sent', label: 'Proposal Sent', colour: 'bg-purple-50 text-purple-700' },
-  { key: 'won', label: 'Won', colour: 'bg-green-50 text-green-800' },
-  { key: 'lost', label: 'Lost', colour: 'bg-red-50 text-red-700' },
+  { key: 'researching', label: 'Researching', colour: 'bg-csf-light-blue/15 text-csf-blue' },
+  { key: 'outreach', label: 'Outreach', colour: 'bg-csf-yellow/15 text-csf-blue' },
+  { key: 'proposal_sent', label: 'Proposal Sent', colour: 'bg-csf-purple/10 text-csf-purple' },
+  { key: 'responded', label: 'Responded', colour: 'bg-csf-light-blue/20 text-csf-blue' },
+  { key: 'won', label: 'Accepted', colour: 'bg-csf-lime/15 text-csf-blue' },
+  { key: 'lost', label: 'Declined', colour: 'bg-csf-orange/10 text-csf-orange' },
   { key: 'paused', label: 'Paused', colour: 'bg-gray-50 text-gray-400' },
 ]

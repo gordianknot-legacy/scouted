@@ -200,7 +200,7 @@ export default function App() {
         {/* Error state */}
         {error && (
           <div className="text-center py-16">
-            <p className="font-body text-red-600">Failed to load opportunities.</p>
+            <p className="font-body text-csf-orange">Failed to load opportunities.</p>
           </div>
         )}
 
@@ -279,10 +279,10 @@ export default function App() {
                 </button>
                 <button
                   onClick={() => setActiveTab('pipeline')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-purple-300 hover:shadow-md transition-all group"
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-csf-purple/30 hover:shadow-md transition-all group"
                 >
-                  <div className="w-9 h-9 bg-purple-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-purple-200 transition-colors">
-                    <RectangleStackIcon className="w-5 h-5 text-purple-700" />
+                  <div className="w-9 h-9 bg-csf-purple/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-purple/15 transition-colors">
+                    <RectangleStackIcon className="w-5 h-5 text-csf-purple" />
                   </div>
                   <div className="text-left">
                     <p className="font-heading text-sm font-bold text-gray-900">Pipeline</p>

@@ -4,13 +4,13 @@ const COLOUR_MAP: Record<string, string> = {
   'Foundational Literacy': 'bg-csf-light-blue/20 text-csf-blue border-csf-light-blue/30',
   'Foundational Learning': 'bg-csf-light-blue/20 text-csf-blue border-csf-light-blue/30',
   'School Governance': 'bg-csf-purple/10 text-csf-purple border-csf-purple/20',
-  'EdTech': 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
-  'Early Childhood': 'bg-amber-50 text-amber-700 border-amber-200/60',
+  'EdTech': 'bg-csf-lime/10 text-csf-blue border-csf-lime/25',
+  'Early Childhood': 'bg-csf-yellow/15 text-csf-blue border-csf-yellow/30',
   'Classroom Instruction': 'bg-csf-orange/10 text-csf-orange border-csf-orange/20',
-  'High Potential Students': 'bg-violet-50 text-violet-700 border-violet-200/60',
+  'High Potential Students': 'bg-csf-purple/10 text-csf-purple border-csf-purple/20',
   'Education': 'bg-gray-50 text-gray-600 border-gray-200/60',
-  'Teacher Training': 'bg-blue-50 text-blue-700 border-blue-200/60',
-  'Education Research': 'bg-indigo-50 text-indigo-700 border-indigo-200/60',
+  'Teacher Training': 'bg-csf-light-blue/15 text-csf-blue border-csf-light-blue/25',
+  'Education Research': 'bg-csf-orange/8 text-csf-orange border-csf-orange/15',
 }
 
 const DEFAULT_COLOUR = 'bg-gray-50 text-gray-600 border-gray-200/60'
