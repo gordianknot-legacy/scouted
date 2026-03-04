@@ -1,0 +1,24 @@
+{
+  "name": "ScoutEd — CSF Grant Opportunities",
+  "short_name": "ScoutEd",
+  "description": "Scout, score, and track funding opportunities for CSF Partnerships & Strategic Initiatives",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f8fa",
+  "theme_color": "#00316B",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

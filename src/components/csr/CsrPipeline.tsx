@@ -15,7 +15,6 @@ import {
 import { useCsrLeads, useUpdateLead } from '../../hooks/useCsrLeads'
 import { useCsrData } from '../../hooks/useCsrData'
 import { aggregateByCin, type CompanySummary } from '../../lib/csr-utils'
-import { formatINR } from '../../lib/formatters'
 import { PIPELINE_STAGES } from '../../types'
 import type { CsrLead, PipelineStage } from '../../types'
 import { PipelineCard } from './PipelineCard'
@@ -84,13 +83,6 @@ export function CsrPipeline({ onBack }: CsrPipelineProps) {
     return map
   }, [leads])
 
-  // Stats
-  const activeLeads = leads.filter(l => l.pipeline_stage !== 'paused' && l.pipeline_stage !== 'lost')
-  const pipelineEduSpend = activeLeads.reduce((sum, l) => {
-    const c = companiesByCin.get(l.cin)
-    return sum + (c?.eduSpend || 0)
-  }, 0)
-
   const selectedLead = leads.find(l => l.id === selectedLeadId) || null
   const selectedCompany = selectedLead ? companiesByCin.get(selectedLead.cin) || null : null
 
@@ -158,14 +150,10 @@ export function CsrPipeline({ onBack }: CsrPipelineProps) {
       {!isLoading && (
         <>
           {/* Stats bar */}
-          <div className="grid grid-cols-3 gap-3 mb-5">
+          <div className="grid grid-cols-2 gap-3 mb-5">
             <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
               <p className="font-body text-xs text-gray-400 uppercase tracking-wider">Total Leads</p>
               <p className="font-heading text-xl font-bold text-csf-purple mt-0.5">{leads.length}</p>
-            </div>
-            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-csf-purple/15 px-4 py-3">
-              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">Education CSR in Pipeline</p>
-              <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">{formatINR(pipelineEduSpend)}</p>
             </div>
             <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
               <p className="font-body text-xs text-gray-400 uppercase tracking-wider">Active Stages</p>
