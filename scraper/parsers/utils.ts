@@ -29,7 +29,6 @@ export function extractTags(text: string): string[] {
   if (lower.match(/school\s+governance|school\s+management|school\s+leader/)) tags.push('School Governance')
   if (lower.match(/classroom|instruction|curriculum/)) tags.push('Classroom Instruction')
   if (lower.match(/high\s+potential|gifted|talent/)) tags.push('High Potential Students')
-  if (tags.length === 0) tags.push('Education')
   return tags
 }
 
@@ -132,8 +131,9 @@ export function isEducationRelevant(text: string): boolean {
   const lower = text.toLowerCase()
   return [
     'education', 'school', 'learning', 'teacher', 'literacy', 'numeracy',
-    'edtech', 'classroom', 'child', 'youth', 'fln', 'stem', 'scholarship',
-    'fellowship', 'training', 'anganwadi', 'early childhood',
+    'edtech', 'classroom', 'fln', 'stem', 'scholarship',
+    'anganwadi', 'early childhood', 'k-12', 'primary school', 'secondary school',
+    'nep', 'samagra shiksha', 'pedagog', 'curriculum',
   ].some(k => lower.includes(k))
 }
 

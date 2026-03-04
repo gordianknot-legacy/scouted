@@ -10,6 +10,7 @@ import { parseDevex } from './parsers/devex.js'
 import { parseAlliance } from './parsers/alliance.js'
 import { parseCsrbox } from './parsers/csrbox.js'
 import { parseGoogleCse } from './parsers/google-cse.js'
+import { isActionableFunding } from './parsers/utils.js'
 
 const PARSERS: Record<string, (url: string) => Promise<RawOpportunity[]>> = {
   ngobox: parseNgobox,
@@ -48,12 +49,23 @@ const EDUCATION_PHRASES = [
 // Short keywords that need word-boundary matching to avoid false positives
 const EDUCATION_REGEX = /\b(fln|stem|student|academic)\b/i
 
-// Negative keywords — reject titles containing these (unless also education-related)
+// Negative keywords — reject items containing these (unless also K-12 education-related)
 const NEGATIVE_KEYWORDS = [
   'veterinary', 'petroleum', 'mining', 'military',
   'women empowerment', 'livelihood', 'self-help group',
   'healthcare', 'sanitation', 'agriculture', 'climate change', 'tribal welfare',
+  // Infrastructure (CSF focuses on learning outcomes, not physical infra)
+  'construction', 'building construction', 'civil works', 'infrastructure development',
+  'mid-day meal', 'school building', 'hostel construction', 'toilet construction',
+  // Higher education / non-K-12
+  'university', 'postgraduate', "master's degree", 'phd', 'doctoral',
+  'higher education', 'college admission',
+  // Other off-topic
+  'microfinance', 'animal welfare', 'disaster relief', 'housing',
 ]
+
+// K-12 terms that override negative keyword rejection
+const K12_OVERRIDE_TERMS = ['k-12', 'primary school', 'secondary school', 'school education', 'foundational literacy', 'fln']
 
 function isIndiaRelevant(opp: RawOpportunity): boolean {
   const text = `${opp.title} ${opp.description} ${opp.location || ''} ${opp.tags.join(' ')}`.toLowerCase()
@@ -83,12 +95,18 @@ function isEducationRelevant(opp: RawOpportunity): boolean {
 }
 
 function hasNegativeKeyword(opp: RawOpportunity): boolean {
-  const title = opp.title.toLowerCase()
-  if (NEGATIVE_KEYWORDS.some(k => title.includes(k))) {
+  const text = `${opp.title} ${opp.description}`.toLowerCase()
+  if (NEGATIVE_KEYWORDS.some(k => text.includes(k))) {
+    // Allow through if title explicitly mentions K-12 terms
+    const title = opp.title.toLowerCase()
+    if (K12_OVERRIDE_TERMS.some(t => title.includes(t))) return false
     return !isEducationRelevant(opp)
   }
   return false
 }
+
+// URL path segments that indicate blog/opinion content, not grant listings
+const BLOG_PATH_SEGMENTS = ['/blog/', '/opinion/', '/editorial/', '/interview/', '/podcast/']
 
 async function main() {
   console.log('=== ScoutEd Scraper ===')
@@ -121,18 +139,17 @@ async function main() {
       //   FundsForNGOs /education/, /edtech/
       //
       // Pre-filtered sources: already filtered in parser (pass through)
-      //   Google CSE (searches for India+education), Devex (filtered in parser), Alliance (filtered in parser)
+      //   Devex (filtered in parser), Alliance (filtered in parser)
       //
       // General sources: require both India + education match
-      //   (none currently)
+      //   Google CSE (queries are broad, results need full filtering)
       //
       const isIndiaSource = source.url.includes('ngobox.org') ||
                             source.url.includes('/tag/india/') ||
                             source.url.includes('csrbox.org') ||
                             source.url.includes('idronline.org')
       const isEducationSource = /education|edtech/i.test(source.url)
-      const isPreFiltered = source.parser === 'google-cse' ||
-                            source.parser === 'devex' ||
+      const isPreFiltered = source.parser === 'devex' ||
                             source.parser === 'alliance'
 
       // Filter out items with deadlines older than 3 months
@@ -147,8 +164,15 @@ async function main() {
         // Exclude items that explicitly mention foreign countries in title
         if (isExplicitlyForeignCountry(opp)) return false
 
-        // Reject negative keywords (veterinary, petroleum, etc.)
+        // Reject negative keywords (veterinary, petroleum, infrastructure, etc.)
         if (hasNegativeKeyword(opp)) return false
+
+        // Reject blog/opinion/editorial URLs (never actual grant listings)
+        if (BLOG_PATH_SEGMENTS.some(seg => opp.source_url.toLowerCase().includes(seg))) return false
+
+        // Reject items with no deadline AND no actionable funding signal
+        // (likely blog posts, project showcases, or completed awards)
+        if (!opp.deadline && !isActionableFunding(`${opp.title} ${opp.description}`)) return false
 
         // Pre-filtered sources already did India+education filtering in the parser
         if (isPreFiltered) return true

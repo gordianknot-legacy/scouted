@@ -34,7 +34,10 @@ NOT RELEVANT (reject these):
 - Livelihood, microfinance, vocational training for adults, self-help groups
 - International programmes with no India connection
 - Corporate training, workforce development, adult skills
-- Sports, arts, culture (unless school curriculum related)`
+- Sports, arts, culture (unless school curriculum related)
+- School infrastructure, construction, buildings, mid-day meals, toilets, hostels (CSF focuses on learning outcomes, not physical infrastructure)
+- Completed projects or past awards with no open application
+- Blog posts, opinion articles, or news commentary about education (unless describing an open grant/RFP/EOI)`
 
 function formatItem(opp: DbOpportunity, index: number): string {
   const desc = opp.description.slice(0, 200).replace(/\n/g, ' ')

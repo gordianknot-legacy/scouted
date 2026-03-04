@@ -76,7 +76,6 @@ export const CSF_SECTORS = [
   'Early Childhood',
   'Classroom Instruction',
   'High Potential Students',
-  'Education',
   'Teacher Training',
 ]
 
