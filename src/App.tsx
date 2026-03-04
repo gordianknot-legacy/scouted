@@ -10,6 +10,7 @@ import { EmailSubscribe } from './components/subscription/EmailSubscribe'
 import { PreviewPane } from './components/preview/PreviewPane'
 import { CsrPage } from './components/csr/CsrPage'
 import { CsrPipeline } from './components/csr/CsrPipeline'
+import { WelcomeHub } from './components/home/WelcomeHub'
 import { SearchBar } from './components/ui/SearchBar'
 import { LoginPage } from './components/auth/LoginPage'
 import { AuthLoadingScreen } from './components/auth/AuthLoadingScreen'
@@ -31,7 +32,7 @@ export default function App() {
   const { user, loading } = useAuth()
   if (loading) return <AuthLoadingScreen />
   if (!user) return <LoginPage />
-  const [activeTab, setActiveTab] = useState<Tab>('dashboard')
+  const [activeTab, setActiveTab] = useState<Tab>('home')
   const [filters, setFilters] = useState<Filters>(defaultFilters)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
@@ -52,6 +53,10 @@ export default function App() {
 
   // Content based on active tab
   const renderContent = () => {
+    if (activeTab === 'home') {
+      return <WelcomeHub onNavigate={setActiveTab} />
+    }
+
     if (activeTab === 'subscribe') {
       return (
         <div className="max-w-lg mx-auto animate-fade-in">
