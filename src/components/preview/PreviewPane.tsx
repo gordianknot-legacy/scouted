@@ -66,7 +66,7 @@ export function PreviewPane({
 
       {/* Desktop: right slide-over / Mobile: bottom sheet */}
       <div className="fixed inset-0 flex justify-end">
-        <DialogPanel className="w-full max-w-xl bg-white shadow-2xl flex flex-col animate-slide-in-right max-lg:hidden">
+        <DialogPanel className="w-full max-w-lg bg-white shadow-2xl flex flex-col animate-slide-in-right max-lg:hidden">
           <DesktopContent
             opportunity={opportunity}
             decayedScore={decayedScore}
@@ -129,7 +129,7 @@ function DesktopContent({ opportunity, decayedScore, deadline, isBookmarked, onT
       </div>
 
       {/* Body */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar px-6 py-5 space-y-6">
+      <div className="flex-1 overflow-y-auto custom-scrollbar px-7 py-6 space-y-6">
         <OpportunityBody opportunity={opportunity} deadline={deadline} />
       </div>
 
@@ -278,7 +278,7 @@ function DetailCard({ icon: Icon, label, value, highlight }: {
     <div className={`p-3 rounded-xl border ${bgClass}`}>
       <div className="flex items-center gap-1.5 mb-1">
         <Icon className="w-3.5 h-3.5 text-gray-400" />
-        <span className="text-[11px] font-heading text-gray-400 uppercase tracking-wider">{label}</span>
+        <span className="text-xs font-heading text-gray-400 uppercase tracking-wider">{label}</span>
       </div>
       <p className={`text-sm font-heading font-semibold ${textClass} leading-snug`}>{value}</p>
     </div>

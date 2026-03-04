@@ -15,7 +15,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 glass-dark text-white shadow-lg shadow-csf-blue/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-16">
+        <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
           <div className="flex items-center gap-3">
             <button
               onClick={onMenuToggle}
@@ -25,7 +25,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
               <Bars3Icon className="w-6 h-6" />
             </button>
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-csf-yellow rounded-xl flex items-center justify-center shadow-sm shadow-csf-yellow/30">
+              <div className="w-8 h-8 bg-csf-yellow rounded-2xl flex items-center justify-center shadow-sm shadow-csf-yellow/30">
                 <span className="text-csf-blue font-heading font-bold text-sm">SE</span>
               </div>
               <h1 className="font-heading text-lg sm:text-xl font-bold tracking-tight">
@@ -35,8 +35,8 @@ export function Header({ onMenuToggle }: HeaderProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <p className="hidden sm:block font-body text-sm text-white/50">
-              CSF Partnerships &middot; Grant Opportunities
+            <p className="hidden sm:block font-body text-[13px] text-white/50">
+              Partnerships &amp; Strategic Initiatives
             </p>
             {user && (
               <div className="flex items-center gap-2">

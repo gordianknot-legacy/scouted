@@ -43,11 +43,11 @@ export function OnboardingModal({ isOpen, onComplete }: OnboardingModalProps) {
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-scale-in">
           {/* Top accent gradient */}
-          <div className="h-1" style={{ background: 'linear-gradient(90deg, #00316B, #8FBAFF, #FFD400)' }} />
+          <div className="h-1.5" style={{ background: 'linear-gradient(90deg, #00316B, #8FBAFF, #FFD400)' }} />
 
-          <div className="p-6 sm:p-8 text-center">
+          <div className="p-8 sm:p-10 text-center">
             {/* Icon */}
-            <div className="w-14 h-14 bg-csf-blue/5 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <div className="w-16 h-16 bg-csf-blue/5 rounded-2xl flex items-center justify-center mx-auto mb-5">
               <current.icon className="w-7 h-7 text-csf-blue" />
             </div>
 

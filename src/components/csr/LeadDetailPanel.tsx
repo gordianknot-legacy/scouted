@@ -46,7 +46,7 @@ function TriStateToggle({
       <span className="font-heading text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
         {label}
       </span>
-      <span className="font-body text-[10px] text-gray-400">
+      <span className="font-body text-[11px] text-gray-400">
         {value === null ? 'Unknown' : value ? 'Connected' : 'Not Connected'}
       </span>
     </button>
@@ -134,21 +134,21 @@ export function LeadDetailPanel({ lead, company, isOpen, onClose }: LeadDetailPa
               </h4>
               <div className="grid grid-cols-3 gap-3">
                 <div className="bg-csf-light-blue/10 rounded-xl px-3 py-2">
-                  <p className="font-body text-[10px] text-gray-400 uppercase">Education</p>
+                  <p className="font-body text-[11px] text-gray-400 uppercase">Education</p>
                   <p className="font-heading text-sm font-bold text-csf-blue">{formatINR(company.eduSpend)}</p>
                 </div>
                 <div className="bg-csf-purple/5 rounded-xl px-3 py-2">
-                  <p className="font-body text-[10px] text-gray-400 uppercase">Vocational</p>
+                  <p className="font-body text-[11px] text-gray-400 uppercase">Vocational</p>
                   <p className="font-heading text-sm font-bold text-csf-purple">{formatINR(company.vocSpend)}</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl px-3 py-2">
-                  <p className="font-body text-[10px] text-gray-400 uppercase">Total CSR</p>
+                  <p className="font-body text-[11px] text-gray-400 uppercase">Total CSR</p>
                   <p className="font-heading text-sm font-bold text-gray-700">{formatINR(company.totalSpend)}</p>
                 </div>
               </div>
               {topProjects.length > 0 && (
                 <div className="mt-3 space-y-1">
-                  <p className="font-body text-[10px] text-gray-400 uppercase">Top Projects</p>
+                  <p className="font-body text-[11px] text-gray-400 uppercase">Top Projects</p>
                   {topProjects.map((p, i) => (
                     <div key={i} className="flex items-start justify-between gap-3">
                       <p className="font-body text-xs text-gray-600 min-w-0 truncate">{p.field}</p>

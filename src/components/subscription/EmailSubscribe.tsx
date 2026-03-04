@@ -35,7 +35,7 @@ export function EmailSubscribe() {
 
   if (status === 'success') {
     return (
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
+      <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent p-5 text-center">
         <CheckCircleIcon className="w-10 h-10 text-csf-blue mx-auto mb-2" />
         <h3 className="font-heading font-bold text-base text-gray-900">Subscribed!</h3>
         <p className="font-body text-xs text-gray-500 mt-1">
@@ -52,7 +52,7 @@ export function EmailSubscribe() {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+    <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent p-5">
       <div className="flex items-center gap-3 mb-4">
         <div className="w-9 h-9 bg-csf-yellow/15 rounded-xl flex items-center justify-center">
           <BellAlertIcon className="w-4.5 h-4.5 text-csf-blue" />
@@ -61,7 +61,7 @@ export function EmailSubscribe() {
           <h3 className="font-heading font-bold text-sm text-gray-900">
             Daily Digest
           </h3>
-          <p className="font-body text-[11px] text-gray-400">Top opportunities at 8:30 AM IST</p>
+          <p className="font-body text-xs text-gray-400">Top opportunities at 8:30 AM IST</p>
         </div>
       </div>
 

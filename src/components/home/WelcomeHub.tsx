@@ -40,43 +40,48 @@ const tools = [
 
 export function WelcomeHub({ onNavigate }: WelcomeHubProps) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] animate-fade-in">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] animate-fade-in relative">
+      {/* Subtle radial gradient background */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(255,212,0,0.06) 0%, transparent 70%)' }} />
+
       {/* Logo + heading */}
-      <div className="w-14 h-14 bg-csf-yellow rounded-2xl flex items-center justify-center shadow-sm shadow-csf-yellow/30 mb-5">
-        <span className="text-csf-blue font-heading font-bold text-xl">SE</span>
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="w-14 h-14 bg-csf-yellow rounded-2xl flex items-center justify-center shadow-sm shadow-csf-yellow/30 mb-7">
+          <span className="text-csf-blue font-heading font-bold text-xl">SE</span>
+        </div>
+        <h2 className="font-heading text-2xl sm:text-3xl font-bold text-csf-blue tracking-tight">
+          Welcome to Scout<span className="text-csf-yellow">Ed</span>
+        </h2>
+        <p className="font-body text-sm text-gray-500 mt-1.5 mb-12">
+          CSF Partnerships &amp; Strategic Initiatives
+        </p>
       </div>
-      <h2 className="font-heading text-2xl sm:text-3xl font-bold text-csf-blue tracking-tight">
-        Welcome to Scout<span className="text-csf-yellow">Ed</span>
-      </h2>
-      <p className="font-body text-sm text-gray-500 mt-1.5 mb-10">
-        CSF Partnerships &amp; Strategic Initiatives
-      </p>
 
       {/* Tool cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-5 w-full max-w-3xl">
         {tools.map(tool => (
           <button
             key={tool.title}
             onClick={() => tool.enabled && onNavigate(tool.id)}
             disabled={!tool.enabled}
-            className={`relative flex flex-col items-center text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm transition-all ${
+            className={`relative flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent transition-all ${
               tool.enabled
-                ? `${tool.hoverBorder} hover:shadow-md cursor-pointer`
+                ? 'hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] cursor-pointer'
                 : 'opacity-60 cursor-default'
             }`}
           >
             {!tool.enabled && (
-              <span className="absolute top-3 right-3 px-2 py-0.5 bg-csf-yellow text-csf-blue text-[10px] font-heading font-bold rounded-full uppercase tracking-wide">
+              <span className="absolute top-3 right-3 px-2 py-0.5 bg-csf-yellow text-csf-blue text-[11px] font-heading font-bold rounded-full uppercase tracking-wide">
                 Coming Soon
               </span>
             )}
-            <div className={`w-12 h-12 ${tool.iconBg} rounded-xl flex items-center justify-center mb-4`}>
-              <tool.icon className={`w-6 h-6 ${tool.iconColor}`} />
+            <div className={`w-14 h-14 ${tool.iconBg} rounded-xl flex items-center justify-center mb-5`}>
+              <tool.icon className={`w-7 h-7 ${tool.iconColor}`} />
             </div>
-            <h3 className="font-heading text-sm font-bold text-gray-900 mb-1">
+            <h3 className="font-heading text-base font-bold text-gray-900 mb-1.5">
               {tool.title}
             </h3>
-            <p className="font-body text-xs text-gray-400 leading-relaxed">
+            <p className="font-body text-sm text-gray-400 leading-relaxed">
               {tool.description}
             </p>
           </button>

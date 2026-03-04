@@ -47,9 +47,9 @@ export function MobileNav({ activeTab, onTabChange }: MobileNavProps) {
               }`}
             >
               <Icon className="w-5.5 h-5.5" />
-              <span className="text-[10px] font-heading font-medium">{tab.label}</span>
+              <span className="text-[11px] font-heading font-medium">{tab.label}</span>
               {isActive && (
-                <div className="w-1 h-1 bg-csf-blue rounded-full -mt-0.5" />
+                <div className="w-5 h-0.5 bg-csf-blue rounded-full -mt-0.5" />
               )}
             </button>
           )

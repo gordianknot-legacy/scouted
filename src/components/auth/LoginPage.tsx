@@ -4,11 +4,14 @@ export function LoginPage() {
   const { signIn, error } = useAuth()
 
   return (
-    <div className="min-h-screen bg-csf-blue flex flex-col items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
+    <div className="min-h-screen bg-csf-blue flex flex-col items-center justify-center px-4 relative overflow-hidden">
+      {/* Subtle radial gradient overlay */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(143,186,255,0.15) 0%, transparent 60%)' }} />
+
+      <div className="w-full max-w-sm relative z-10">
+        <div className="bg-white rounded-2xl shadow-2xl p-10">
           {/* Logo */}
-          <div className="flex items-center justify-center gap-2.5 mb-8">
+          <div className="flex items-center justify-center gap-2.5 mb-10">
             <div className="w-10 h-10 bg-csf-yellow rounded-xl flex items-center justify-center shadow-sm shadow-csf-yellow/30">
               <span className="text-csf-blue font-heading font-bold text-lg">SE</span>
             </div>
@@ -31,7 +34,7 @@ export function LoginPage() {
           {/* Sign in button */}
           <button
             onClick={signIn}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-300 rounded-xl font-heading text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:shadow-md transition-all"
+            className="w-full flex items-center justify-center gap-3 px-4 py-3.5 bg-white border border-gray-300 rounded-xl font-heading text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:shadow-md transition-all"
           >
             {/* Google "G" icon */}
             <svg className="w-5 h-5" viewBox="0 0 24 24">

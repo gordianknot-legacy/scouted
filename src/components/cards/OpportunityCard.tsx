@@ -48,10 +48,10 @@ export function OpportunityCard({
   return (
     <article
       onClick={onClick}
-      className="group bg-white rounded-2xl border border-gray-100 hover:border-csf-blue/20 shadow-sm hover:shadow-lg hover:shadow-csf-blue/5 transition-all duration-300 cursor-pointer overflow-hidden"
+      className="group bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all duration-300 cursor-pointer overflow-hidden"
     >
       {/* Score accent bar */}
-      <div className="h-0.5" style={{
+      <div className="h-[3px]" style={{
         background: decayedScore >= 75
           ? 'linear-gradient(90deg, #87FF38, #a8ff6e)'
           : decayedScore >= 50
@@ -59,12 +59,12 @@ export function OpportunityCard({
             : 'linear-gradient(90deg, #C93F13, #e05a33)',
       }} />
 
-      <div className="p-4 sm:p-5">
+      <div className="p-5 sm:p-6">
         {/* Top row: org + score */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             {opportunity.organisation && (
-              <p className="text-[11px] font-heading text-csf-blue/50 uppercase tracking-wider font-semibold mb-1.5 truncate">
+              <p className="text-xs font-heading text-csf-blue/50 uppercase tracking-wider font-semibold mb-1.5 truncate">
                 {opportunity.organisation}
               </p>
             )}
@@ -88,7 +88,7 @@ export function OpportunityCard({
         </p>
 
         {/* Bottom meta row */}
-        <div className="mt-3 pt-3 border-t border-gray-50 flex items-center justify-between">
+        <div className="mt-4 pt-0 flex items-center justify-between">
           <div className="flex items-center gap-3 text-xs text-gray-400 font-heading">
             {opportunity.amount && (
               <span className="font-semibold text-gray-600">{opportunity.amount}</span>
@@ -105,7 +105,7 @@ export function OpportunityCard({
       </div>
 
       {/* Actions footer */}
-      <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 bg-gray-50/50 border-t border-gray-50">
+      <div className="flex items-center justify-between px-5 sm:px-6 py-2.5 bg-gray-50/30 border-t border-gray-50">
         <div className="flex items-center gap-0.5">
           <button
             onClick={e => { e.stopPropagation(); onToggleBookmark() }}

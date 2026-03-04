@@ -47,7 +47,7 @@ export function FilterSidebar({ filters, onChange, onClose, isMobile }: FilterSi
           {hasFilters && (
             <button
               onClick={clearAll}
-              className="text-[11px] text-csf-orange hover:underline font-heading font-medium"
+              className="text-xs text-csf-orange hover:underline font-heading font-medium"
             >
               Clear all
             </button>
@@ -91,7 +91,7 @@ export function FilterSidebar({ filters, onChange, onClose, isMobile }: FilterSi
               <button
                 key={sector}
                 onClick={() => toggleArrayItem('sectors', sector)}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-heading font-medium transition-all border ${
+                className={`px-2.5 py-1 rounded-lg text-xs font-heading font-medium transition-all border ${
                   isActive
                     ? 'bg-csf-blue/10 text-csf-blue border-csf-blue/20'
                     : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200'

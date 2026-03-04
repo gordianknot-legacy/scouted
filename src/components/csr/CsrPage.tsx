@@ -142,8 +142,8 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
         <div className="space-y-5">
           {/* Stats bar */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
                 Companies with Edu/Voc CSR
               </p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
@@ -151,24 +151,24 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
                 <span className="text-sm font-normal text-gray-400 ml-1">/ {companies.length}</span>
               </p>
             </div>
-            <div className="bg-white rounded-2xl border border-csf-yellow shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-csf-yellow/30 px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
                 Education CSR
               </p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
                 {formatINR(totalEduSpend)}
               </p>
             </div>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
                 Vocational Skills CSR
               </p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
                 {formatINR(totalVocSpend)}
               </p>
             </div>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
                 Shortlisted
               </p>
               <div className="flex items-center gap-1.5 mt-0.5">
@@ -178,8 +178,8 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
                 </p>
               </div>
             </div>
-            <div className="bg-white rounded-2xl border border-csf-purple/20 shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-csf-purple/15 px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
                 In Pipeline
               </p>
               <p className="font-heading text-xl font-bold text-csf-purple mt-0.5">

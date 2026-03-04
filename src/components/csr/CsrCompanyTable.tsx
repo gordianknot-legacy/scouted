@@ -91,7 +91,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
       </p>
 
       {/* Desktop table */}
-      <div className="hidden lg:block bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="hidden lg:block bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50/50">
@@ -170,8 +170,8 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
           return (
             <div
               key={c.cin}
-              className={`bg-white rounded-2xl border shadow-sm overflow-hidden transition-colors ${
-                starred ? 'border-csf-yellow/60' : 'border-gray-100'
+              className={`bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden transition-colors ${
+                starred ? 'border border-csf-yellow/60' : 'border border-transparent'
               }`}
             >
               <div className="p-4">
@@ -197,7 +197,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                         {c.company}
                       </p>
                       {inPipeline && (
-                        <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
+                        <span className="shrink-0 px-1.5 py-0.5 rounded text-[11px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
                           Pipeline
                         </span>
                       )}
@@ -206,21 +206,21 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                     {/* Key metrics */}
                     <div className="flex items-baseline gap-4 mt-2">
                       <div>
-                        <p className="font-body text-[10px] text-gray-400 uppercase">Education</p>
+                        <p className="font-body text-[11px] text-gray-400 uppercase">Education</p>
                         <p className="font-heading text-base font-bold text-csf-blue">
                           {formatINR(c.eduSpend)}
                         </p>
                       </div>
                       {c.vocSpend > 0 && (
                         <div>
-                          <p className="font-body text-[10px] text-gray-400 uppercase">Vocational</p>
+                          <p className="font-body text-[11px] text-gray-400 uppercase">Vocational</p>
                           <p className="font-heading text-sm text-gray-600">
                             {formatINR(c.vocSpend)}
                           </p>
                         </div>
                       )}
                       <div>
-                        <p className="font-body text-[10px] text-gray-400 uppercase">Total CSR</p>
+                        <p className="font-body text-[11px] text-gray-400 uppercase">Total CSR</p>
                         <p className="font-heading text-sm text-gray-600">
                           {formatINR(c.totalSpend)}
                         </p>
@@ -372,7 +372,7 @@ function CompanyRow({
               {c.company}
             </p>
             {lead && (
-              <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
+              <span className="shrink-0 px-1.5 py-0.5 rounded text-[11px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
                 Pipeline
               </span>
             )}

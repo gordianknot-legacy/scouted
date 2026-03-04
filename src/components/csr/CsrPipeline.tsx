@@ -97,23 +97,23 @@ export function CsrPipeline({ onBack }: CsrPipelineProps) {
         <>
           {/* Stats bar */}
           <div className="grid grid-cols-3 gap-3 mb-5">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">Total Leads</p>
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">Total Leads</p>
               <p className="font-heading text-xl font-bold text-csf-purple mt-0.5">{leads.length}</p>
             </div>
-            <div className="bg-white rounded-2xl border border-csf-purple/20 shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">Education CSR in Pipeline</p>
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-csf-purple/15 px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">Education CSR in Pipeline</p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">{formatINR(pipelineEduSpend)}</p>
             </div>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
-              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">Active Stages</p>
+            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
+              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">Active Stages</p>
               <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                 {VISIBLE_STAGES.slice(0, 4).map(s => {
                   const count = leadsByStage.get(s)?.length || 0
                   if (count === 0) return null
                   const info = PIPELINE_STAGES.find(ps => ps.key === s)
                   return (
-                    <span key={s} className={`px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold ${info?.colour || ''}`}>
+                    <span key={s} className={`px-1.5 py-0.5 rounded text-[11px] font-heading font-semibold ${info?.colour || ''}`}>
                       {count}
                     </span>
                   )

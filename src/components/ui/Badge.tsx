@@ -33,7 +33,7 @@ export function Badge({ label }: BadgeProps) {
   const colourClass = COLOUR_MAP[normalised] || COLOUR_MAP[label] || DEFAULT_COLOUR
 
   return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-lg text-[11px] font-heading font-medium border ${colourClass}`}>
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-heading font-medium border ${colourClass}`}>
       {normalised}
     </span>
   )

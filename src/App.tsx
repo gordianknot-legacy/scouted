@@ -148,7 +148,7 @@ export default function App() {
               Creator's Guide
             </h2>
           </div>
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
+          <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
             <iframe
               src="/ScoutEd_Creator_Guide.pdf"
               title="ScoutEd Creator's Guide"
@@ -252,7 +252,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4f6f9] pb-20 lg:pb-0">
+    <div className="min-h-screen bg-[#f7f8fa] pb-20 lg:pb-0">
       <Header onMenuToggle={() => setShowMobileMenu(!showMobileMenu)} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -261,44 +261,44 @@ export default function App() {
           {activeTab === 'dashboard' && (
             <aside className="hidden lg:block w-64 shrink-0">
               <div className="space-y-6">
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent p-5">
                   <FilterSidebar filters={filters} onChange={setFilters} />
                 </div>
                 <EmailSubscribe />
                 <button
                   onClick={() => setActiveTab('csr')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-csf-blue/20 hover:shadow-md transition-all group"
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all group"
                 >
                   <div className="w-9 h-9 bg-csf-yellow/20 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-yellow/30 transition-colors">
                     <ChartBarIcon className="w-5 h-5 text-csf-blue" />
                   </div>
                   <div className="text-left">
                     <p className="font-heading text-sm font-bold text-gray-900">CSR Data</p>
-                    <p className="font-body text-[11px] text-gray-400">Company CSR spending</p>
+                    <p className="font-body text-xs text-gray-400">Company CSR spending</p>
                   </div>
                 </button>
                 <button
                   onClick={() => setActiveTab('pipeline')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-csf-purple/30 hover:shadow-md transition-all group"
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all group"
                 >
                   <div className="w-9 h-9 bg-csf-purple/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-purple/15 transition-colors">
                     <RectangleStackIcon className="w-5 h-5 text-csf-purple" />
                   </div>
                   <div className="text-left">
                     <p className="font-heading text-sm font-bold text-gray-900">Pipeline</p>
-                    <p className="font-body text-[11px] text-gray-400">CSR lead tracking</p>
+                    <p className="font-body text-xs text-gray-400">CSR lead tracking</p>
                   </div>
                 </button>
                 <button
                   onClick={() => setActiveTab('guide')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-csf-blue/20 hover:shadow-md transition-all group"
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all group"
                 >
                   <div className="w-9 h-9 bg-csf-yellow/20 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-yellow/30 transition-colors">
                     <BookOpenIcon className="w-5 h-5 text-csf-blue" />
                   </div>
                   <div className="text-left">
                     <p className="font-heading text-sm font-bold text-gray-900">Creator's Guide</p>
-                    <p className="font-body text-[11px] text-gray-400">How ScoutEd works</p>
+                    <p className="font-body text-xs text-gray-400">How ScoutEd works</p>
                   </div>
                 </button>
               </div>
