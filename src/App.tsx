@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FunnelIcon, BookOpenIcon, ChartBarIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { FunnelIcon, BookOpenIcon, ChartBarIcon, ArrowLeftIcon, RectangleStackIcon } from '@heroicons/react/24/outline'
 import { Header } from './components/layout/Header'
 import { MobileNav, type Tab } from './components/layout/MobileNav'
 import { OpportunityCard } from './components/cards/OpportunityCard'
@@ -9,6 +9,7 @@ import { OnboardingModal } from './components/onboarding/OnboardingModal'
 import { EmailSubscribe } from './components/subscription/EmailSubscribe'
 import { PreviewPane } from './components/preview/PreviewPane'
 import { CsrPage } from './components/csr/CsrPage'
+import { CsrPipeline } from './components/csr/CsrPipeline'
 import { SearchBar } from './components/ui/SearchBar'
 import { LoginPage } from './components/auth/LoginPage'
 import { AuthLoadingScreen } from './components/auth/AuthLoadingScreen'
@@ -120,7 +121,11 @@ export default function App() {
     }
 
     if (activeTab === 'csr') {
-      return <CsrPage onBack={() => setActiveTab('dashboard')} />
+      return <CsrPage onBack={() => setActiveTab('dashboard')} onNavigatePipeline={() => setActiveTab('pipeline')} />
+    }
+
+    if (activeTab === 'pipeline') {
+      return <CsrPipeline onBack={() => setActiveTab('csr')} />
     }
 
     if (activeTab === 'guide') {
@@ -265,6 +270,18 @@ export default function App() {
                   <div className="text-left">
                     <p className="font-heading text-sm font-bold text-gray-900">CSR Data</p>
                     <p className="font-body text-[11px] text-gray-400">Company CSR spending</p>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setActiveTab('pipeline')}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-purple-300 hover:shadow-md transition-all group"
+                >
+                  <div className="w-9 h-9 bg-purple-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-purple-200 transition-colors">
+                    <RectangleStackIcon className="w-5 h-5 text-purple-700" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-heading text-sm font-bold text-gray-900">Pipeline</p>
+                    <p className="font-body text-[11px] text-gray-400">CSR lead tracking</p>
                   </div>
                 </button>
                 <button

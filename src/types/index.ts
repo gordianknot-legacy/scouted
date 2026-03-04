@@ -45,3 +45,33 @@ export interface CsrSpendingRecord {
   fiscal_year: string
   created_at: string
 }
+
+// ── CSR Lead Pipeline ───────────────────────────────────────────────
+
+export type PipelineStage = 'prospect' | 'researching' | 'outreach' | 'proposal_sent' | 'won' | 'lost' | 'paused'
+
+export interface CsrLead {
+  id: string
+  cin: string
+  company: string
+  pipeline_stage: PipelineStage
+  ishmeet_connected: boolean | null
+  saurabh_connected: boolean | null
+  connection_notes: string
+  prior_association: string
+  notes: string
+  assigned_to: string
+  fiscal_year: string
+  created_at: string
+  updated_at: string
+}
+
+export const PIPELINE_STAGES: { key: PipelineStage; label: string; colour: string }[] = [
+  { key: 'prospect', label: 'Prospect', colour: 'bg-gray-100 text-gray-700' },
+  { key: 'researching', label: 'Researching', colour: 'bg-blue-50 text-csf-blue' },
+  { key: 'outreach', label: 'Outreach', colour: 'bg-yellow-50 text-yellow-800' },
+  { key: 'proposal_sent', label: 'Proposal Sent', colour: 'bg-purple-50 text-purple-700' },
+  { key: 'won', label: 'Won', colour: 'bg-green-50 text-green-800' },
+  { key: 'lost', label: 'Lost', colour: 'bg-red-50 text-red-700' },
+  { key: 'paused', label: 'Paused', colour: 'bg-gray-50 text-gray-400' },
+]

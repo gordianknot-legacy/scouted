@@ -3,11 +3,14 @@ import { ArrowLeftIcon, MagnifyingGlassIcon, StarIcon } from '@heroicons/react/2
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { useCsrData } from '../../hooks/useCsrData'
 import { useCsrShortlist } from '../../hooks/useCsrShortlist'
+import { useCsrLeads, useCreateLead } from '../../hooks/useCsrLeads'
 import { CsrCompanyTable } from './CsrCompanyTable'
 import { formatINR } from '../../lib/formatters'
+import { aggregateByCin } from '../../lib/csr-utils'
 
 interface CsrPageProps {
   onBack: () => void
+  onNavigatePipeline: () => void
 }
 
 const FISCAL_YEARS = ['2023-24']
@@ -19,7 +22,7 @@ const EDU_SPEND_THRESHOLDS = [
   { label: '₹100 Cr+', value: 100_00_00_000 },
 ]
 
-export function CsrPage({ onBack }: CsrPageProps) {
+export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
   const [fiscalYear, setFiscalYear] = useState('2023-24')
   const [search, setSearch] = useState('')
   const [minEduSpend, setMinEduSpend] = useState(0)
@@ -28,49 +31,11 @@ export function CsrPage({ onBack }: CsrPageProps) {
 
   const { data: records = [], isLoading, error } = useCsrData(fiscalYear)
   const shortlist = useCsrShortlist()
+  const { data: leads = [] } = useCsrLeads(fiscalYear)
+  const createLead = useCreateLead()
 
   // Aggregate records into company-level summaries
-  const companies = useMemo(() => {
-    const map = new Map<string, {
-      company: string
-      cin: string
-      totalSpend: number
-      eduSpend: number
-      eduProjects: { field: string; spend: number }[]
-      vocSpend: number
-      vocProjects: { field: string; spend: number }[]
-    }>()
-
-    for (const r of records) {
-      const existing = map.get(r.cin) || {
-        company: r.company,
-        cin: r.cin,
-        totalSpend: 0,
-        eduSpend: 0,
-        eduProjects: [],
-        vocSpend: 0,
-        vocProjects: [],
-      }
-      const amount = Number(r.spend_inr)
-      existing.totalSpend += amount
-      if (r.field.toLowerCase().startsWith('education')) {
-        existing.eduSpend += amount
-        existing.eduProjects.push({ field: r.field, spend: amount })
-      } else if (r.field.toLowerCase().startsWith('vocational')) {
-        existing.vocSpend += amount
-        existing.vocProjects.push({ field: r.field, spend: amount })
-      }
-      map.set(r.cin, existing)
-    }
-
-    // Sort projects by spend desc within each company
-    for (const c of map.values()) {
-      c.eduProjects.sort((a, b) => b.spend - a.spend)
-      c.vocProjects.sort((a, b) => b.spend - a.spend)
-    }
-
-    return [...map.values()]
-  }, [records])
+  const companies = useMemo(() => aggregateByCin(records), [records])
 
   // Stats
   const companiesWithEdu = companies.filter(c => c.eduSpend > 0 || c.vocSpend > 0).length
@@ -125,6 +90,12 @@ export function CsrPage({ onBack }: CsrPageProps) {
             Identify companies for education CSR outreach &middot; FY {fiscalYear}
           </p>
         </div>
+        <button
+          onClick={onNavigatePipeline}
+          className="px-3 py-2 rounded-xl font-heading text-sm font-semibold bg-purple-600 text-white hover:bg-purple-700 transition-colors shadow-sm"
+        >
+          Pipeline
+        </button>
         <select
           value={fiscalYear}
           onChange={e => setFiscalYear(e.target.value)}
@@ -170,7 +141,7 @@ export function CsrPage({ onBack }: CsrPageProps) {
       {!isLoading && !error && records.length > 0 && (
         <div className="space-y-5">
           {/* Stats bar */}
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3">
               <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
                 Companies with Edu/Voc CSR
@@ -206,6 +177,14 @@ export function CsrPage({ onBack }: CsrPageProps) {
                   {shortlist.count}
                 </p>
               </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-purple-200 shadow-sm px-4 py-3">
+              <p className="font-body text-[11px] text-gray-400 uppercase tracking-wider">
+                In Pipeline
+              </p>
+              <p className="font-heading text-xl font-bold text-purple-700 mt-0.5">
+                {leads.length}
+              </p>
             </div>
           </div>
 
@@ -262,6 +241,10 @@ export function CsrPage({ onBack }: CsrPageProps) {
           <CsrCompanyTable
             companies={filtered}
             shortlist={shortlist}
+            leads={leads}
+            onMoveToPipeline={(cin, company) => {
+              createLead.mutate({ cin, company, fiscal_year: fiscalYear })
+            }}
             page={page}
             pageSize={15}
             onPageChange={setPage}

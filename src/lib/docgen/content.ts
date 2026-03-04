@@ -129,6 +129,57 @@ export const APPLICATION_CHECKLIST = [
   'Submit application before deadline',
 ]
 
+// ── CSR Pitch Content ───────────────────────────────────────────────
+
+export const CSF_PITCH_CONTENT = {
+  educationChallenge: [
+    'India faces a foundational learning crisis: NIPUN Bharat aims for universal foundational literacy and numeracy by Grade 3, yet over 50% of children in Grade 5 cannot read a Grade 2 text.',
+    'The National Education Policy 2020 calls for systemic reform across curriculum, assessment, teacher training, and governance \u2014 requiring collaboration between government, civil society, and the private sector.',
+    'CSR investment in education can catalyse state-level reforms that reach millions of children, particularly in underserved geographies.',
+  ],
+  csfImpact: [
+    'Technical partner to 9+ state governments for foundational literacy, school governance, and EdTech integration.',
+    'Programmes reaching over 5 Crore students across priority states including UP, MP, Haryana, and Gujarat.',
+    'Helped unlock over \u20B913,500 Crore in government spending on education reform.',
+    'Evidence-led approach with rigorous monitoring frameworks and independent impact evaluations.',
+    'Deep expertise in FLN (Foundational Literacy and Numeracy), classroom instruction, school governance, and EdTech.',
+  ],
+  proposedPartnership: [
+    '[TEAM INPUT] Proposed states / geographies for partnership.',
+    '[TEAM INPUT] Specific CSF programmes or interventions to be supported (e.g., FLN programme in UP, EdTech integration in MP).',
+    '[TEAM INPUT] Target reach \u2014 number of schools, teachers, and students.',
+    '[TEAM INPUT] Duration and phasing of the proposed partnership.',
+  ],
+  investmentFramework: [
+    { item: 'Programme Design & Setup', amount: '[TEAM INPUT]' },
+    { item: 'State Implementation Support', amount: '[TEAM INPUT]' },
+    { item: 'Monitoring, Evaluation & Learning', amount: '[TEAM INPUT]' },
+    { item: 'Capacity Building & Training', amount: '[TEAM INPUT]' },
+    { item: 'Total Proposed Investment', amount: '[TEAM INPUT]' },
+  ],
+  whyPartnerWithCsf: [
+    'Proven track record of catalysing education reform at state scale.',
+    'Deep relationships with state education departments and SCERT/DIETs.',
+    'Rigorous evidence and data systems for transparent impact reporting.',
+    'Ability to leverage CSR investment to unlock significantly larger government funding.',
+    '[TEAM INPUT] Specific relationship context or prior association with the company.',
+  ],
+} as const
+
+// ── CSR File Naming ─────────────────────────────────────────────────
+
+function sanitiseCompany(text: string): string {
+  return text
+    .replace(/[^a-zA-Z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .substring(0, 40)
+}
+
+export function generateCsrFileName(company: string, ext: 'pptx' | 'docx'): string {
+  const date = new Date().toISOString().slice(0, 10)
+  return `CSF-CSR-Concept_${sanitiseCompany(company)}_${date}.${ext}`
+}
+
 // ── File Naming ─────────────────────────────────────────────────────
 
 function sanitise(text: string): string {

@@ -13,7 +13,7 @@ import {
   BookOpenIcon as BookOpenIconSolid,
 } from '@heroicons/react/24/solid'
 
-export type Tab = 'dashboard' | 'bookmarks' | 'subscribe' | 'csr' | 'guide'
+export type Tab = 'dashboard' | 'bookmarks' | 'subscribe' | 'csr' | 'pipeline' | 'guide'
 
 interface MobileNavProps {
   activeTab: Tab

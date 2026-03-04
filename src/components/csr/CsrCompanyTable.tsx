@@ -3,19 +3,11 @@ import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon } from '@heroicons/rea
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { formatINR } from '../../lib/formatters'
+import type { CompanySummary } from '../../lib/csr-utils'
+import type { CsrLead } from '../../types'
 
 type SortField = 'eduSpend' | 'vocSpend' | 'totalSpend' | 'company' | 'eduPct'
 type SortDir = 'asc' | 'desc'
-
-export interface CompanySummary {
-  company: string
-  cin: string
-  totalSpend: number
-  eduSpend: number
-  eduProjects: { field: string; spend: number }[]
-  vocSpend: number
-  vocProjects: { field: string; spend: number }[]
-}
 
 interface CsrCompanyTableProps {
   companies: CompanySummary[]
@@ -23,12 +15,20 @@ interface CsrCompanyTableProps {
     isShortlisted: (cin: string) => boolean
     toggle: (cin: string) => void
   }
+  leads: CsrLead[]
+  onMoveToPipeline: (cin: string, company: string) => void
   page: number
   pageSize: number
   onPageChange: (page: number) => void
 }
 
-export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageChange }: CsrCompanyTableProps) {
+export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline, page, pageSize, onPageChange }: CsrCompanyTableProps) {
+  const leadsByCin = useMemo(() => {
+    const map = new Map<string, CsrLead>()
+    for (const l of leads) map.set(l.cin, l)
+    return map
+  }, [leads])
+
   const [sortField, setSortField] = useState<SortField>('eduSpend')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [expandedCin, setExpandedCin] = useState<string | null>(null)
@@ -144,6 +144,8 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
                   eduPct={pct}
                   isExpanded={isExpanded}
                   isShortlisted={starred}
+                  lead={leadsByCin.get(c.cin)}
+                  onMoveToPipeline={() => onMoveToPipeline(c.cin, c.company)}
                   onToggle={() => setExpandedCin(isExpanded ? null : c.cin)}
                   onStar={(e) => {
                     e.stopPropagation()
@@ -163,6 +165,7 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
           const isExpanded = expandedCin === c.cin
           const pct = eduPct(c)
           const starred = shortlist.isShortlisted(c.cin)
+          const inPipeline = leadsByCin.has(c.cin)
 
           return (
             <div
@@ -193,6 +196,11 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
                       <p className="font-heading text-sm font-semibold text-gray-900 truncate">
                         {c.company}
                       </p>
+                      {inPipeline && (
+                        <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-purple-50 text-purple-700">
+                          Pipeline
+                        </span>
+                      )}
                     </div>
 
                     {/* Key metrics */}
@@ -251,11 +259,22 @@ export function CsrCompanyTable({ companies, shortlist, page, pageSize, onPageCh
 
               {/* Expanded: education & vocational projects */}
               {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
-                <ExpandedProjects
-                  eduProjects={c.eduProjects}
-                  vocProjects={c.vocProjects}
-                  cin={c.cin}
-                />
+                <div>
+                  <ExpandedProjects
+                    eduProjects={c.eduProjects}
+                    vocProjects={c.vocProjects}
+                    cin={c.cin}
+                  />
+                  <div className="px-6 pb-3">
+                    <button
+                      onClick={() => onMoveToPipeline(c.cin, c.company)}
+                      disabled={inPipeline}
+                      className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {inPipeline ? 'In Pipeline' : 'Move to Pipeline'}
+                    </button>
+                  </div>
+                </div>
               )}
             </div>
           )
@@ -298,6 +317,8 @@ function CompanyRow({
   eduPct,
   isExpanded,
   isShortlisted,
+  lead,
+  onMoveToPipeline,
   onToggle,
   onStar,
 }: {
@@ -306,6 +327,8 @@ function CompanyRow({
   eduPct: number
   isExpanded: boolean
   isShortlisted: boolean
+  lead?: CsrLead
+  onMoveToPipeline: () => void
   onToggle: () => void
   onStar: (e: React.MouseEvent) => void
 }) {
@@ -348,6 +371,11 @@ function CompanyRow({
             <p className="font-heading text-sm font-medium text-gray-900 truncate">
               {c.company}
             </p>
+            {lead && (
+              <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-purple-50 text-purple-700">
+                Pipeline
+              </span>
+            )}
           </div>
         </td>
 
@@ -405,6 +433,15 @@ function CompanyRow({
               vocProjects={c.vocProjects}
               cin={c.cin}
             />
+            <div className="px-6 pb-3">
+              <button
+                onClick={(e) => { e.stopPropagation(); onMoveToPipeline() }}
+                disabled={!!lead}
+                className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              >
+                {lead ? 'In Pipeline' : 'Move to Pipeline'}
+              </button>
+            </div>
           </td>
         </tr>
       )}
