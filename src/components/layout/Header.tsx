@@ -20,7 +20,7 @@ export function Header({ onMenuToggle, onLogoClick }: HeaderProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={onMenuToggle}
-              className="lg:hidden p-2 -ml-2 rounded-xl hover:bg-white/10 transition-colors"
+              className="p-2 -ml-2 rounded-xl hover:bg-white/10 transition-colors"
               aria-label="Open menu"
             >
               <Bars3Icon className="w-6 h-6" />

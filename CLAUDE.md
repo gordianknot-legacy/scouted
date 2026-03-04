@@ -33,6 +33,7 @@
 
 ## 3. Tech Stack
 - **Frontend:** React (Vite), TypeScript, Tailwind CSS, Headless UI (for accessible components).
+- **Drag & Drop:** `@dnd-kit/core` + `@dnd-kit/sortable` + `@dnd-kit/utilities` (Kanban pipeline).
 - **Backend/DB:** Supabase (PostgreSQL) - Free Tier.
 - **Automation:** GitHub Actions (Cron job for daily scraping).
 - **Hosting:** Vercel (Custom subdomain).
@@ -55,9 +56,14 @@ Each opportunity gets a score (0-100).
 * **Decay:** Score decreases by 5 points for every week since posting.
 
 ### B. User Interface
-1.  **Onboarding Flow:** - A 3-step modal tour for first-time visitors explaining **ScoutEd**.
+1.  **Welcome Hub (Home):** Default landing page with 4 tool cards: Grant Opportunities, CSR Prospects, Creator's Guide, Donor Newsletter (disabled/coming soon). Grid: `sm:grid-cols-2 lg:grid-cols-4`.
+2.  **Navigation:**
+    - **Tab persistence:** Active tab stored in `sessionStorage` (key: `scouted_active_tab`), restored on refresh. Validated against known `Tab` values.
+    - **Logo navigation:** ScoutEd logo in header is a clickable button that returns to Welcome Hub (`'home'` tab).
+    - **Mobile nav:** Bottom navigation bar with Home, Grants, Bookmarks, Subscribe, CSR Data, Guide tabs.
+3.  **Onboarding Flow:** - A 3-step modal tour for first-time visitors explaining **ScoutEd**.
     - "Welcome to ScoutEd -> How Scoring Works -> How to Subscribe".
-2.  **Dashboard (Main View):**
+4.  **Dashboard (Grants View):**
     - **Filter Sidebar:** Filter by Score (High/Med/Low), Sector, State, Deadline.
     - **Feed:** Card-based layout (Masonry or Grid).
 3.  **Opportunity Card:**
@@ -305,7 +311,9 @@ The scraper uses Playwright with persistent browser context. It exploits the MCA
 1. `cd scraper && node csr-scraper.js` — opens browser, harvests CINs via live search, calls API for each
 2. `npx tsx csr-upsert.ts --file csr_report_23_24.json --fy 2023-24` — upserts to Supabase
 3. Supports `--resume` (reuse saved CINs + progress) and `--prefixes lim,ind,tat` (custom prefix list)
-4. If API returns 403, falls back to CAPTCHA solving via OpenRouter vision model (needs `OPENROUTER_API_KEY`)
+4. `--resume --source companies` resumes using the full 5,667 discovered companies (not just 99 target companies)
+5. If API returns 403, falls back to CAPTCHA solving via Groq audio transcription → Google → local Whisper cascade
+6. Typical session processes 200-600 companies before Akamai session expires; multiple `--resume` cycles needed to cover all companies
 
 ### Alternative Data Source: Dataful.in
 If MCA scraping fails, Dataful.in has pre-compiled CSR datasets:
@@ -359,10 +367,11 @@ The MCA portal at `mca.gov.in/content/csr/global/master/home/ExploreCsrData/comp
 - Extracts `{ name, cin }` from `#myTable #geoTBody tr` (data-company, data-cin attributes)
 - Deduplicates by CIN across all prefix searches
 - `page.evaluate(fetch(API_PATH + '?cin=X&fy=FY 2023-24'))` for each CIN — stays within Akamai session
-- 800ms delay between API calls; saves progress every 25 companies
+- 800ms delay between API calls; saves progress every 5 companies
 - Stops after 10 consecutive errors (session likely expired)
+- `--source companies` flag: use with `--resume` to process the full discovered company list instead of just the 99 target companies
 - **`transformAndSave()`**: Classifies MCA `sector` into Education / Vocational Skills / Other (see Sector Classification above)
-- **CAPTCHA fallback**: if API returns 403, uses OpenRouter vision model (`google/gemini-2.0-flash-001`) to read CAPTCHA from screenshot — no 2Captcha dependency
+- **CAPTCHA solving**: Uses audio CAPTCHA with a cascade of transcription engines: Groq (fastest) → Google Speech → local Whisper (base.en fallback). No 2Captcha dependency
 - `--resume` flag: skips live search, loads `csr_companies.json`, continues API calls from progress file
 - `--prefixes` flag: override default prefix list (e.g. `--prefixes lim,tat,rel`)
 - `--rank` flag: outputs `csr_top500.json` with per-company totals for `total_spend`, `education_spend`, and `vocational_spend`
@@ -381,8 +390,21 @@ These 20 prefixes are designed to cover virtually all CSR-filing companies in In
 |------|---------|
 | `src/components/csr/CsrPage.tsx` | Main page — fetches data, aggregates by CIN, stats bar, filters |
 | `src/components/csr/CsrCompanyTable.tsx` | Sortable table — Education, Vocational, Total CSR columns + expanded project detail |
-| `src/hooks/useCsrData.ts` | React Query hook — fetches all `csr_spending` rows for a fiscal year |
+| `src/components/csr/CsrPipeline.tsx` | Kanban board with drag-and-drop (`@dnd-kit`), DndContext + DragOverlay |
+| `src/components/csr/PipelineCard.tsx` | Presentational card for pipeline leads |
+| `src/components/csr/LeadDetailPanel.tsx` | Slide-over detail panel for pipeline leads |
+| `src/hooks/useCsrData.ts` | React Query hook — fetches all `csr_spending` rows with pagination (1000-row batches via `.range()`) |
+| `src/hooks/useCsrLeads.ts` | React Query hooks — `useCsrLeads()`, `useCreateLead()`, `useUpdateLead()` |
 | `src/hooks/useCsrShortlist.ts` | localStorage-based shortlist by CIN |
+
+### Pipeline Drag-and-Drop (`CsrPipeline.tsx`)
+- Uses `@dnd-kit/core`: `DndContext`, `DragOverlay`, `useDroppable`, `useDraggable`
+- `PointerSensor` with `activationConstraint: { distance: 5 }` — prevents accidental drags on click
+- `closestCorners` collision detection (column-based layout)
+- Droppable IDs = stage keys (`'prospect'`, `'researching'`, etc.)
+- Draggable IDs = lead UUIDs
+- `onDragEnd` calls `useUpdateLead().mutate({ id, pipeline_stage })` to persist
+- `DragOverlay` renders a floating card copy during drag
 
 **Aggregation Logic (`CsrPage.tsx`):**
 - Groups all `csr_spending` records by CIN
@@ -405,7 +427,9 @@ Shows two sections when expanded: "Education (N)" and "Vocational Skills (N)", e
 ### Known Data Gotchas
 1. **MCA API returns geographic duplicates**: Same `(project, state, district)` can appear 2-3x in raw API data. The upsert dedup handles this by summing amounts per `(cin, field, fiscal_year)` key.
 2. **"Pan India" is not a summary row**: Rows with `state: "Pan India"` represent nationally-scoped spend. They are additive with state-specific rows, not summaries.
-3. **Supabase default row limit**: The Supabase JS client returns max 1000 rows by default. Current dataset (979 rows for FY 2023-24) fits within this limit. If the dataset grows beyond 1000, the `useCsrData` hook must add `.range()` or pagination.
+3. **Supabase row limit — RESOLVED**: The Supabase JS client returns max 1000 rows by default. The `useCsrData` hook now paginates with `.range()` in a while loop (1000-row batches). Current dataset has 1,398 rows (FY 2023-24).
+4. **Browser profile locks**: If the Playwright browser crashes mid-scrape, stale lock files (`SingletonLock`, `SingletonSocket`, `SingletonCookie`) in `scraper/mca-browser-profile/` prevent relaunch. Delete them before restarting.
+5. **`--resume` source selection**: `--resume` alone uses TARGET_COMPANIES (99). Use `--resume --source companies` to resume from the full discovered list (5,667 CINs from `csr_companies.json`).
 
 ## 15. Authentication (Google OAuth)
 
@@ -437,3 +461,26 @@ Supabase stores auth tokens in `localStorage` automatically. Refresh does not re
 ### Manual Setup Required
 1. **Google Cloud Console**: Create OAuth 2.0 Client ID with redirect URI `https://<supabase-project>.supabase.co/auth/v1/callback`
 2. **Supabase Dashboard**: Authentication → Providers → Enable Google, paste Client ID + Secret; set Site URL and Redirect URLs
+
+## 16. In-App Creator's Guide
+
+### Overview
+The Creator's Guide (`src/components/guide/GuidePage.tsx`) is a styled, scrollable HTML page aimed at non-technical users. It replaces a previous PDF iframe approach. Accessible from:
+- Welcome Hub card ("Creator's Guide")
+- Desktop sidebar link on the Grants page
+- Mobile bottom nav ("Guide" tab)
+
+### Sections
+1. **What is ScoutEd?** — One-paragraph intro
+2. **Getting Started** — Sign in, Welcome Hub, navigation
+3. **Grant Opportunities** — Dashboard cards, scores, filters, bookmarks, hiding, preview pane
+4. **Relevance Scoring** — Criteria table (sector +30, geography +20, funding +20, donor +15, duration +15, decay -5/week)
+5. **CSR Partnership Prospects** — Company table, sorting, threshold filter, shortlisting, expanding detail, "Move to Pipeline"
+6. **CSR Pipeline** — Kanban stages explained, drag-and-drop, detail panel, notes, concept notes
+7. **Email Digest** — Subscribe, schedule (8:30 AM IST), unsubscribe
+8. **Tips & Shortcuts** — Logo click, bookmarks persist, tab persistence, mobile nav, Load More
+
+### Styling
+- `max-w-3xl mx-auto` reading width, CSF branded colours
+- `Section` component with yellow accent bar + CSF Blue heading
+- `Tip` component with `LightBulbIcon` and `bg-csf-yellow/5` background

@@ -12,6 +12,7 @@ import { CsrPage } from './components/csr/CsrPage'
 import { CsrPipeline } from './components/csr/CsrPipeline'
 import { WelcomeHub } from './components/home/WelcomeHub'
 import { GuidePage } from './components/guide/GuidePage'
+import { NavDrawer } from './components/layout/NavDrawer'
 import { SearchBar } from './components/ui/SearchBar'
 import { LoginPage } from './components/auth/LoginPage'
 import { AuthLoadingScreen } from './components/auth/AuthLoadingScreen'
@@ -301,6 +302,14 @@ export default function App() {
 
       {/* Mobile navigation */}
       <MobileNav activeTab={activeTab} onTabChange={setActiveTab} />
+
+      {/* Navigation drawer */}
+      <NavDrawer
+        isOpen={showMobileMenu}
+        onClose={() => setShowMobileMenu(false)}
+        activeTab={activeTab}
+        onNavigate={setActiveTab}
+      />
 
       {/* Mobile filter drawer */}
       <MobileFilterDrawer
