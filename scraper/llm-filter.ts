@@ -1,16 +1,66 @@
 import type { DbOpportunity } from './supabase.js'
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
+const OPENROUTER_MODELS_URL = 'https://openrouter.ai/api/v1/models'
 const BATCH_SIZE = 10
 const DELAY_MS = 3000
 const MAX_RETRIES = 2
+const MIN_CONTEXT_LENGTH = 16000
 
-// Ordered by preference: best free model first, smaller/alternate fallbacks after
-const MODELS = [
-  'google/gemma-3-27b-it:free',
+// Fallback if dynamic discovery fails
+const FALLBACK_MODELS = [
   'meta-llama/llama-3.3-70b-instruct:free',
-  'google/gemma-3-4b-it:free',
+  'qwen/qwen3-coder:free',
+  'mistralai/mistral-small-3.1-24b-instruct:free',
+  'nousresearch/hermes-3-llama-3.1-405b:free',
 ]
+
+// Models known to reject system prompts or waste tokens on reasoning
+const BROKEN_MODELS = new Set([
+  'google/gemma-3-27b-it:free',
+  'google/gemma-3-12b-it:free',
+  'google/gemma-3-4b-it:free',
+  'google/gemma-3n-e4b-it:free',
+  'google/gemma-3n-e2b-it:free',
+  'liquid/lfm-2.5-1.2b-thinking:free',  // thinking model, wastes tokens
+  'qwen/qwen3-coder:free',              // code model, not suited for classification
+  'cognitivecomputations/dolphin-mistral-24b-venice-edition:free', // uncensored, unreliable
+])
+
+let discoveredModels: string[] | null = null
+
+async function discoverFreeModels(apiKey: string): Promise<string[]> {
+  if (discoveredModels) return discoveredModels
+
+  try {
+    console.log('[LLM Filter] Discovering available free models...')
+    const res = await fetch(OPENROUTER_MODELS_URL, {
+      headers: { 'Authorization': `Bearer ${apiKey}` },
+    })
+    if (!res.ok) throw new Error(`${res.status}`)
+
+    const json = await res.json() as { data: { id: string; context_length: number }[] }
+    const free = json.data
+      .filter(m =>
+        m.id.endsWith(':free') &&
+        m.context_length >= MIN_CONTEXT_LENGTH &&
+        !BROKEN_MODELS.has(m.id)
+      )
+      .sort((a, b) => b.context_length - a.context_length)
+      .map(m => m.id)
+
+    if (free.length === 0) throw new Error('No suitable free models found')
+
+    // Take top 5 to avoid trying too many
+    discoveredModels = free.slice(0, 5)
+    console.log(`[LLM Filter] Found ${free.length} free models, using: ${discoveredModels.join(', ')}`)
+    return discoveredModels
+  } catch (err) {
+    console.warn(`[LLM Filter] Model discovery failed (${err}), using fallback list`)
+    discoveredModels = FALLBACK_MODELS
+    return FALLBACK_MODELS
+  }
+}
 
 const SYSTEM_PROMPT = `You are a classifier for Central Square Foundation (CSF), an Indian education non-profit focused on K-12 school education.
 
@@ -69,7 +119,7 @@ async function callOpenRouter(
       { role: 'user', content: items.join('\n') },
     ],
     temperature: 0,
-    max_tokens: 256,
+    max_tokens: 1024,
   }
 
   const res = await fetch(OPENROUTER_URL, {
@@ -141,11 +191,12 @@ async function callOpenRouter(
 async function classifyBatch(
   batch: DbOpportunity[],
   apiKey: string,
+  models: string[],
 ): Promise<boolean[]> {
   const formatted = batch.map((opp, i) => formatItem(opp, i))
 
   // Try each model in order, with retries for retryable errors
-  for (const model of MODELS) {
+  for (const model of models) {
     if (dailyQuotaExhausted) break
 
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
@@ -178,6 +229,7 @@ export async function classifyWithLlm(items: DbOpportunity[]): Promise<DbOpportu
 
   if (items.length === 0) return items
 
+  const models = await discoverFreeModels(apiKey)
   console.log(`\n[LLM Filter] Classifying ${items.length} items (batch size: ${BATCH_SIZE})...`)
 
   const accepted: DbOpportunity[] = []
@@ -195,7 +247,7 @@ export async function classifyWithLlm(items: DbOpportunity[]): Promise<DbOpportu
     }
 
     console.log(`[LLM Filter] Batch ${batchNum}/${batches} (${batch.length} items)...`)
-    const results = await classifyBatch(batch, apiKey)
+    const results = await classifyBatch(batch, apiKey, models)
 
     for (let j = 0; j < batch.length; j++) {
       if (results[j]) {
