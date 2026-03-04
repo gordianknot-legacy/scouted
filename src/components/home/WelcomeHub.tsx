@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon, RectangleStackIcon, NewspaperIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, RectangleStackIcon, NewspaperIcon, BookOpenIcon } from '@heroicons/react/24/outline'
 import type { Tab } from '../layout/MobileNav'
 
 interface WelcomeHubProps {
@@ -17,13 +17,23 @@ const tools = [
     enabled: true,
   },
   {
-    id: 'pipeline' as Tab,
+    id: 'csr' as Tab,
     title: 'CSR Prospects',
     description: 'Track CSR partnership outreach and prospects',
     icon: RectangleStackIcon,
     iconBg: 'bg-csf-purple/10',
     iconColor: 'text-csf-purple',
     hoverBorder: 'hover:border-csf-purple/30',
+    enabled: true,
+  },
+  {
+    id: 'guide' as Tab,
+    title: "Creator's Guide",
+    description: 'Learn how ScoutEd works and how to use it',
+    icon: BookOpenIcon,
+    iconBg: 'bg-csf-yellow/20',
+    iconColor: 'text-csf-blue',
+    hoverBorder: 'hover:border-csf-blue/30',
     enabled: true,
   },
   {
@@ -58,7 +68,7 @@ export function WelcomeHub({ onNavigate }: WelcomeHubProps) {
       </div>
 
       {/* Tool cards */}
-      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-5 w-full max-w-3xl">
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-4xl">
         {tools.map(tool => (
           <button
             key={tool.title}

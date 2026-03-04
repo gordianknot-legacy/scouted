@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { FunnelIcon, BookOpenIcon, ChartBarIcon, ArrowLeftIcon, RectangleStackIcon } from '@heroicons/react/24/outline'
+import { useState, useCallback } from 'react'
+import { FunnelIcon, ChartBarIcon, BookOpenIcon, RectangleStackIcon } from '@heroicons/react/24/outline'
 import { Header } from './components/layout/Header'
 import { MobileNav, type Tab } from './components/layout/MobileNav'
 import { OpportunityCard } from './components/cards/OpportunityCard'
@@ -11,6 +11,7 @@ import { PreviewPane } from './components/preview/PreviewPane'
 import { CsrPage } from './components/csr/CsrPage'
 import { CsrPipeline } from './components/csr/CsrPipeline'
 import { WelcomeHub } from './components/home/WelcomeHub'
+import { GuidePage } from './components/guide/GuidePage'
 import { SearchBar } from './components/ui/SearchBar'
 import { LoginPage } from './components/auth/LoginPage'
 import { AuthLoadingScreen } from './components/auth/AuthLoadingScreen'
@@ -32,7 +33,15 @@ export default function App() {
   const { user, loading } = useAuth()
   if (loading) return <AuthLoadingScreen />
   if (!user) return <LoginPage />
-  const [activeTab, setActiveTab] = useState<Tab>('home')
+  const VALID_TABS: Tab[] = ['home', 'dashboard', 'bookmarks', 'subscribe', 'csr', 'pipeline', 'guide']
+  const storedTab = sessionStorage.getItem('scouted_active_tab') as Tab | null
+  const initialTab = storedTab && VALID_TABS.includes(storedTab) ? storedTab : 'home'
+
+  const [activeTab, setActiveTabState] = useState<Tab>(initialTab)
+  const setActiveTab = useCallback((tab: Tab) => {
+    setActiveTabState(tab)
+    sessionStorage.setItem('scouted_active_tab', tab)
+  }, [])
   const [filters, setFilters] = useState<Filters>(defaultFilters)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
@@ -134,29 +143,7 @@ export default function App() {
     }
 
     if (activeTab === 'guide') {
-      return (
-        <div className="animate-fade-in">
-          <div className="flex items-center gap-3 mb-4">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className="p-2 rounded-xl hover:bg-gray-200/60 transition-colors"
-              aria-label="Back to dashboard"
-            >
-              <ArrowLeftIcon className="w-5 h-5 text-gray-600" />
-            </button>
-            <h2 className="font-heading text-xl font-bold text-gray-900">
-              Creator's Guide
-            </h2>
-          </div>
-          <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
-            <iframe
-              src="/ScoutEd_Creator_Guide.pdf"
-              title="ScoutEd Creator's Guide"
-              className="w-full h-full border-0"
-            />
-          </div>
-        </div>
-      )
+      return <GuidePage onBack={() => setActiveTab('home')} />
     }
 
     // Dashboard (default)
@@ -253,7 +240,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f7f8fa] pb-20 lg:pb-0">
-      <Header onMenuToggle={() => setShowMobileMenu(!showMobileMenu)} />
+      <Header onMenuToggle={() => setShowMobileMenu(!showMobileMenu)} onLogoClick={() => setActiveTab('home')} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="lg:flex lg:gap-8">

@@ -3,9 +3,10 @@ import { useAuth } from '../../contexts/AuthContext'
 
 interface HeaderProps {
   onMenuToggle: () => void
+  onLogoClick?: () => void
 }
 
-export function Header({ onMenuToggle }: HeaderProps) {
+export function Header({ onMenuToggle, onLogoClick }: HeaderProps) {
   const { user, signOut } = useAuth()
 
   const avatarUrl = user?.user_metadata?.avatar_url as string | undefined
@@ -24,14 +25,18 @@ export function Header({ onMenuToggle }: HeaderProps) {
             >
               <Bars3Icon className="w-6 h-6" />
             </button>
-            <div className="flex items-center gap-2.5">
+            <button
+              onClick={onLogoClick}
+              className="flex items-center gap-2.5 cursor-pointer"
+              aria-label="Go to Welcome Hub"
+            >
               <div className="w-8 h-8 bg-csf-yellow rounded-2xl flex items-center justify-center shadow-sm shadow-csf-yellow/30">
                 <span className="text-csf-blue font-heading font-bold text-sm">SE</span>
               </div>
               <h1 className="font-heading text-lg sm:text-xl font-bold tracking-tight">
                 Scout<span className="text-csf-yellow">Ed</span>
               </h1>
-            </div>
+            </button>
           </div>
 
           <div className="flex items-center gap-3">
