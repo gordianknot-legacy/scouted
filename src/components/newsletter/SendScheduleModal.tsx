@@ -194,6 +194,12 @@ export function SendScheduleModal({ isOpen, onClose, newsletterId, title, subjec
                   <ClockIcon className="w-4 h-4" />
                   {scheduling ? 'Scheduling...' : 'Schedule'}
                 </button>
+                <button
+                  onClick={handleCancelSchedule}
+                  className="w-full py-2 font-heading text-xs font-medium text-gray-400 hover:text-csf-orange transition-colors"
+                >
+                  Cancel existing schedule
+                </button>
               </>
             )}
 
