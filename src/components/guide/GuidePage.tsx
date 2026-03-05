@@ -27,7 +27,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   )
 }
 
-function CodeBlock({ children }: { children: string }) {
+function CodeBlock({ children }: { children: React.ReactNode }) {
   return (
     <pre className="bg-gray-900 text-gray-100 text-xs rounded-xl px-4 py-3 my-3 overflow-x-auto font-mono leading-relaxed whitespace-pre-wrap">
       {children}
