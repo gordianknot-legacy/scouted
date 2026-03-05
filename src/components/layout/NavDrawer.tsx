@@ -62,13 +62,13 @@ const navItems: {
     enabled: true,
   },
   {
-    id: 'subscribe' as Tab,
+    id: 'newsletter' as Tab,
     label: 'Donor Newsletter',
     description: "Curated quarterly newsletters",
     icon: NewspaperIcon,
-    iconBg: 'bg-gray-100',
-    iconColor: 'text-gray-400',
-    enabled: false,
+    iconBg: 'bg-csf-orange/10',
+    iconColor: 'text-csf-orange',
+    enabled: true,
   },
 ]
 

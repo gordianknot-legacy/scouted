@@ -66,6 +66,64 @@ export interface CsrLead {
   updated_at: string
 }
 
+// ── Donor Newsletter ────────────────────────────────────────────────
+
+export interface Donor {
+  id: string
+  name: string
+  email: string
+  organisation: string | null
+  tags: string[]
+  is_active: boolean
+  unsubscribe_token: string
+  created_at: string
+  updated_at: string
+}
+
+export type NewsletterStatus = 'draft' | 'scheduled' | 'sent' | 'failed'
+
+export type NewsletterSectionType =
+  | 'ceo_message'
+  | 'section_header'
+  | 'impact_story'
+  | 'stats'
+  | 'events'
+  | 'cta'
+  | 'custom'
+
+export interface NewsletterSection {
+  id: string
+  type: NewsletterSectionType
+  title: string
+  body: string
+  image: string | null
+  stats?: { label: string; value: string }[]
+  events?: { date: string; description: string }[]
+  ctaLabel?: string
+  ctaUrl?: string
+}
+
+export interface NewsletterContent {
+  quarterLabel: string
+  heroImage: string | null
+  sections: NewsletterSection[]
+}
+
+export interface Newsletter {
+  id: string
+  title: string
+  subject: string
+  content_json: NewsletterContent
+  html_rendered: string | null
+  status: NewsletterStatus
+  scheduled_at: string | null
+  sent_at: string | null
+  sent_count: number
+  created_by: string | null
+  created_at: string
+  updated_at: string
+}
+
 export const PIPELINE_STAGES: { key: PipelineStage; label: string; colour: string }[] = [
   { key: 'prospect', label: 'Prospect', colour: 'bg-gray-100 text-gray-700' },
   { key: 'researching', label: 'Researching', colour: 'bg-csf-light-blue/15 text-csf-blue' },

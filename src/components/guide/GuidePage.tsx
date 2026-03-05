@@ -194,6 +194,38 @@ export function GuidePage({ onBack }: GuidePageProps) {
           <Tip>Use the "Show Paused" button to reveal companies you've temporarily set aside.</Tip>
         </Section>
 
+        <Section title="Donor Newsletter">
+          <p>
+            The Donor Newsletter tool lets you create, preview, and send branded quarterly newsletters to CSF's donors — all within ScoutEd.
+          </p>
+
+          <h3 className="font-heading text-sm font-bold text-gray-800 mt-4 mb-1">Managing Donors</h3>
+          <p>
+            Click <strong>Manage Donors</strong> to add, edit, or remove donor contacts. You can add donors one by one or use <strong>Bulk Import</strong> to paste a CSV list (name, email, organisation per line). Toggle a donor's active status to include or exclude them from sends.
+          </p>
+
+          <h3 className="font-heading text-sm font-bold text-gray-800 mt-4 mb-1">Creating a Newsletter</h3>
+          <p>
+            Click <strong>New Newsletter</strong> to start with a pre-populated template. The editor has two modes:
+          </p>
+          <ul className="list-disc list-inside space-y-1.5 ml-2">
+            <li><strong>Structured mode</strong> — Fill in sections: CEO Message, Section Headers, Impact Stories, Stats, Events, CTAs</li>
+            <li><strong>Free Text mode</strong> — Paste raw content and click "Structure with AI" to automatically organise it into sections</li>
+          </ul>
+          <p className="mt-2">
+            Each section can be reordered with the up/down arrows, deleted, or polished with AI (click the sparkle icon).
+          </p>
+
+          <h3 className="font-heading text-sm font-bold text-gray-800 mt-4 mb-1">Preview &amp; Send</h3>
+          <ul className="list-disc list-inside space-y-1.5 ml-2">
+            <li><strong>Preview</strong> — See the rendered email in desktop (600px) or mobile (320px) width. Copy the raw HTML if needed</li>
+            <li><strong>Send Test</strong> — Send a test email to yourself first</li>
+            <li><strong>Send Now</strong> — Immediately send to all active donors</li>
+            <li><strong>Schedule</strong> — Pick a future date and time; the system checks hourly and sends when due</li>
+          </ul>
+          <Tip>Every newsletter email includes an unsubscribe link. Clicking it removes the donor automatically.</Tip>
+        </Section>
+
         <Section title="Email Digest">
           <p>
             Subscribe to the ScoutEd Daily Digest to receive the top-scored opportunities straight to your inbox.

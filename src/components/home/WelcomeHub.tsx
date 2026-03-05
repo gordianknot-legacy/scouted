@@ -37,14 +37,14 @@ const tools = [
     enabled: true,
   },
   {
-    id: 'pipeline' as Tab, // unused — card is disabled
+    id: 'newsletter' as Tab,
     title: 'Donor Newsletter',
     description: "Curated quarterly newsletters for CSF's donors",
     icon: NewspaperIcon,
-    iconBg: 'bg-gray-100',
-    iconColor: 'text-gray-400',
-    hoverBorder: '',
-    enabled: false,
+    iconBg: 'bg-csf-orange/10',
+    iconColor: 'text-csf-orange',
+    hoverBorder: 'hover:border-csf-orange/30',
+    enabled: true,
   },
 ]
 
