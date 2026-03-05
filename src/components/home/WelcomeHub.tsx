@@ -27,16 +27,6 @@ const tools = [
     enabled: true,
   },
   {
-    id: 'guide' as Tab,
-    title: "Creator's Guide",
-    description: 'Learn how ScoutEd works and how to use it',
-    icon: BookOpenIcon,
-    iconBg: 'bg-csf-yellow/20',
-    iconColor: 'text-csf-blue',
-    hoverBorder: 'hover:border-csf-blue/30',
-    enabled: true,
-  },
-  {
     id: 'newsletter' as Tab,
     title: 'Donor Newsletter',
     description: "Curated quarterly newsletters for CSF's donors",
@@ -44,6 +34,16 @@ const tools = [
     iconBg: 'bg-csf-orange/10',
     iconColor: 'text-csf-orange',
     hoverBorder: 'hover:border-csf-orange/30',
+    enabled: true,
+  },
+  {
+    id: 'guide' as Tab,
+    title: "Creator's Guide",
+    description: 'Learn how ScoutEd works and how to use it',
+    icon: BookOpenIcon,
+    iconBg: 'bg-csf-yellow/20',
+    iconColor: 'text-csf-blue',
+    hoverBorder: 'hover:border-csf-blue/30',
     enabled: true,
   },
 ]
