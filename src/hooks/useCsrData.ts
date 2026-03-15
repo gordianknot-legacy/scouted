@@ -8,14 +8,27 @@ export function useCsrData(fiscalYear: string = '2023-24') {
     queryFn: async () => {
       if (!supabase) return []
 
-      const { data, error } = await supabase
-        .from('csr_spending')
-        .select('*')
-        .eq('fiscal_year', fiscalYear)
-        .order('spend_inr', { ascending: false })
+      // Supabase default limit is 1000 rows — fetch all with pagination
+      const all: CsrSpendingRecord[] = []
+      const pageSize = 1000
+      let from = 0
 
-      if (error) throw error
-      return data as CsrSpendingRecord[]
+      while (true) {
+        const { data, error } = await supabase
+          .from('csr_spending')
+          .select('*')
+          .eq('fiscal_year', fiscalYear)
+          .order('spend_inr', { ascending: false })
+          .range(from, from + pageSize - 1)
+
+        if (error) throw error
+        if (!data || data.length === 0) break
+        all.push(...(data as CsrSpendingRecord[]))
+        if (data.length < pageSize) break
+        from += pageSize
+      }
+
+      return all
     },
     staleTime: 10 * 60 * 1000,
   })
