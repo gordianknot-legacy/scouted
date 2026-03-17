@@ -1,4 +1,7 @@
 import type { CsrSpendingRecord } from '../types'
+import reportLinks from '../data/csr-report-links.json'
+
+const reportLinksMap = reportLinks as Record<string, { report_url: string; report_type: string; report_year: string }>
 
 export interface CompanySummary {
   company: string
@@ -8,6 +11,8 @@ export interface CompanySummary {
   eduProjects: { field: string; spend: number }[]
   vocSpend: number
   vocProjects: { field: string; spend: number }[]
+  reportUrl?: string
+  reportType?: string
 }
 
 /** Aggregate raw CSR spending records into per-company summaries */
@@ -36,10 +41,15 @@ export function aggregateByCin(records: CsrSpendingRecord[]): CompanySummary[] {
     map.set(r.cin, existing)
   }
 
-  // Sort projects by spend desc within each company
+  // Sort projects by spend desc within each company and attach report links
   for (const c of map.values()) {
     c.eduProjects.sort((a, b) => b.spend - a.spend)
     c.vocProjects.sort((a, b) => b.spend - a.spend)
+    const link = reportLinksMap[c.cin]
+    if (link) {
+      c.reportUrl = link.report_url
+      c.reportType = link.report_type
+    }
   }
 
   return [...map.values()]

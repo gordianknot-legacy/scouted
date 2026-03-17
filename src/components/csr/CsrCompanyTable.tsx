@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { formatINR } from '../../lib/formatters'
@@ -126,6 +126,9 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                 onClick={() => toggleSort('eduPct')}
               >
                 Edu % <SortIcon field="eduPct" />
+              </th>
+              <th className="text-center px-3 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider w-16">
+                Report
               </th>
             </tr>
           </thead>
@@ -265,7 +268,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                     vocProjects={c.vocProjects}
                     cin={c.cin}
                   />
-                  <div className="px-6 pb-3">
+                  <div className="px-6 pb-3 flex items-center gap-3">
                     <button
                       onClick={() => onMoveToPipeline(c.cin, c.company)}
                       disabled={inPipeline}
@@ -273,6 +276,17 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                     >
                       {inPipeline ? 'In Pipeline' : 'Move to Pipeline'}
                     </button>
+                    {c.reportUrl && (
+                      <a
+                        href={c.reportUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-heading text-xs font-medium border border-csf-blue/20 text-csf-blue hover:bg-csf-blue/5 transition-colors"
+                      >
+                        <DocumentTextIcon className="w-3.5 h-3.5" />
+                        {c.reportType || 'Report'}
+                      </a>
+                    )}
                   </div>
                 </div>
               )}
@@ -422,12 +436,30 @@ function CompanyRow({
             </span>
           </div>
         </td>
+
+        {/* Report link */}
+        <td className="px-3 py-3 text-center">
+          {c.reportUrl ? (
+            <a
+              href={c.reportUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center justify-center p-1.5 rounded-lg hover:bg-csf-blue/5 transition-colors group"
+              title={c.reportType || 'Annual Report'}
+            >
+              <DocumentTextIcon className="w-4.5 h-4.5 text-csf-blue/60 group-hover:text-csf-blue" />
+            </a>
+          ) : (
+            <span className="text-gray-300">—</span>
+          )}
+        </td>
       </tr>
 
       {/* Expanded detail */}
       {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
         <tr>
-          <td colSpan={7} className="p-0">
+          <td colSpan={8} className="p-0">
             <ExpandedProjects
               eduProjects={c.eduProjects}
               vocProjects={c.vocProjects}
