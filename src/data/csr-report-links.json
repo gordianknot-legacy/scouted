@@ -2,152 +2,626 @@
   "L22210MH1995PLC084781": {
     "report_url": "https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2024-25/ar/annual-report-2024-2025.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Lab on Bike programme in 12 schools (Bengaluru) and 10 schools (Ahmedabad); science/maths labs in tribal Odisha",
+        "source": "https://csrbox.org/India_CSR_Project_Training-and-Education-pan-india_10417"
+      }
+    ],
+    "ceo": {
+      "name": "K Krithivasan",
+      "title": "CEO & MD",
+      "linkedin": "https://in.linkedin.com/in/k-krithivasan-84659325"
+    },
+    "csr_head": {
+      "name": "Balaji Ganapathy",
+      "title": "Chief Social Responsibility Officer",
+      "linkedin": "https://www.linkedin.com/in/balajiganapathy"
+    }
   },
   "L17110MH1973PLC019786": {
     "report_url": "https://www.ril.com/reports/CSR202425.pdf",
     "report_type": "CSR Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "On-ground partner in LiftEd initiative (Development Impact Bond for FLN/NIPUN Bharat)",
+        "source": "https://reliancefoundation.org/lifted"
+      },
+      {
+        "ngo": "Kaivalya Education Foundation",
+        "details": "On-ground partner in LiftEd initiative for FLN",
+        "source": "https://reliancefoundation.org/lifted"
+      },
+      {
+        "ngo": "Language and Learning Foundation",
+        "details": "On-ground partner in LiftEd initiative",
+        "source": "https://reliancefoundation.org/lifted"
+      },
+      {
+        "ngo": "Peepul India",
+        "details": "On-ground partner in LiftEd initiative",
+        "source": "https://reliancefoundation.org/lifted"
+      },
+      {
+        "ngo": "Rocket Learning",
+        "details": "EdTech partner in LiftEd initiative",
+        "source": "https://reliancefoundation.org/lifted"
+      }
+    ],
+    "ceo": {
+      "name": "Mukesh Ambani",
+      "title": "Chairman & MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Reliance Foundation",
+      "title": "CSR Contact",
+      "linkedin": null,
+      "email": "contactus@reliancefoundation.org"
+    }
   },
   "L65920MH1994PLC080618": {
     "report_url": "https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/annual-reports/2024-25/HDFC_Bank_Annual_Report_2024_25-310202.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Implementing partner for Project Parivartan across Maharashtra, Gujarat, Punjab, Haryana",
+        "source": "https://v.hdfc.bank.in/csr/our-partners.html"
+      },
+      {
+        "ngo": "Magic Bus India Foundation",
+        "details": "Implementing partner for Project Disha in 172 schools across Chhattisgarh, Rajasthan, MP, Maharashtra (17,500 students)",
+        "source": "https://v.hdfc.bank.in/csr/initiatives/education.html"
+      },
+      {
+        "ngo": "Educate Girls",
+        "details": "Supported Foundation to Educate Girls in Barwani and Khandwa districts, MP",
+        "source": "https://homeloans.hdfc.bank.in/content/dam/housingdevelopmentfinancecorp/pdf/about-us/impact-assessment-reports/2022/education-community-based-programs-educate-girls.pdf"
+      },
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "STEM programme across 11 districts in Maharashtra; 8 science centres, 3 mobile labs, Innovation Lab",
+        "source": "https://thecsruniverse.com/articles/hdfc-bank-parivartan-expands-stem-education-reaches-over-47-000-students"
+      },
+      {
+        "ngo": "Sampark Foundation",
+        "details": "Implementing partner for education/scholarship initiatives",
+        "source": "https://v.hdfc.bank.in/csr/our-partners.html"
+      }
+    ],
+    "ceo": {
+      "name": "Sashidhar Jagdishan",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Nusrat Pathan",
+      "title": "Head - CSR",
+      "linkedin": null,
+      "email": "csr@hdfcbank.com"
+    }
   },
   "L27100MH1907PLC000260": {
     "report_url": "https://www.tatasteel.com/media/23973/fy25-integratedreport.pdf",
     "report_type": "Integrated Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Implementing partner for hospitality sector skill development, training disadvantaged youth from rural areas",
+        "source": "https://nationalskillsnetwork.in/how-tata-steel-ensures-gainful-employment-through-quality-skill-development/"
+      }
+    ],
+    "ceo": {
+      "name": "T V Narendran",
+      "title": "CEO & MD",
+      "linkedin": "https://in.linkedin.com/in/t-v-narendran-5b531816"
+    },
+    "csr_head": {
+      "name": "Sourav Roy",
+      "title": "Chief CSR & CEO, Tata Steel Foundation",
+      "linkedin": "https://www.linkedin.com/in/sourav-roy-347ba94/"
+    }
   },
   "L27105HR1979PLC009913": {
     "report_url": "https://d2lptvt2jijg6f.cloudfront.net/jspsteelpower20/custom/1754894191_Annual_Report_FY25.pdf",
     "report_type": "Integrated Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Naveen Jindal",
+      "title": "Chairman",
+      "linkedin": "https://in.linkedin.com/in/naveenjindalmp"
+    },
+    "csr_head": {
+      "name": "Shallu Jindal",
+      "title": "Chairperson, JSPL Foundation",
+      "linkedin": null
+    }
   },
   "L64200MH1986PLC041370": {
     "report_url": "https://insights.techmahindra.com/investors/tml-integrated-annual-report-fy-2024-2025.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Mohit Joshi",
+      "title": "CEO & MD",
+      "linkedin": "https://uk.linkedin.com/in/themohitjoshipage"
+    },
+    "csr_head": {
+      "name": "Chetan Kapoor",
+      "title": "CEO, Tech Mahindra Foundation",
+      "linkedin": "https://in.linkedin.com/in/chetankapoorcsr",
+      "email": "communications@techmahindrafoundation.org"
+    }
   },
   "L32102KA1945PLC020800": {
     "report_url": "https://www.wipro.com/content/dam/nexus/en/investor/annual-reports/2024-2025/Integrated-annual-report-2024-25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Vikramshila Education Resource Society",
+        "details": "Long-standing partner across West Bengal, Tripura, Assam, Bihar, Odisha, J&K",
+        "source": "https://www.wiprofoundation.org/partner/vikramshila-education-resource-society/"
+      },
+      {
+        "ngo": "Magic Bus India Foundation",
+        "details": "Supports 800 marginalised children in government schools around Devanahalli, Karnataka",
+        "source": "https://www.wiprofoundation.org/partner/magic-bus/"
+      },
+      {
+        "ngo": "ShikshaLokam",
+        "details": "Collaborated on Sanjhi Sikhiya education programme in Punjab",
+        "source": "https://www.wiprofoundation.org/partner/sanjhi-sikhiya/"
+      }
+    ],
+    "ceo": {
+      "name": "Srini Pallia",
+      "title": "CEO & MD",
+      "linkedin": "https://www.linkedin.com/in/srini-pallia/"
+    },
+    "csr_head": {
+      "name": "P S Narayan",
+      "title": "Global Head, Sustainability; Managing Trustee, Wipro Foundation",
+      "linkedin": "https://in.linkedin.com/in/psnarayan5565",
+      "email": "admin.wiprofoundation@wipro.com"
+    }
   },
   "L74899DL1993GOI054155": {
     "report_url": "https://ongcindia.com/documents/77751/2660534/FY24-25-CSR-AR.pdf/4598ac0c-d3af-462a-0a70-dd560c301439",
     "report_type": "CSR Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Arun Kumar Singh",
+      "title": "Chairman & CEO",
+      "linkedin": "https://in.linkedin.com/in/singharunongc"
+    },
+    "csr_head": {
+      "name": "Sandeep Kumar",
+      "title": "COO, ONGC Foundation",
+      "linkedin": null,
+      "email": "info@ongcfoundation.org"
+    }
   },
   "L65110GJ1993PLC020769": {
     "report_url": "https://www.axisbank.com/annual-reports/2024-2025/pdf/Axis%20Bank%20IR%2024-25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Amitabh Chaudhry",
+      "title": "MD & CEO",
+      "linkedin": "https://in.linkedin.com/in/amitabh-chaudhry-7b560b1"
+    },
+    "csr_head": {
+      "name": "Abhejit Agarwal",
+      "title": "SVP & Head - Sustainability & CSR",
+      "linkedin": "https://www.linkedin.com/in/abhejit/",
+      "email": "sustainability@axisbank.com"
+    }
   },
   "L34103DL1981PLC011375": {
     "report_url": "https://marutistoragenew.blob.core.windows.net/msilintiwebpdf/MSIL_IR_2024_25_HR.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Hisashi Takeuchi",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Tarun Agarwal",
+      "title": "VP & Head CSR",
+      "linkedin": "https://in.linkedin.com/in/tarun-agarwal-74163815",
+      "email": "contact@marutisuzuki.com"
+    }
   },
   "L16005WB1910PLC001985": {
     "report_url": "https://itcportal.com/content/dam/itc-corporate/pdfs/report-and-accounts/ITC-Report-and-Accounts-2025.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Partner since 2013 across 12 states; Read India Plus programme for children aged 6-14",
+        "source": "https://www.pratham.org/partner/itc-limited/"
+      },
+      {
+        "ngo": "Educate Girls",
+        "details": "Supports Pragati programme for adolescent girls in Munger, Bihar under Mission Sunehra Kal",
+        "source": "https://www.educategirls.ngo/corporate-social-responsibility/"
+      }
+    ],
+    "ceo": {
+      "name": "Sanjiv Puri",
+      "title": "Chairman & MD",
+      "linkedin": "https://in.linkedin.com/in/sanjiv-puri"
+    },
+    "csr_head": {
+      "name": "Madhulika Sharma",
+      "title": "VP & Chief Sustainability Officer",
+      "linkedin": "https://www.linkedin.com/in/madhulika-sharma-586a9b43/"
+    }
   },
   "L65910KL1997PLC011300": {
     "report_url": "https://cdn.muthootfinance.com/sites/default/files/files/2025-07/ANNUALREPORTFORFY2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Magic Bus India Foundation",
+        "details": "Muthoot Haathi Mera Saathi in Ranchi/Chennai; sports-for-development for 4,500 children in Kochi/Trivandrum",
+        "source": "https://www.muthootcsr.com/csr-initiatives/education/"
+      }
+    ],
+    "ceo": {
+      "name": "George Alexander Muthoot",
+      "title": "MD",
+      "linkedin": "https://www.linkedin.com/in/george-alexander-8505233a/"
+    },
+    "csr_head": {
+      "name": "Babu John Malayil",
+      "title": "DGM & Head CSR",
+      "linkedin": "https://www.linkedin.com/in/babu-john-malayil-malayil-48a2bba7/",
+      "email": "babujohn@muthootgroup.com"
+    }
   },
   "L74140DL1991PLC046369": {
     "report_url": "https://www.hcltech.com/sites/default/files/document/open/annual-report/2025-08/Annual-Report-2024-25_0.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Katha",
+        "details": "Implementing partner in Promotion of Education and Livelihood Enhancement Programme",
+        "source": "https://csrbox.org/India_CSR_Project_HCL-Technologies-Limited-Promotion-of-Education-and-Livelihood-Enhancement-Program-Uttar-Pradesh-_18329"
+      },
+      {
+        "ngo": "Bhumi",
+        "details": "Premier corporate partner; holistic education including school infrastructure at Okkiam Thoraipakkam, Chennai",
+        "source": "https://bhumi.ngo/blog/hcl-bhumi-aid-holistic-education-for-children/"
+      }
+    ],
+    "ceo": {
+      "name": "C Vijayakumar",
+      "title": "CEO & MD",
+      "linkedin": "https://www.linkedin.com/in/vijayakumar-c-hcl/"
+    },
+    "csr_head": {
+      "name": "Dr. Nidhi Pundhir",
+      "title": "SVP Global CSR & Director, HCL Foundation",
+      "linkedin": "https://www.linkedin.com/in/dr-nidhi-pundhir-1215b823/",
+      "email": "hclfoundation@hcltech.com"
+    }
   },
   "L26940MH2000PLC128420": {
     "report_url": "https://www.ultratechcement.com/content/dam/ultratechcementwebsite/pdf/financials/annual-reports/ultratech-integrated-and-sustainability-report-2024-25-double-page.pdf",
     "report_type": "Integrated Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "K C Jhanwar",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Gajendra Rao",
+      "title": "Head CSR",
+      "linkedin": "https://www.linkedin.com/in/gajendra-rao-0950a354/"
+    }
   },
   "U29309TN1996PLC035377": {
     "report_url": "https://www.hyundai.com/content/dam/hyundai/in/en/data/investor-relations/annual-report/annual-report2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Flagship Vidya Vahini STEM programme in 364 govt schools across 26 districts of UP/Haryana (50,000 students)",
+        "source": "https://indiacsr.in/hyundai-motor-india-foundation-expands-vidya-vahini-up-haryana/"
+      }
+    ],
+    "ceo": {
+      "name": "Tarun Garg",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Puneet Anand",
+      "title": "AVP - Corporate Affairs & CSR",
+      "linkedin": "https://www.linkedin.com/in/puneet-anand-874a425/"
+    }
   },
   "L65110MH1985PLC038137": {
     "report_url": "https://www.kotak.bank.in/content/dam/Kotak/investor-relation/Financial-Result/Annual-Reports/FY-2025/kotak-mahindra-bank/Kotak-Mahindra-Bank-Limited-FY25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Multi-year partnership; Skilling, Entrepreneurship & Livelihoods Programme through 17 training centres across 9 states",
+        "source": "https://www.kotak.bank.in/content/dam/Kotak/about-us/csr-policy/impact-assessment-reports/FY-2024-25/Pratham-Education-Foundation.pdf"
+      },
+      {
+        "ngo": "Sampark Foundation",
+        "details": "Implementing partner for education initiatives",
+        "source": "https://csrbox.org/India_CSR_Project_Kotak-Mahindra-Bank-Education-Initiatives-pan-india_10728"
+      },
+      {
+        "ngo": "Akanksha Foundation",
+        "details": "Supported through Payroll Giving Programme",
+        "source": "https://thecsrjournal.in/kotak-mahindra-bank-csr-corporate-social-responsibility-activities-report/"
+      }
+    ],
+    "ceo": {
+      "name": "Ashok Vaswani",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Rohit Rao",
+      "title": "Jt President & Group Chief CSR Officer",
+      "linkedin": "https://www.linkedin.com/in/rohit-rao-160a5745/"
+    }
   },
   "L23201MH1959GOI011388": {
     "report_url": "https://iocl.com/download/SingleAnnualReport202425.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Arvinder Singh Sahney",
+      "title": "Chairman",
+      "linkedin": "https://in.linkedin.com/in/a-s-sahney-36505871"
+    }
   },
   "L35301KA1963GOI001622": {
     "report_url": "https://hal-india.co.in/backend/wp-content/uploads/2025/07/HAL_AR_2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Dr D K Sunil",
+      "title": "CMD (Addl. Charge)",
+      "linkedin": null
+    }
   },
   "L27102MH1994PLC152925": {
     "report_url": "https://www.jswsteel.in/sites/default/files/assets/downloads/steel/IR/Financial%20Performance/Annual%20Reports%20Steel/24-25/Integrated-Annual-Report-FY-2024-25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Azim Premji Foundation",
+        "details": "Computer Aided Learning Centres (CALC) collaboration; 54 centres benefitting ~17,000 children",
+        "source": "https://group.jsw.in/foundation/excellence-education"
+      },
+      {
+        "ngo": "Magic Bus India Foundation",
+        "details": "JSW ASPIRE in Salem; expanded to 17,050 adolescents across 157 schools in MH, KA, TN, OD",
+        "source": "https://www.magicbus.org/corporate-ngo-partnership.php"
+      }
+    ],
+    "ceo": {
+      "name": "Jayant Acharya",
+      "title": "Joint MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Prabodha Acharya",
+      "title": "Group Chief Sustainability Officer",
+      "linkedin": null
+    }
   },
   "L65990MH1945PLC004558": {
     "report_url": "https://www.mahindra.com/sites/default/files/2025-06/MMAnnualReportFY2025.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Dr Anish Shah",
+      "title": "Group CEO & MD",
+      "linkedin": "https://in.linkedin.com/in/anishdshah"
+    },
+    "csr_head": {
+      "name": "Sheetal Mehta",
+      "title": "Sr VP & Chief CSR; ED, KC Mahindra Education Trust",
+      "linkedin": "https://in.linkedin.com/in/mehta-sheetal-03371b2"
+    }
   },
   "L23201MH1952GOI008858": {
     "report_url": "https://www.hindustanpetroleum.com/documents/pdf/HPCL-Annual-Report-2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Project Agastya for 28,000 students — scientific temper via mobile science labs in remote areas",
+        "source": "https://thecsruniverse.com/articles/maharatna-hpcl-spends-rs-182-24-crore-on-csr-activities-major-focus-on-education-sanitation"
+      }
+    ],
+    "ceo": {
+      "name": "Vikas Kaushal",
+      "title": "CMD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Rajeev Goel",
+      "title": "ED - CSR & PR",
+      "linkedin": null,
+      "email": null
+    }
   },
   "U10102MP1985GOI003160": {
     "report_url": "https://d3u7ubx0okog7j.cloudfront.net/documents/AR24-25_NCL.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "B. Sairam (Addl. Charge)",
+      "title": "CMD",
+      "linkedin": null
+    }
   },
   "L65190GJ1994PLC021012": {
     "report_url": "https://www.icici.bank.in/content/dam/icicibank/managed-assets/docs/investor/annual-reports/2025/icici-bank-integrated-report-2024-25.pdf",
     "report_type": "Integrated Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Historical founding relationship — ICICI donated first computers; Chairman N. Vaghul was trustee since 1996",
+        "source": "https://www.pratham.org/our-story/"
+      }
+    ],
+    "ceo": {
+      "name": "Sandeep Bakhshi",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Sanjay Datta",
+      "title": "President, ICICI Foundation",
+      "linkedin": null,
+      "email": "info@icicifoundation.org"
+    }
   },
   "L23109WB1973GOI028844": {
     "report_url": "https://d3u7ubx0okog7j.cloudfront.net/documents/HYPERLINKED_Coal_India__IAR_2024-25_compressed_04.08.2025.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "B. Sairam",
+      "title": "CMD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Renu Chaturvedi",
+      "title": "Head CSR",
+      "linkedin": null,
+      "email": null
+    }
   },
   "L27203OR1981GOI000920": {
     "report_url": "https://nalcoindia.com/wp-content/uploads/2025/09/44th-Annual-Report-2024-25-NALCO.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Brijendra Pratap Singh",
+      "title": "CMD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Asutosh Rath",
+      "title": "GGM (Admin, CSR & PR)",
+      "linkedin": null,
+      "email": "asutosh.rath@nalcoindia.co.in"
+    }
   },
   "L23220MH1952GOI008931": {
     "report_url": "https://heavyindustries.gov.in/sites/default/files/2025-12/bpcl_annual_report_2024_25_english.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Sanjay Khanna",
+      "title": "CMD (Addl. Charge)",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "E. Rozario",
+      "title": "GM (CSR)",
+      "linkedin": null,
+      "email": "rozarioe@bharatpetroleum.in"
+    },
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Implementing partner for Project Akshar (INR 2.61 Cr) — early childhood education in Nandurbar (MH) and Sagar (MP), 84,000+ children",
+        "source": "https://www.csrbox.org/India_CSR_Project_Bharat-Petroleum-Corporation-Limited-Project-Akshar-Maharashtra_19432"
+      },
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Science fairs and academic practicals in ZP schools at BPCL Bhopal and Gwalior locations",
+        "source": "https://www.bharatpetroleum.in/social-responsibility/csr-thrust-areas/education"
+      }
+    ]
   },
   "L40101DL1989GOI038121": {
     "report_url": "https://www.powergrid.in/sites/default/files/annual_reports/Powergrid_Annual_Report_2024-25-1.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Vamsi Rama Mohan Burra",
+      "title": "CMD",
+      "linkedin": null
+    }
   },
   "L11101AS1959GOI001148": {
     "report_url": "https://www.oil-india.com/files/financial_results_documents/OIL_India_Annual_Report_2024_25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Dr. Ranjit Rath",
+      "title": "CMD",
+      "linkedin": null
+    }
   },
   "L72900MH1996PLC104693": {
     "report_url": "https://www.ltimindtree.com/wp-content/uploads/2025/05/Integrated-Annual-Report-FY25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Debashis Chatterjee",
+      "title": "CEO & MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Archana Sahay",
+      "title": "Global Head - ESG & CSR",
+      "linkedin": "https://www.linkedin.com/in/archana-sahay-8563799/"
+    }
   },
   "L74999TZ1984PLC001456": {
     "report_url": "https://www.titancompany.in/sites/default/files/2025-07/Titan%20AR%202024-25%20(1)%20(1).pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Science Experiential Learning through Mobile Science Labs for underprivileged children",
+        "source": "https://www.csrbox.org/India_CSR_Project_Titan-Company-Limited-Education-with-special-focus-on-the-Girl-Child-Tamil-Nadu-_19418"
+      }
+    ],
+    "ceo": {
+      "name": "C K Venkataraman",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "N E Sridhar",
+      "title": "Chief Sustainability Officer",
+      "linkedin": "https://www.linkedin.com/in/sridhar-n-e-62217215/"
+    }
   },
   "L32309KA1954GOI000787": {
     "report_url": "https://bel-india.in/wp-content/uploads/2025/08/Integrated-Annual-Report-2024-25-1.pdf",
@@ -157,96 +631,1052 @@
   "L27020MH1958PLC011238": {
     "report_url": "https://www.hindalco.com/Upload/PDF/hindalco-annualreport-2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Satish Pai",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Avijit Raju",
+      "title": "Head CSR",
+      "linkedin": null,
+      "email": null
+    }
   },
   "L17124MP1947PLC000410": {
     "report_url": "https://www.grasim.com/Upload/PDF/grasim-integrated-annual-report-2024-25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Himanshu Kapania",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Ajay Gupta",
+      "title": "Head CSR",
+      "linkedin": null,
+      "email": null
+    }
   },
   "L24100MH1983PLC029442": {
     "report_url": "https://www.lupin.com/wp-content/uploads/2025/07/integrated-report-consolidated.pdf",
     "report_type": "Integrated Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Nilesh Gupta",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Tushara Shankar",
+      "title": "Head CSR & Lupin Foundation",
+      "linkedin": "https://in.linkedin.com/in/tushara-shankar-5b1a168",
+      "email": "tushara.shankar@lupin.com"
+    }
   },
   "L27204RJ1966PLC001208": {
     "report_url": "https://www.hzlindia.com/wp-content/uploads/Integrated-Annual-Report-2024-25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Arun Misra",
+      "title": "WTD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Anupam Nidhi",
+      "title": "Head CSR & Group CSR, Vedanta",
+      "linkedin": "https://in.linkedin.com/in/anupam-nidhi-55630a39",
+      "email": "anupam.nidhi@hzlindia.com"
+    }
   },
   "L24100MH1969PLC014336": {
     "report_url": "https://www.pidilite.com/content/dam/pidilitecorporatewebsite/financial/annual-reports/annual-report-2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Sudhanshu Vats",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Pavan Rajani",
+      "title": "Manager - CSR & Special Initiatives",
+      "linkedin": null,
+      "email": null
+    }
   },
   "U45203UR1988GOI009822": {
     "report_url": "https://thdc.co.in/sites/default/files/performance/THDCIL_Annual_Report_2024_25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Sipan Kumar Garg",
+      "title": "CMD (Addl. Charge)",
+      "linkedin": null
+    }
   },
   "L28920MH1945PLC004520": {
     "report_url": "https://www.tatamotors.com/wp-content/uploads/2024/05/tata-motor-IAR-2024-25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Implementing partner for Education Promotion CSR across Tata Motors locations",
+        "source": "https://csrbox.org/India_CSR_Project_Tata-Motors-Ltd-Education-Promotion-pan-india_19391"
+      },
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Implementing partner for Skill Development Programme",
+        "source": "https://csrbox.org/India_CSR_Project_Tata-Motors-Ltd-Skill-Development-Program-pan-india_19390"
+      }
+    ],
+    "ceo": {
+      "name": "Shailesh Chandra",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Vinod Kulkarni",
+      "title": "Head - CSR",
+      "linkedin": "https://www.linkedin.com/in/vinod-kulkarni-a1255218/"
+    }
   },
   "L93090TN1956GOI003507": {
     "report_url": "https://www.nlcindia.in/webassets/investor/AnnualReport2025.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Prasanna Kumar Motupalli",
+      "title": "CMD",
+      "linkedin": null
+    }
   },
   "U10200JH1956GOI000581": {
     "report_url": "https://d3u7ubx0okog7j.cloudfront.net/documents/CCL_Annual_Report_2024-25_Final_26.08.2025.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Nilendu Kumar Singh",
+      "title": "CMD",
+      "linkedin": null
+    }
   },
   "L40101DL1969GOI005095": {
     "report_url": "https://recindia.nic.in/uploads/files/REC-Annual-Report-FY-2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Jitendra Srivastava",
+      "title": "CMD",
+      "linkedin": null
+    }
   },
   "L24239MH1935PLC002380": {
     "report_url": "https://www.cipla.com/sites/default/files/Cipla-AR-2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Cipla Foundation partners with Pratham Scholarship Programme, supporting economically disadvantaged children across 14 states",
+        "source": "https://www.cipla.com/csr/cipla-foundation/education.html"
+      }
+    ],
+    "ceo": {
+      "name": "Umang Vohra",
+      "title": "MD & Global CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Anurag Mishra",
+      "title": "Head, Cipla Foundation",
+      "linkedin": null,
+      "email": null
+    }
   },
   "L29308MH1954PLC009371": {
     "report_url": "https://www.voltas.in/file-uploads/financial-snapshot/Annual-reports/VoltasAnnualReport2024-2025.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Partner for Affirmative Action skill training at Panvel centre in plumbing and electrical trades; reaches 13,500+ students",
+        "source": "https://thecsruniverse.com/articles/interview-with-pradnya-shinde-head-corporate-sustainability-voltas-stronger-law-needed-to-encourage-accountability-in-csr-implementation"
+      }
+    ],
+    "ceo": {
+      "name": "Pradeep Bakshi",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Pradnya Shinde",
+      "title": "Head - Corporate Sustainability",
+      "linkedin": null
+    }
   },
   "L51100GJ1993PLC019067": {
     "report_url": "https://www.adanienterprises.com/-/media/Project/Enterprises/Investors/Investor-Downloads/Annual-Report/AEL-FY25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Rajesh S. Adani",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Dr. Priti Adani",
+      "title": "Chairperson, Adani Foundation",
+      "linkedin": null,
+      "email": null
+    }
   },
   "L24230GJ1993PLC019050": {
     "report_url": "https://sunpharma.com/wp-content/uploads/2025/07/SPIL-Annual-Report-2024-25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Kirti Ganorkar",
+      "title": "MD",
+      "linkedin": null
+    }
   },
   "L15491WB1962PLC031425": {
     "report_url": "https://www.tataconsumer.com/sites/g/files/gfwrlq316/files/2025-06/Tata_Consumer_IAR_2024_25.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Sunil D'Souza",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
   },
   "L15140MH1988PLC049208": {
     "report_url": "https://marico.com/investorspdf/Marico_Annual_Report_FY25.pdf",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Saugata Gupta",
+      "title": "MD & CEO",
+      "linkedin": "https://in.linkedin.com/in/saugata-gupta-36aa3b14"
+    },
+    "funded_ngos": [
+      {
+        "ngo": "Educate Girls",
+        "details": "Long-standing CSR partner for girls' enrolment-retention-learning in Udaipur, Jalore (Rajasthan) and Dhar (MP); uses Gyan Ka Pitara kit for grades 3-5",
+        "source": "https://csrbox.org/India_CSR_Project_Marico-Limited-Educate-Girls-_8625"
+      }
+    ]
   },
   "L74899DL1998PLC093073": {
     "report_url": "https://www.petronetlng.in/documents/699827/1986169/Petronet+AR+202501.09.2025+%281%29.pdf/e066105b-f740-6d18-8ac7-4955d7f2fdd9?t=1756735211822",
     "report_type": "Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Akshay Kumar Singh",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
   },
   "L74899DL1965GOI004352": {
     "report_url": "https://engineersindia.com/admin/img/UploadedFiles/Reports/2024-2025/Chairman/8ad73059d2674e3387feb3a2e60cc173.pdf",
     "report_type": "Integrated Annual Report",
-    "report_year": "2024-25"
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Praveen M. Khanooja",
+      "title": "CMD (Interim)",
+      "linkedin": null
+    }
   },
   "U32100TG1967GOI001149": {
     "report_url": "https://www.ecil.co.in/imp_docs/annual_reports/58th_ECIL_AR_2024-25_English.pdf",
     "report_type": "Annual Report",
     "report_year": "2024-25"
-  }
+  },
+  "L85110KA1981PLC013115": {
+    "report_url": "https://www.infosys.com/investors/reports-filings/annual-report/annual/documents/infosys-ar-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Long-standing partnership; Bodoland STEM programme with 9 Mobile Science Labs and 18 Lab-on-a-Bike units in Assam",
+        "source": "https://www.infosys.org/infosys-foundation/initiatives/education.html"
+      },
+      {
+        "ngo": "India Literacy Project",
+        "details": "Digital education in 10 govt schools; developing 11 model schools in rural Mysuru (2025)",
+        "source": "https://www.infosys.com/newsroom/features/2025/develop-11-model-schools-rural-mysuru.html"
+      }
+    ],
+    "ceo": {
+      "name": "Salil Parekh",
+      "title": "CEO & MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Infosys Foundation",
+      "title": "CSR Contact",
+      "linkedin": null,
+      "email": "foundation@infosys.com"
+    }
+  },
+  "U10102OR1992GOI003038": {
+    "report_url": "https://www.mahanadicoal.in/Financial/pdf/AR%20MCRL%202024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "L15140MH1933PLC002030": {
+    "report_url": "https://www.hul.co.in/files/hul-integrated-annual-report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Rohit Jawa",
+      "title": "CEO & MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "BP Biddappa",
+      "title": "ED & Chief People, Transformation & Sustainability Officer",
+      "linkedin": "https://www.linkedin.com/in/bp-biddappa-8437b5/"
+    }
+  },
+  "L40101DL1975GOI007966": {
+    "report_url": "https://ntpc.co.in/sites/default/files/annual-report/complete-reports/Annual%20Report%202024-25_1.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Gurdeep Singh",
+      "title": "CMD",
+      "linkedin": null
+    }
+  },
+  "L65910MH1987PLC042961": {
+    "report_url": "https://www.bajajfinserv.in/finance-digital-annual-report-fy25/bajaj-finance-ltd-ar-2024-25-assets/pdf/annual-report-fy2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Teach For India",
+        "details": "Contributed towards TFI Fellowship and Alumni Leadership Incubators",
+        "source": "https://www.csrbox.org/India_CSR_Project_Bajaj-Finance-Limited--Maharashtra-_18246"
+      },
+      {
+        "ngo": "Akanksha Foundation",
+        "details": "Partnered to impact 950 students at Matoshri English Medium School, Pune",
+        "source": "https://cms-assets.bajajfinserv.in/is/content/bajajfinance/bfs-empowering-society-v1pdf"
+      }
+    ],
+    "ceo": {
+      "name": "Rajeev Jain",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Kurush Irani",
+      "title": "President - Group Head CSR, Bajaj Finserv",
+      "linkedin": "https://www.linkedin.com/in/kurush-irani-189767/"
+    }
+  },
+  "L27109DL1973GOI006454": {
+    "report_url": "https://www.sail.co.in/sites/default/files/2025-08/Sail%20Annual%20Report_2025_(25_08_2025).pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U01100MH1999PLC120563": {
+    "report_url": "https://www.ril.com/reports/CSR202425.pdf",
+    "report_type": "CSR Report (Parent: RIL)",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "LiftEd initiative ($18M FLN programme) — on-ground education partner across 15+ states, 3.3M children impacted",
+        "source": "https://bilkulonline.com/2024/01/24/private-sector-and-civil-society-collaborate-to-transform-education-and-support-the-government-of-indias-nipun-bharat-mission/"
+      },
+      {
+        "ngo": "Kaivalya Education Foundation",
+        "details": "LiftEd initiative — on-ground partner for FLN outcomes in government schools",
+        "source": "https://bilkulonline.com/2024/01/24/private-sector-and-civil-society-collaborate-to-transform-education-and-support-the-government-of-indias-nipun-bharat-mission/"
+      },
+      {
+        "ngo": "Language and Learning Foundation",
+        "details": "LiftEd initiative — on-ground partner for FLN outcomes",
+        "source": "https://bilkulonline.com/2024/01/24/private-sector-and-civil-society-collaborate-to-transform-education-and-support-the-government-of-indias-nipun-bharat-mission/"
+      },
+      {
+        "ngo": "Peepul India",
+        "details": "LiftEd initiative — on-ground partner for FLN outcomes",
+        "source": "https://bilkulonline.com/2024/01/24/private-sector-and-civil-society-collaborate-to-transform-education-and-support-the-government-of-indias-nipun-bharat-mission/"
+      },
+      {
+        "ngo": "Rocket Learning",
+        "details": "LiftEd initiative — EdTech Accelerator partner",
+        "source": "https://bilkulonline.com/2024/01/24/private-sector-and-civil-society-collaborate-to-transform-education-and-support-the-government-of-indias-nipun-bharat-mission/"
+      }
+    ],
+    "ceo": {
+      "name": "Jeyandran Venugopal",
+      "title": "President & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Shikha Shabdita",
+      "title": "Head Group CSR, Reliance",
+      "linkedin": null,
+      "email": "contactus@reliancefoundation.org"
+    }
+  },
+  "L65191PN1994PLC076333": {
+    "report_url": "https://www.indusind.com/content/dam/indusind-corporate/investor-resource/latest-annual-report/annual_report_2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Rajiv Anand",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Matilda Lobo",
+      "title": "EVP - CSR & Sustainable Banking",
+      "linkedin": "https://www.linkedin.com/in/matilda-lobo-17a220b3/",
+      "email": "matilda.lobo@indusind.com"
+    }
+  },
+  "L65910DL1986GOI024862": {
+    "report_url": "https://www.pfcclindia.com/download/annual-report-pfcl-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "L35911DL1984PLC017354": {
+    "report_url": "https://www.heromotocorp.com/content/dam/hero-aem-website/in/en-in/company-section/investors/annual-report/annual-reports/2024-2025/hero_motocorp_ir_2024_25_c2c_v3.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Magic Bus India Foundation",
+        "details": "Hamari Pari programme for 5,500 children in East/North Delhi",
+        "source": "https://csrbox.org/India_CSR_Project_Hero-Motocorp-Ltd-Promoting-education,-skill-development-and-road-safety-education-Haryana-_19763"
+      },
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "Hands-on science education; projected budget INR 215 Cr FY 2015-19",
+        "source": "https://csrbox.org/Impact/description/India_CSR_news_Top-10-Education-Projects-through-CSR-in-India-in-the-Financial-Year-2018-19_480"
+      }
+    ],
+    "ceo": {
+      "name": "Harshavardhan Chitale",
+      "title": "CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Latika Taneja",
+      "title": "Head - Corporate Communications, Corporate Affairs & CSR",
+      "linkedin": "https://in.linkedin.com/in/latika-taneja-1669b44"
+    }
+  },
+  "U99999MH1917PTC000478": {
+    "report_url": "https://www.tata.com/content/dam/tata/pdf/fy25/Tata-Sons-Annual-Report-FY25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "N. Chandrasekaran",
+      "title": "Chairman",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Siddharth Sharma",
+      "title": "Group Chief Sustainability Officer",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "L15202DL1959PLC003786": {
+    "report_url": "https://www.nestle.in/sites/g/files/pydnoa451/files/2025-06/Nestl%C3%A9-India-AR-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Magic Bus India Foundation",
+        "details": "Nestle Healthy Kids Programme since Dec 2014; 466,000+ adolescents across 25 states",
+        "source": "https://www.nestle.in/media/pressreleases/nestle-india-signs-an-agreement-with-magic-bus-india-foundation"
+      }
+    ]
+  },
+  "U45102GJ1997PLC031906": {
+    "report_url": "https://www.sptl.co.in/pdf/sptl-Annual-Report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U51909MH2006PLC166166": {
+    "report_url": "https://rilstaticasset.akamaized.net/sites/default/files/2025-07/Reliance_Retail_Ventures_Limited.pdf",
+    "report_type": "Financial Statements",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Jeyandran Venugopal",
+      "title": "President & CEO (Reliance Retail)",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Shikha Shabdita",
+      "title": "Head Group CSR, Reliance",
+      "linkedin": null,
+      "email": "contactus@reliancefoundation.org"
+    }
+  },
+  "U40100GJ1991PTC051130": {
+    "report_url": "https://www.jupl.co.in/pdf/jupl-Annual-Report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "L67190WB2014PLC204622": {
+    "report_url": "https://bandhan.bank.in/sites/default/files/2025-07/Annual-Report-FY24-25-2.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Partha Pratim Sengupta",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Sarvashish Roy",
+      "title": "Head CSR",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U65990MH1991PLC060670": {
+    "report_url": "https://www.tatacapital.com/content/dam/tata-capital/pdf/investors-and-financial-reports/annual-reports/24-25/tata-capital-limited.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Rajiv Sabharwal",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "U66010PN2000PLC015329": {
+    "report_url": "https://www.bajajgeneralinsurance.com/download-documents/annual-report/Annual-Report-2024-2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Akanksha Foundation",
+        "details": "Implementation agency for education CSR in Maharashtra",
+        "source": "https://thecsruniverse.com/articles/csr-2019-20-bajaj-allianz-spends-rs-23-93-crore-major-focus-on-healthcare-and-education"
+      }
+    ],
+    "ceo": {
+      "name": "Dr. Tapan Singhel",
+      "title": "MD & CEO",
+      "linkedin": "https://in.linkedin.com/in/tapansinghel"
+    },
+    "csr_head": {
+      "name": "Kurush Irani",
+      "title": "President - Group CSR, Bajaj Finserv",
+      "linkedin": "https://www.linkedin.com/in/kurush-irani-189767/",
+      "email": null
+    }
+  },
+  "L24120TG1961PLC000892": {
+    "report_url": "https://www.coromandel.biz/wp-content/uploads/2025/07/Integrated-Annual-Report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "S. Sankarasubramanian",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "U24304GJ2021PLC126977": {
+    "report_url": "https://www.ril.com/sites/default/files/2025-07/Reliance_Syngas_Limited.pdf",
+    "report_type": "Financial Statements",
+    "report_year": "2024-25"
+  },
+  "L23209KA1988GOI008959": {
+    "report_url": "https://admin.mrpl.co.in/img/UploadedFiles/AnnualReport/Files/e48fd029cb5849df9136c87a8ff639d1.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Mundkur Shyamprasad Kamath",
+      "title": "MD",
+      "linkedin": null
+    }
+  },
+  "L65993PN2007PLC130076": {
+    "report_url": "https://investors.bajajauto.com/ar25/wp-content/uploads/2025/07/BAL_Annual_Report_2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Rajiv Bajaj",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Pankaj Ballabh",
+      "title": "VP - CSR",
+      "linkedin": null,
+      "email": "csr@bajajauto.co.in"
+    }
+  },
+  "L24110MH1978GOI020185": {
+    "report_url": "https://www.rcfltd.com/public/storage/investers/1758606773.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U72200KA2002PLC030310": {
+    "report_url": "https://www.infosysbpm.com/about/documents/annual-report-2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Anantha Radhakrishnan",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "L24239MH1939PLC002893": {
+    "report_url": "https://www.tatachemicals.com/upload/content_pdf/integrated-annual-report-fy-2024-25.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25"
+  },
+  "L27101OR1961PLC000428": {
+    "report_url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/a0cbcd40-a9a0-4f0d-be63-14c29491f450.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Subhrakant Panda",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Shaifalika Panda",
+      "title": "Chief CSR & CEO, BIPF",
+      "linkedin": "https://www.linkedin.com/in/shaifalika-panda-488598275/",
+      "email": null
+    }
+  },
+  "L15146GJ1999PLC035320": {
+    "report_url": "https://www.awl.in/wp-content/uploads/2025/07/Annual-Report-2024-2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Shrikant Kanhere",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "U67190MH2008PLC187552": {
+    "report_url": "https://www.tatacapital.com/content/dam/tata-capital/pdf/tchfl/investor-information/annual-reports/annual-report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U15100MH1950GOI008187": {
+    "report_url": "https://www.irel.co.in/documents/20126/114997/Annual+Report+2024-25+IREL+%281%29.pdf/cb3382a3-24fa-c697-4a7c-782752762b4c?t=1762855411950",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "S.B. Mohanty (Interim)",
+      "title": "Director (Finance)",
+      "linkedin": null
+    }
+  },
+  "L25111KL1972PLC002449": {
+    "report_url": "https://corporate.apollotyres.com/content/dam/orbit/apollo-corporate/investors/financial-reporting/annual-report/2024-25/AGM%20Notice%20and%20Annual%20Report%20FY2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "L65999DL1998PLC093849": {
+    "report_url": "https://www.sbicard.com/sbi-card-en/assets/docs/pdf/who-we-are/notices/Integrated-annual-report-fy-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Salila Pande",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "SBI Cards CSR Team",
+      "title": "CSR Contact",
+      "linkedin": null,
+      "email": "csrpehel@sbicard.com"
+    }
+  },
+  "U61100GJ2009FLC095953": {
+    "report_url": "https://www.adaniports.com/-/media/Project/Ports/Investor/Investor-Downloads/Annual-Report/FY25.pdf",
+    "report_type": "Annual Report (Parent: APSEZ)",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Pranav Vora",
+      "title": "CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Dr. Priti Adani",
+      "title": "Chairperson, Adani Foundation (Parent)",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "L65991MH1999PLC123027": {
+    "report_url": "https://files.hdfcfund.com/s3fs-public/2025-06/HDFC%20AMC_AR%202024-25_C2C_41%20MB.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Navneet Munot",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "L70101HR1963PLC002484": {
+    "report_url": "https://www.dlf.in/annual_docket/Annual-report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Bharti Foundation",
+        "details": "Established 30 rural schools in Haryana, UP and Punjab",
+        "source": "https://www.dlffoundation.in/"
+      },
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Partnership since May 2007; DLF Learning Excellence Centres in 25 villages",
+        "source": "https://www.dlffoundation.in/"
+      }
+    ],
+    "ceo": {
+      "name": "Ashok Kumar Tyagi",
+      "title": "MD",
+      "linkedin": "https://in.linkedin.com/in/ashok-tyagi-7583941b0"
+    },
+    "csr_head": {
+      "name": "Gayatri Paul",
+      "title": "CEO, DLF Foundation",
+      "linkedin": null,
+      "email": "dlf-foundation@dlf.in"
+    }
+  },
+  "L64200MH1986PLC039266": {
+    "report_url": "https://gamma.tatacommunications.com/assets/wp-content/uploads/2025/06/integrated-annual-report-fy2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Kaivalya Education Foundation",
+        "details": "Funds ANEW programme in 110 govt schools in Gurugram through Gandhi Fellows; all schools SAKSHAM-certified",
+        "source": "https://www.tatasustainability.com/SocialAndHumanCapital/ANewEducationWorldview"
+      }
+    ],
+    "ceo": {
+      "name": "A S Lakshminarayanan",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Pallavi Barua",
+      "title": "Global Head & Director - CSR",
+      "linkedin": "https://in.linkedin.com/in/pallavi-barua-28962114"
+    }
+  },
+  "L65110MH2000PLC128245": {
+    "report_url": "https://www.hdfclife.com/content/dam/hdfclifeinsurancecompany/about-us/pdf/investor-relations/financial-information/annual-reports/integrated-annual-report-fy-2024-2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Teach For India",
+        "details": "Partnership since 2010; sponsored 2 employees as fellows for 2010-12 fellowship",
+        "source": "https://www.slideshare.net/slideshow/corporate-social-responsibility-initiatives-by-hdfc-bank-and-hdfc-life/50899840"
+      }
+    ],
+    "ceo": {
+      "name": "Vibha Padalkar",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Pritika Shah",
+      "title": "EVP & Head - Marketing & CSR",
+      "linkedin": "https://www.linkedin.com/in/pritika-shah/"
+    }
+  },
+  "U67120MH2000PLC152193": {
+    "report_url": "https://www.hdfcsec.com/hsl.docs/HSL_Annual%20Report_2025_16072025-202507181414053208313.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Dhiraj Relli",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "L65922DL2005PLC136029": {
+    "report_url": "https://www.sammaancapital.com/media/pdf/sclannualreportfy2025_98453.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U65910PN2008PLC132228": {
+    "report_url": "https://www.bajajhousingfinance.in/documents/37350/7232305/17th+Annual+Report.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Atul Jain",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Kurush Irani",
+      "title": "President - Group CSR, Bajaj Finserv",
+      "linkedin": "https://www.linkedin.com/in/kurush-irani-189767/",
+      "email": null
+    }
+  },
+  "L99999MH2000PLC129113": {
+    "report_url": "https://www.sbilife.co.in/sites/SBILife/Annual-Report/FY25/pdf/SBI_Life_IR_06_08_2025_Spread_High_vr_6%20(1).pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Amit Jhingran",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Ravindra Sharma",
+      "title": "Chief of Brand, Communications & CSR",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U40106MH1989PLC330738": {
+    "report_url": "https://www.tatapowersolar.com/wp-content/uploads/2024/07/09111325/TPSSL-Annual-Report-FY24.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2023-24"
+  },
+  "L31900MH2015PLC262254": {
+    "report_url": "https://reports.crompton.co.in/shopify/public/files/IvrMP89Bgk_Integrated%20Annual%20Report.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25"
+  },
+  "U85110MH2000PLC128425": {
+    "report_url": "https://www.tataaig.com/s3/fy_2024_25_23f0139dd5.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Amit Ganorkar",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Sibesh Sen",
+      "title": "Head of CSR",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "L74899DL1999GOI101707": {
+    "report_url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/f93b8c16-f2e4-49b3-9280-6c399a753158.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25"
+  },
+  "U28110KA1996PLC137499": {
+    "report_url": "https://www.indo-mim.com/wp-content/uploads/2025/09/Annual-report-2024-2025-1.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "L74899DL1995PLC068021": {
+    "report_url": "https://www.infoedge.in/pdfs/Report_filings/InfoEdge_Annual_Report_2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Language and Learning Foundation",
+        "details": "Rs 47.50 lakhs for play-based early learning in government primary schools in Haryana; funded LLF certificate course on early literacy",
+        "source": "https://indiacsr.in/info-edge-spends-rs-15-33-crore-on-corporate-social-responsibility-csr-in-fy-2025/"
+      },
+      {
+        "ngo": "Teach For India",
+        "details": "Donation to TFI for teacher fellowships in under-resourced schools; listed as implementing partner for Teacher Training Programme",
+        "source": "https://csrbox.org/India_CSR_Project_Info-Edge-(India)-Limited-Teacher-Training-Program-_18651"
+      }
+    ],
+    "ceo": {
+      "name": "Hitesh Oberoi",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "L31300MH1967PLC016531": {
+    "report_url": "https://www.finolex.com/UploadedDocs/Finolex%20Cables%20AR%202024-25_040925%20-3mb.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U14219TN1955PLC000961": {
+    "report_url": "https://drive.altiusinvestech.com/docs/2025-annual-report-INDIAN-Potash.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "L85110KA1989PLC009968": {
+    "report_url": "https://d1y69b020rytqm.cloudfront.net/PDF/Annual-Reports/July2025/Annual-Report-2024-25.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Manoj Raghavan",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "U24239MH2001PTC130654": {
+    "report_url": "https://www.ril.com/reports/CSR202425.pdf",
+    "report_type": "CSR Report (Parent: RIL)",
+    "report_year": "2024-25"
+  },
+  "L65190MH2003PLC143249": {
+    "report_url": "https://www.bseindia.com/xml-data/corpfiling/Attachhis/77d2730a-4ae8-409d-8233-e26a4763bb78.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25"
+  },
+  "L24292TG1970GOI001353": {
+    "report_url": "https://bdl-india.in/sites/default/files/AnnualReport2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Commodore A. Madhavarao (Retd.)",
+      "title": "CMD",
+      "linkedin": null
+    }
+  },
+  "U74999GJ2008PLC107256": {
+    "report_url": "https://www.adanielectricity.com/-/media/ElectricityFeature/ElectricityNew/PDFs/Investor-Relations/AEML_Annual_Report_2024_25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U15141KA2010PTC054808": {
+    "report_url": "https://wiproenterprises.com/wp-content/uploads/2025/12/Wipro-Annual-Report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "L67200MH1937PLC002622": {
+    "report_url": "https://tatainvestment.com/wp-content/uploads/2025/05/Tata-Investment-Annual-Report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U66010PN2001PLC015959": {
+    "report_url": "https://www.bajajlifeinsurance.com/content/dam/balic-web/pdf/financialinformation/Annual%20Report/2024-25/Q1/BALIC-Annual-Report-FY-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Tarun Chugh",
+      "title": "MD & CEO",
+      "linkedin": null
+    }
+  },
+  "L63090GJ1998PLC034182": {
+    "report_url": "https://www.adaniports.com/-/media/Project/Ports/Investor/Investor-Downloads/Annual-Report/FY25.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Karan Adani",
+      "title": "MD",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Dr. Priti Adani",
+      "title": "Chairperson, Adani Foundation",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U66000MH2009PLC190546": {
+    "report_url": "https://www.sbigeneral.in/about-us/investor-relations",
+    "report_type": "Annual Report (IR Page)",
+    "report_year": "2024-25",
+    "ceo": {
+      "name": "Naveen Chandra Jha",
+      "title": "MD & CEO",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Rathin Lahiri",
+      "title": "Head - Marketing & CSR",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U40101GJ2013PLC077700": {
+    "report_url": "https://www.adanienergysolutions.com/-/media/Project/Transmission/Investor/documents/Annual-Report/AESL--Annual-Report-FY25.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25"
+  },
+  "U65993MH1999PLC123191": {
+    "report_url": "https://www.bandhanamc.com/assets/pdfs/Annual_Report_Bandhan_AMC_Limited2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U67190MH2006PLC159411": {
+    "report_url": "https://www.credila.com/pdfs/21-Notice-of-20th-Annual-General-Meeting-and-Annual-Report-for-the-financial-year-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25"
+  },
+  "U45203TG1979PLC057431": {
+    "report_url": "https://tataprojects.com/web/sites/default/files/2025-09/Integrated-Annual-Report_FY-2024-25.pdf",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25"
+  },
+  "U60200GJ2010PLC115649": {
+    "report_url": "https://www.adanienterprises.com/-/media/Project/Enterprises/Investors/Investor-Downloads/Annual-Report/AEL-FY25.pdf",
+    "report_type": "Annual Report (Parent: Adani Enterprises)",
+    "report_year": "2024-25",
+    "csr_head": {
+      "name": "Dr. Priti Adani",
+      "title": "Chairperson, Adani Foundation (Parent)",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U74999KA2016PTC129059": {
+    "report_url": "https://www.wipro.com/content/dam/nexus/en/investor/annual-reports/2024-2025/Integrated-annual-report-2024-25.pdf",
+    "report_type": "Annual Report (Parent: Wipro)",
+    "report_year": "2024-25"
+  },
+  "U63090GJ2012PTC069305": {
+    "report_url": "https://www.adaniports.com/-/media/Project/Ports/Investor/Investor-Downloads/Annual-Report/FY25.pdf",
+    "report_type": "Annual Report (Parent: APSEZ)",
+    "report_year": "2024-25",
+    "csr_head": {
+      "name": "Dr. Priti Adani",
+      "title": "Chairperson, Adani Foundation (Parent)",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U61200GJ2014PTC080300": {
+    "report_url": "https://www.adaniports.com/-/media/Project/Ports/Investor/Investor-Downloads/Annual-Report/FY25.pdf",
+    "report_type": "Annual Report (Parent: APSEZ)",
+    "report_year": "2024-25",
+    "csr_head": {
+      "name": "Dr. Priti Adani",
+      "title": "Chairperson, Adani Foundation (Parent)",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U74993GJ2018PLC101340": {
+    "report_url": "https://www.adanienterprises.com/-/media/Project/Enterprises/Investors/Investor-Downloads/Annual-Report/AEL-FY25.pdf",
+    "report_type": "Annual Report (Parent: Adani Enterprises)",
+    "report_year": "2024-25",
+    "csr_head": {
+      "name": "Dr. Priti Adani",
+      "title": "Chairperson, Adani Foundation (Parent)",
+      "linkedin": null,
+      "email": null
+    }
+  },
+  "U45209PN2005PTC020270": {},
+  "U72200MH2004PTC144362": {},
+  "U45203KA2001PLC028418": {},
+  "U28111TN2006PTC089185": {},
+  "U74899DL1989PTC036517": {}
 }

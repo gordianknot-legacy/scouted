@@ -237,6 +237,16 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
             </button>
           </div>
 
+          {/* MCA data methodology note */}
+          <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-amber-50/80 border border-amber-200/50">
+            <svg className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+            </svg>
+            <p className="font-body text-[11px] text-amber-800 leading-relaxed">
+              <span className="font-semibold">Data Source: MCA Portal (FY 2023-24)</span> — Figures reflect project-level CSR spend per company ({'\u2018'}amnt_spent{'\u2019'} from MCA API), excluding administrative overheads and impact assessment costs. Holding companies (e.g., Bajaj Finserv) show only their own statutory spend; subsidiary CSR appears under each subsidiary{'\u2019'}s separate row. Totals may differ from consolidated figures in annual reports.
+            </p>
+          </div>
+
           {/* Company table */}
           <CsrCompanyTable
             companies={filtered}

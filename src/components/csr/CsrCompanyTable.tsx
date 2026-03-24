@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
+import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { formatINR } from '../../lib/formatters'
@@ -204,6 +204,11 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                           Pipeline
                         </span>
                       )}
+                      {c.fundedNgos.length > 0 && (
+                        <span className="shrink-0 px-1.5 py-0.5 rounded text-[11px] font-heading font-semibold bg-csf-yellow/20 text-amber-700">
+                          {c.fundedNgos.length} NGO{c.fundedNgos.length > 1 ? 's' : ''}
+                        </span>
+                      )}
                     </div>
 
                     {/* Key metrics */}
@@ -249,7 +254,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                   </div>
 
                   {/* Expand chevron */}
-                  {(c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
+                  {(c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
                     <button
                       onClick={() => setExpandedCin(isExpanded ? null : c.cin)}
                       className="mt-0.5 shrink-0 p-1"
@@ -260,12 +265,15 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                 </div>
               </div>
 
-              {/* Expanded: education & vocational projects */}
-              {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
+              {/* Expanded: education & vocational projects + NGOs */}
+              {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
                 <div>
                   <ExpandedProjects
                     eduProjects={c.eduProjects}
                     vocProjects={c.vocProjects}
+                    fundedNgos={c.fundedNgos}
+                    ceo={c.ceo}
+                    csrHead={c.csrHead}
                     cin={c.cin}
                   />
                   <div className="px-6 pb-3 flex items-center gap-3">
@@ -371,7 +379,7 @@ function CompanyRow({
 
         {/* Expand chevron */}
         <td className="px-1 py-3 text-center">
-          {(c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
+          {(c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
             <ChevronRightIcon className={`w-3.5 h-3.5 text-gray-400 transition-transform inline ${isExpanded ? 'rotate-90' : ''}`} />
           )}
         </td>
@@ -388,6 +396,11 @@ function CompanyRow({
             {lead && (
               <span className="shrink-0 px-1.5 py-0.5 rounded text-[11px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
                 Pipeline
+              </span>
+            )}
+            {c.fundedNgos.length > 0 && (
+              <span className="shrink-0 px-1.5 py-0.5 rounded text-[11px] font-heading font-semibold bg-csf-yellow/20 text-amber-700">
+                {c.fundedNgos.length} NGO{c.fundedNgos.length > 1 ? 's' : ''}
               </span>
             )}
           </div>
@@ -457,12 +470,15 @@ function CompanyRow({
       </tr>
 
       {/* Expanded detail */}
-      {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0) && (
+      {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
         <tr>
           <td colSpan={8} className="p-0">
             <ExpandedProjects
               eduProjects={c.eduProjects}
               vocProjects={c.vocProjects}
+              fundedNgos={c.fundedNgos}
+              ceo={c.ceo}
+              csrHead={c.csrHead}
               cin={c.cin}
             />
             <div className="px-6 pb-3">
@@ -486,15 +502,34 @@ function CompanyRow({
 function ExpandedProjects({
   eduProjects,
   vocProjects,
+  fundedNgos = [],
+  ceo,
+  csrHead,
   cin,
 }: {
   eduProjects: { field: string; spend: number }[]
   vocProjects: { field: string; spend: number }[]
+  fundedNgos?: { ngo: string; details: string; source: string }[]
+  ceo?: { name: string; title: string; linkedin?: string | null; email?: string | null }
+  csrHead?: { name: string; title: string; linkedin?: string | null; email?: string | null }
   cin: string
 }) {
   return (
     <div className="bg-gray-50/80 border-t border-gray-100 px-6 py-3 space-y-3">
-      <p className="font-body text-[11px] text-gray-400 font-mono text-right">{cin}</p>
+      {/* Leadership + CIN row */}
+      <div className="flex items-start justify-between gap-4">
+        {(ceo || csrHead) && (
+          <div className="flex flex-wrap gap-x-6 gap-y-1">
+            {ceo && (
+              <LeaderBadge label="CEO" name={ceo.name} title={ceo.title} linkedin={ceo.linkedin} email={ceo.email} />
+            )}
+            {csrHead && (
+              <LeaderBadge label="CSR Head" name={csrHead.name} title={csrHead.title} linkedin={csrHead.linkedin} email={csrHead.email} />
+            )}
+          </div>
+        )}
+        <p className="font-body text-[11px] text-gray-400 font-mono text-right shrink-0">{cin}</p>
+      </div>
 
       {eduProjects.length > 0 && (
         <ProjectSection
@@ -512,6 +547,72 @@ function ExpandedProjects({
           prefix="Vocational Skills: "
           accentClass="text-csf-purple"
         />
+      )}
+
+      {fundedNgos.length > 0 && (
+        <div>
+          <p className="font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+            Education NGO Partners ({fundedNgos.length})
+          </p>
+          <div className="space-y-1.5">
+            {fundedNgos.map((n, i) => (
+              <div key={i} className="flex items-start gap-2">
+                <div className="min-w-0 flex-1">
+                  <p className="font-heading text-xs font-semibold text-amber-700">{n.ngo}</p>
+                  <p className="font-body text-xs text-gray-500 leading-relaxed">{n.details}</p>
+                </div>
+                <a
+                  href={n.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="shrink-0 p-1 rounded hover:bg-gray-200 transition-colors"
+                  title="View source"
+                >
+                  <ArrowTopRightOnSquareIcon className="w-3 h-3 text-gray-400" />
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function LeaderBadge({ label, name, title, linkedin, email }: {
+  label: string
+  name: string
+  title: string
+  linkedin?: string | null
+  email?: string | null
+}) {
+  return (
+    <div className="flex items-center gap-1.5 flex-wrap">
+      <span className="font-heading text-[10px] font-semibold text-gray-400 uppercase">{label}:</span>
+      <span className="font-heading text-xs font-medium text-gray-700">{name}</span>
+      <span className="font-body text-[10px] text-gray-400">({title})</span>
+      {linkedin && (
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="shrink-0 text-[#0A66C2] hover:text-[#004182] transition-colors"
+          title="LinkedIn profile"
+        >
+          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      )}
+      {email && (
+        <a
+          href={`mailto:${email}`}
+          onClick={(e) => e.stopPropagation()}
+          className="shrink-0 font-body text-[11px] text-csf-blue hover:text-csf-blue/80 hover:underline transition-colors"
+          title={`Email: ${email}`}
+        >
+          {email}
+        </a>
       )}
     </div>
   )
