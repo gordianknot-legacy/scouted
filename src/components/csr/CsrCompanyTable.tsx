@@ -510,8 +510,8 @@ function ExpandedProjects({
   eduProjects: { field: string; spend: number }[]
   vocProjects: { field: string; spend: number }[]
   fundedNgos?: { ngo: string; details: string; source: string }[]
-  ceo?: { name: string; title: string; linkedin?: string | null; email?: string | null }
-  csrHead?: { name: string; title: string; linkedin?: string | null; email?: string | null }
+  ceo?: { name: string; title: string; linkedin?: string | null; email?: string | null; email_verified?: boolean; email_confidence?: number }
+  csrHead?: { name: string; title: string; linkedin?: string | null; email?: string | null; email_verified?: boolean; email_confidence?: number }
   cin: string
 }) {
   return (
@@ -521,10 +521,10 @@ function ExpandedProjects({
         {(ceo || csrHead) && (
           <div className="flex flex-wrap gap-x-6 gap-y-1">
             {ceo && (
-              <LeaderBadge label="CEO" name={ceo.name} title={ceo.title} linkedin={ceo.linkedin} email={ceo.email} />
+              <LeaderBadge label="CEO" name={ceo.name} title={ceo.title} linkedin={ceo.linkedin} email={ceo.email} emailVerified={ceo.email_verified} emailConfidence={ceo.email_confidence} />
             )}
             {csrHead && (
-              <LeaderBadge label="CSR Head" name={csrHead.name} title={csrHead.title} linkedin={csrHead.linkedin} email={csrHead.email} />
+              <LeaderBadge label="CSR Head" name={csrHead.name} title={csrHead.title} linkedin={csrHead.linkedin} email={csrHead.email} emailVerified={csrHead.email_verified} emailConfidence={csrHead.email_confidence} />
             )}
           </div>
         )}
@@ -580,13 +580,23 @@ function ExpandedProjects({
   )
 }
 
-function LeaderBadge({ label, name, title, linkedin, email }: {
+function LeaderBadge({ label, name, title, linkedin, email, emailVerified, emailConfidence }: {
   label: string
   name: string
   title: string
   linkedin?: string | null
   email?: string | null
+  emailVerified?: boolean
+  emailConfidence?: number
 }) {
+  // Confidence indicator: green = verified/high, yellow = medium, gray = low
+  const confidenceColor = emailVerified ? 'bg-green-400' :
+    (emailConfidence ?? 0) >= 75 ? 'bg-csf-yellow' :
+    (emailConfidence ?? 0) >= 50 ? 'bg-amber-300' : 'bg-gray-300'
+  const confidenceLabel = emailVerified ? 'Verified' :
+    (emailConfidence ?? 0) >= 75 ? `${emailConfidence}% match` :
+    (emailConfidence ?? 0) >= 50 ? `${emailConfidence}% match` : 'Low confidence'
+
   return (
     <div className="flex items-center gap-1.5 flex-wrap">
       <span className="font-heading text-[10px] font-semibold text-gray-400 uppercase">{label}:</span>
@@ -605,14 +615,20 @@ function LeaderBadge({ label, name, title, linkedin, email }: {
         </a>
       )}
       {email && (
-        <a
-          href={`mailto:${email}`}
-          onClick={(e) => e.stopPropagation()}
-          className="shrink-0 font-body text-[11px] text-csf-blue hover:text-csf-blue/80 hover:underline transition-colors"
-          title={`Email: ${email}`}
-        >
-          {email}
-        </a>
+        <span className="inline-flex items-center gap-1 shrink-0">
+          <a
+            href={`mailto:${email}`}
+            onClick={(e) => e.stopPropagation()}
+            className="font-body text-[11px] text-csf-blue hover:text-csf-blue/80 hover:underline transition-colors"
+            title={`Email: ${email}`}
+          >
+            {email}
+          </a>
+          <span
+            className={`w-1.5 h-1.5 rounded-full ${confidenceColor}`}
+            title={confidenceLabel}
+          />
+        </span>
       )}
     </div>
   )

@@ -19,7 +19,10 @@
       "name": "Joseph Sunil Nallapalli",
       "title": "Global Head, CSR",
       "linkedin": "https://in.linkedin.com/in/joseph-sunil-nallapalli-0a248914",
-      "email": null
+      "email": "joseph.nallapalli@tcs.com",
+      "email_verified": false,
+      "email_confidence": 59,
+      "email_pattern": "first.last"
     }
   },
   "L17110MH1973PLC019786": {
@@ -105,7 +108,10 @@
       "name": "Nusrat Pathan",
       "title": "Head - CSR",
       "linkedin": null,
-      "email": "csr@hdfcbank.com"
+      "email": "nusrat.pathan@hdfcbank.com",
+      "email_verified": false,
+      "email_confidence": 90,
+      "email_pattern": "first.last"
     }
   },
   "L27100MH1907PLC000260": {
@@ -127,7 +133,11 @@
     "csr_head": {
       "name": "Sourav Roy",
       "title": "Chief CSR & CEO, Tata Steel Foundation",
-      "linkedin": "https://www.linkedin.com/in/sourav-roy-347ba94/"
+      "linkedin": "https://www.linkedin.com/in/sourav-roy-347ba94/",
+      "email": "sourav.roy@tatasteel.com",
+      "email_verified": false,
+      "email_confidence": 58,
+      "email_pattern": "first.last"
     }
   },
   "L27105HR1979PLC009913": {
@@ -142,7 +152,11 @@
     "csr_head": {
       "name": "Shallu Jindal",
       "title": "Chairperson, JSPL Foundation",
-      "linkedin": null
+      "linkedin": null,
+      "email": "sjindal@jindalsteelpower.com",
+      "email_verified": false,
+      "email_confidence": 75,
+      "email_pattern": "f_last"
     }
   },
   "L64200MH1986PLC041370": {
@@ -158,7 +172,10 @@
       "name": "Chetan Kapoor",
       "title": "CEO, Tech Mahindra Foundation",
       "linkedin": "https://in.linkedin.com/in/chetankapoorcsr",
-      "email": "communications@techmahindrafoundation.org"
+      "email": "chetan.kapoor@techmahindra.com",
+      "email_verified": false,
+      "email_confidence": 59,
+      "email_pattern": "first.last"
     }
   },
   "L32102KA1945PLC020800": {
@@ -207,7 +224,10 @@
       "name": "Sandeep Kumar",
       "title": "COO, ONGC Foundation",
       "linkedin": null,
-      "email": "info@ongcfoundation.org"
+      "email": "kumar_sandeep@ongc.co.in",
+      "email_verified": false,
+      "email_confidence": 70,
+      "email_pattern": "last_first"
     }
   },
   "L65110GJ1993PLC020769": {
@@ -223,7 +243,10 @@
       "name": "Abhejit Agarwal",
       "title": "SVP & Head - Sustainability & CSR",
       "linkedin": "https://www.linkedin.com/in/abhejit/",
-      "email": "sustainability@axisbank.com"
+      "email": "abhejit.agarwal@axisbank.com",
+      "email_verified": false,
+      "email_confidence": 73,
+      "email_pattern": "first.last"
     }
   },
   "L34103DL1981PLC011375": {
@@ -239,7 +262,8 @@
       "name": "Tarun Agarwal",
       "title": "VP & Head CSR",
       "linkedin": "https://in.linkedin.com/in/tarun-agarwal-74163815",
-      "email": "contact@marutisuzuki.com"
+      "email": "tarun.agarwal@maruti.co.in",
+      "email_verified": true
     }
   },
   "L16005WB1910PLC001985": {
@@ -266,7 +290,11 @@
     "csr_head": {
       "name": "Madhulika Sharma",
       "title": "VP & Chief Sustainability Officer",
-      "linkedin": "https://www.linkedin.com/in/madhulika-sharma-586a9b43/"
+      "linkedin": "https://www.linkedin.com/in/madhulika-sharma-586a9b43/",
+      "email": "madhulika.sharma@itc.in",
+      "email_verified": false,
+      "email_confidence": 76,
+      "email_pattern": "first.last"
     }
   },
   "L65910KL1997PLC011300": {
@@ -354,7 +382,9 @@
     "csr_head": {
       "name": "Puneet Anand",
       "title": "AVP - Corporate Affairs & CSR",
-      "linkedin": "https://www.linkedin.com/in/puneet-anand-874a425/"
+      "linkedin": "https://www.linkedin.com/in/puneet-anand-874a425/",
+      "email": "puneet.anand@hmie.co.in",
+      "email_verified": true
     }
   },
   "L65110MH1985PLC038137": {
@@ -386,7 +416,9 @@
     "csr_head": {
       "name": "Rohit Rao",
       "title": "Jt President & Group Chief CSR Officer",
-      "linkedin": "https://www.linkedin.com/in/rohit-rao-160a5745/"
+      "linkedin": "https://www.linkedin.com/in/rohit-rao-160a5745/",
+      "email": "rohit.rao@kotak.com",
+      "email_verified": true
     }
   },
   "L23201MH1959GOI011388": {
@@ -433,7 +465,11 @@
     "csr_head": {
       "name": "Prabodha Acharya",
       "title": "Group Chief Sustainability Officer",
-      "linkedin": null
+      "linkedin": null,
+      "email": "prabodha.acharya@jsw.in",
+      "email_verified": false,
+      "email_confidence": 88,
+      "email_pattern": "first.last"
     }
   },
   "L65990MH1945PLC004558": {
@@ -448,7 +484,11 @@
     "csr_head": {
       "name": "Sheetal Mehta",
       "title": "Sr VP & Chief CSR; ED, KC Mahindra Education Trust",
-      "linkedin": "https://in.linkedin.com/in/mehta-sheetal-03371b2"
+      "linkedin": "https://in.linkedin.com/in/mehta-sheetal-03371b2",
+      "email": "sheetal.mehta@mahindra.com",
+      "email_verified": false,
+      "email_confidence": 90,
+      "email_pattern": "first.last"
     }
   },
   "L23201MH1952GOI008858": {
@@ -471,7 +511,8 @@
       "name": "Rajeev Goel",
       "title": "ED - CSR & PR",
       "linkedin": null,
-      "email": null
+      "email": "rajeev.goel@hpcl.in",
+      "email_verified": true
     }
   },
   "U10102MP1985GOI003160": {
@@ -504,7 +545,10 @@
       "name": "Sanjay Datta",
       "title": "President, ICICI Foundation",
       "linkedin": null,
-      "email": "info@icicifoundation.org"
+      "email": "sanjay.datta@icicibank.com",
+      "email_verified": false,
+      "email_confidence": 84,
+      "email_pattern": "first.last"
     }
   },
   "L23109WB1973GOI028844": {
@@ -520,7 +564,10 @@
       "name": "Renu Chaturvedi",
       "title": "Head CSR",
       "linkedin": null,
-      "email": null
+      "email": "renu.chaturvedi@coalindia.in",
+      "email_verified": false,
+      "email_confidence": 50,
+      "email_pattern": "first.last"
     }
   },
   "L27203OR1981GOI000920": {
@@ -599,7 +646,11 @@
     "csr_head": {
       "name": "Archana Sahay",
       "title": "Global Head - ESG & CSR",
-      "linkedin": "https://www.linkedin.com/in/archana-sahay-8563799/"
+      "linkedin": "https://www.linkedin.com/in/archana-sahay-8563799/",
+      "email": "archana.sahay@ltimindtree.com",
+      "email_verified": false,
+      "email_confidence": 92,
+      "email_pattern": "first.last"
     }
   },
   "L74999TZ1984PLC001456": {
@@ -621,7 +672,11 @@
     "csr_head": {
       "name": "N E Sridhar",
       "title": "Chief Sustainability Officer",
-      "linkedin": "https://www.linkedin.com/in/sridhar-n-e-62217215/"
+      "linkedin": "https://www.linkedin.com/in/sridhar-n-e-62217215/",
+      "email": "nesridhar@titan.co.in",
+      "email_verified": false,
+      "email_confidence": 40,
+      "email_pattern": "firstlast"
     }
   },
   "L32309KA1954GOI000787": {
@@ -642,7 +697,10 @@
       "name": "Avijit Raju",
       "title": "Head CSR",
       "linkedin": null,
-      "email": null
+      "email": "avijit.raju@adityabirla.com",
+      "email_verified": false,
+      "email_confidence": 65,
+      "email_pattern": "first.last"
     }
   },
   "L17124MP1947PLC000410": {
@@ -658,7 +716,10 @@
       "name": "Ajay Gupta",
       "title": "Head CSR",
       "linkedin": null,
-      "email": null
+      "email": "ajay.gupta@adityabirla.com",
+      "email_verified": false,
+      "email_confidence": 65,
+      "email_pattern": "first.last"
     }
   },
   "L24100MH1983PLC029442": {
@@ -706,7 +767,10 @@
       "name": "Pavan Rajani",
       "title": "Manager - CSR & Special Initiatives",
       "linkedin": null,
-      "email": null
+      "email": "pavan.rajani@pidilite.com",
+      "email_verified": false,
+      "email_confidence": 70,
+      "email_pattern": "first.last"
     }
   },
   "U45203UR1988GOI009822": {
@@ -743,7 +807,11 @@
     "csr_head": {
       "name": "Vinod Kulkarni",
       "title": "Head - CSR",
-      "linkedin": "https://www.linkedin.com/in/vinod-kulkarni-a1255218/"
+      "linkedin": "https://www.linkedin.com/in/vinod-kulkarni-a1255218/",
+      "email": "vinod.kulkarni@tatamotors.com",
+      "email_verified": false,
+      "email_confidence": 82,
+      "email_pattern": "first.last"
     }
   },
   "L93090TN1956GOI003507": {
@@ -796,7 +864,10 @@
       "name": "Anurag Mishra",
       "title": "Head, Cipla Foundation",
       "linkedin": null,
-      "email": null
+      "email": "anurag.mishra@cipla.com",
+      "email_verified": false,
+      "email_confidence": 96,
+      "email_pattern": "first.last"
     }
   },
   "L29308MH1954PLC009371": {
@@ -834,7 +905,10 @@
       "name": "Dr. Priti Adani",
       "title": "Chairperson, Adani Foundation",
       "linkedin": null,
-      "email": null
+      "email": "priti.adani@adani.com",
+      "email_verified": false,
+      "email_confidence": 65,
+      "email_pattern": "first.last"
     }
   },
   "L24230GJ1993PLC019050": {
@@ -944,7 +1018,11 @@
     "csr_head": {
       "name": "BP Biddappa",
       "title": "ED & Chief People, Transformation & Sustainability Officer",
-      "linkedin": "https://www.linkedin.com/in/bp-biddappa-8437b5/"
+      "linkedin": "https://www.linkedin.com/in/bp-biddappa-8437b5/",
+      "email": "bp.biddappa@unilever.com",
+      "email_verified": false,
+      "email_confidence": 94,
+      "email_pattern": "first.last"
     }
   },
   "L40101DL1975GOI007966": {
@@ -981,7 +1059,11 @@
     "csr_head": {
       "name": "Kurush Irani",
       "title": "President - Group Head CSR, Bajaj Finserv",
-      "linkedin": "https://www.linkedin.com/in/kurush-irani-189767/"
+      "linkedin": "https://www.linkedin.com/in/kurush-irani-189767/",
+      "email": "kurush.irani@bajajfinserv.in",
+      "email_verified": false,
+      "email_confidence": 90,
+      "email_pattern": "first.last"
     }
   },
   "L27109DL1973GOI006454": {
@@ -1029,7 +1111,8 @@
       "name": "Shikha Shabdita",
       "title": "Head Group CSR, Reliance",
       "linkedin": null,
-      "email": "contactus@reliancefoundation.org"
+      "email": "shikha.shabdita@ril.com",
+      "email_verified": false
     }
   },
   "L65191PN1994PLC076333": {
@@ -1077,7 +1160,9 @@
     "csr_head": {
       "name": "Latika Taneja",
       "title": "Head - Corporate Communications, Corporate Affairs & CSR",
-      "linkedin": "https://in.linkedin.com/in/latika-taneja-1669b44"
+      "linkedin": "https://in.linkedin.com/in/latika-taneja-1669b44",
+      "email": "latika.taneja@heromotocorp.com",
+      "email_verified": true
     }
   },
   "U99999MH1917PTC000478": {
@@ -1093,7 +1178,10 @@
       "name": "Siddharth Sharma",
       "title": "Group Chief Sustainability Officer",
       "linkedin": null,
-      "email": null
+      "email": "siddharth.sharma@tata.com",
+      "email_verified": false,
+      "email_confidence": 37,
+      "email_pattern": "first.last"
     }
   },
   "L15202DL1959PLC003786": {
@@ -1126,7 +1214,8 @@
       "name": "Shikha Shabdita",
       "title": "Head Group CSR, Reliance",
       "linkedin": null,
-      "email": "contactus@reliancefoundation.org"
+      "email": "shikha.shabdita@ril.com",
+      "email_verified": false
     }
   },
   "U40100GJ1991PTC051130": {
@@ -1147,7 +1236,8 @@
       "name": "Sarvashish Roy",
       "title": "Head CSR",
       "linkedin": null,
-      "email": null
+      "email": "sarvashish.roy@bandhanbank.com",
+      "email_verified": false
     }
   },
   "U65990MH1991PLC060670": {
@@ -1180,7 +1270,10 @@
       "name": "Kurush Irani",
       "title": "President - Group CSR, Bajaj Finserv",
       "linkedin": "https://www.linkedin.com/in/kurush-irani-189767/",
-      "email": null
+      "email": "kurush.irani@bajajfinserv.in",
+      "email_verified": false,
+      "email_confidence": 90,
+      "email_pattern": "first.last"
     }
   },
   "L24120TG1961PLC000892": {
@@ -1221,7 +1314,8 @@
       "name": "Pankaj Ballabh",
       "title": "VP - CSR",
       "linkedin": null,
-      "email": "csr@bajajauto.co.in"
+      "email": "pankaj.ballabh@bajajauto.co.in",
+      "email_verified": false
     }
   },
   "L24110MH1978GOI020185": {
@@ -1257,7 +1351,10 @@
       "name": "Shaifalika Panda",
       "title": "Chief CSR & CEO, BIPF",
       "linkedin": "https://www.linkedin.com/in/shaifalika-panda-488598275/",
-      "email": null
+      "email": "shaifalika.panda@imfa.in",
+      "email_verified": false,
+      "email_confidence": 60,
+      "email_pattern": "first.last"
     }
   },
   "L15146GJ1999PLC035320": {
@@ -1319,7 +1416,10 @@
       "name": "Dr. Priti Adani",
       "title": "Chairperson, Adani Foundation (Parent)",
       "linkedin": null,
-      "email": null
+      "email": "priti.adani@adani.com",
+      "email_verified": false,
+      "email_confidence": 65,
+      "email_pattern": "first.last"
     }
   },
   "L65991MH1999PLC123027": {
@@ -1357,7 +1457,10 @@
       "name": "Gayatri Paul",
       "title": "CEO, DLF Foundation",
       "linkedin": null,
-      "email": "dlf-foundation@dlf.in"
+      "email": "gayatri.paul@dlf.in",
+      "email_verified": false,
+      "email_confidence": 70,
+      "email_pattern": "first.last"
     }
   },
   "L64200MH1986PLC039266": {
@@ -1379,7 +1482,11 @@
     "csr_head": {
       "name": "Pallavi Barua",
       "title": "Global Head & Director - CSR",
-      "linkedin": "https://in.linkedin.com/in/pallavi-barua-28962114"
+      "linkedin": "https://in.linkedin.com/in/pallavi-barua-28962114",
+      "email": "pallavi.barua@tatacommunications.com",
+      "email_verified": false,
+      "email_confidence": 94,
+      "email_pattern": "first.last"
     }
   },
   "L65110MH2000PLC128245": {
@@ -1401,7 +1508,9 @@
     "csr_head": {
       "name": "Pritika Shah",
       "title": "EVP & Head - Marketing & CSR",
-      "linkedin": "https://www.linkedin.com/in/pritika-shah/"
+      "linkedin": "https://www.linkedin.com/in/pritika-shah/",
+      "email": "pritika.shah@hdfclife.com",
+      "email_verified": true
     }
   },
   "U67120MH2000PLC152193": {
@@ -1432,7 +1541,10 @@
       "name": "Kurush Irani",
       "title": "President - Group CSR, Bajaj Finserv",
       "linkedin": "https://www.linkedin.com/in/kurush-irani-189767/",
-      "email": null
+      "email": "kurush.irani@bajajfinserv.in",
+      "email_verified": false,
+      "email_confidence": 90,
+      "email_pattern": "first.last"
     }
   },
   "L99999MH2000PLC129113": {
@@ -1448,7 +1560,10 @@
       "name": "Ravindra Sharma",
       "title": "Chief of Brand, Communications & CSR",
       "linkedin": null,
-      "email": null
+      "email": "ravindra.sharma@sbilife.co.in",
+      "email_verified": false,
+      "email_confidence": 60,
+      "email_pattern": "first.last"
     }
   },
   "U40106MH1989PLC330738": {
@@ -1474,7 +1589,10 @@
       "name": "Sibesh Sen",
       "title": "Head of CSR",
       "linkedin": null,
-      "email": null
+      "email": "sibesh.sen@tataaig.com",
+      "email_verified": false,
+      "email_confidence": 70,
+      "email_pattern": "first.last"
     }
   },
   "L74899DL1999GOI101707": {
@@ -1587,7 +1705,10 @@
       "name": "Dr. Priti Adani",
       "title": "Chairperson, Adani Foundation",
       "linkedin": null,
-      "email": null
+      "email": "priti.adani@adani.com",
+      "email_verified": false,
+      "email_confidence": 65,
+      "email_pattern": "first.last"
     }
   },
   "U66000MH2009PLC190546": {
@@ -1603,7 +1724,10 @@
       "name": "Rathin Lahiri",
       "title": "Head - Marketing & CSR",
       "linkedin": null,
-      "email": null
+      "email": "rathin.lahiri@sbigeneral.in",
+      "email_verified": false,
+      "email_confidence": 60,
+      "email_pattern": "first.last"
     }
   },
   "U40101GJ2013PLC077700": {

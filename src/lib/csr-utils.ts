@@ -12,6 +12,8 @@ export interface LeaderInfo {
   title: string
   linkedin?: string | null
   email?: string | null
+  email_verified?: boolean
+  email_confidence?: number
 }
 
 const reportLinksMap = reportLinks as unknown as Record<string, {
@@ -19,8 +21,8 @@ const reportLinksMap = reportLinks as unknown as Record<string, {
   report_type?: string
   report_year?: string
   funded_ngos?: FundedNgo[]
-  ceo?: { name: string; title: string; linkedin?: string | null; email?: string | null }
-  csr_head?: { name: string; title: string; linkedin?: string | null; email?: string | null } | null
+  ceo?: LeaderInfo
+  csr_head?: (LeaderInfo & { email_pattern?: string }) | null
 }>
 
 export interface CompanySummary {
