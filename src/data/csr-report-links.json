@@ -2050,5 +2050,248 @@
     },
     "csr_head": null,
     "email_domain": "ibm.com"
+  },
+  "U27100GJ1976FLC013787": {
+    "report_url": "https://www.amns.in/storage/statutory-documents/February2026/AMNS_Annual_Report_2024_25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Protean eGov Technologies (Vidyasaarathi)",
+        "details": "Beti Padhao scholarship for girls from Class 9 in Odisha, Gujarat, AP, Chhattisgarh, Maharashtra; ~650 women supported",
+        "source": "https://indiacsr.in/arcelormittal-nippon-steel-beti-padhao-protean/"
+      },
+      {
+        "ngo": "NAMTECH",
+        "details": "Technology institute founded by AM/NS India to develop day-zero-ready manufacturing talent",
+        "source": "https://www.namtech.ac/founding-partner"
+      },
+      {
+        "ngo": "NSDC",
+        "details": "Daksh Digital Skills Training; ~75% placement rate, target 1,600+ youth per year",
+        "source": "https://csrbox.org/Impact/description/India_CSR_news_AM-NS-India-helps-over-1,100-women-become-self-sufficient_1682"
+      }
+    ],
+    "ceo": {
+      "name": "Dilip Oommen",
+      "title": "CEO",
+      "linkedin": "https://www.linkedin.com/in/dilip-oommen-888038203"
+    },
+    "csr_head": {
+      "name": "Dr. Vikas Chandra Yadvendu",
+      "title": "Group Head CSR",
+      "linkedin": "https://www.linkedin.com/in/dr-vikas-yadvendu-a9965515/"
+    },
+    "email_domain": "amns.in"
+  },
+  "U85110PN1993PLC145950": {
+    "report_url": "https://www.capgemini.com/in-en/wp-content/uploads/sites/18/2025/08/Annual-Report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Infotech Foundation",
+        "details": "Leap Digital Academy for youth 18-35 from disadvantaged backgrounds with skills training and placement",
+        "source": "https://www.capgemini.com/in-en/about-us/csr/digital-inclusion/transforming-lives-through-technology/"
+      },
+      {
+        "ngo": "Save The Children India",
+        "details": "Study Centre Programme for underprivileged children",
+        "source": "https://csrbox.org/India_CSR_Project_Capgemini-Technology-Services-India-Limited-Educational-Activities-Karnataka_3501"
+      },
+      {
+        "ngo": "Digital Empowerment Foundation",
+        "details": "Project Akshara — notebooks at 46 government schools for tech-enabled learning",
+        "source": "https://csrbox.org/India_CSR_Project_Capgemini-Technology-Services-India-Limited-Educational-Activities-Karnataka_3501"
+      },
+      {
+        "ngo": "Foundation For Excellence India Trust",
+        "details": "Scholarships for meritorious students from low-income families",
+        "source": "https://csrbox.org/India_CSR_Project_Capgemini-Technology-Services-India-Limited-Educational-Activities-Karnataka_3501"
+      },
+      {
+        "ngo": "Lila Poonawalla Foundation",
+        "details": "Education support and scholarships for girls from economically weaker sections",
+        "source": "https://csrbox.org/India_CSR_Project_Capgemini-Technology-Services-India-Limited-Educational-Activities-Karnataka_3501"
+      }
+    ],
+    "ceo": {
+      "name": "Sanjay Chalke",
+      "title": "CEO, Capgemini India",
+      "linkedin": "https://www.linkedin.com/in/sanjay-chalke-846a903/"
+    },
+    "csr_head": {
+      "name": "Kumar Anurag Pratap",
+      "title": "VP & Head CSR",
+      "linkedin": "https://www.linkedin.com/in/anuragpratap/"
+    },
+    "email_domain": "capgemini.com"
+  },
+  "U24230GJ2011PTC065022": {
+    "funded_ngos": [
+      {
+        "ngo": "Maa Foundation",
+        "details": "Promoting education — scholarships and training programmes for students in Gujarat",
+        "source": "https://csrbox.org/India_CSR_Project_Meril-Life-Sciences-Private-Limited-Promoting-Education-Gujarat_2398"
+      }
+    ],
+    "ceo": {
+      "name": "Vivek Shah",
+      "title": "Chief Executive Officer",
+      "linkedin": "https://in.linkedin.com/in/vivek-shah-849886239"
+    },
+    "csr_head": null,
+    "email_domain": "merillife.com"
+  },
+  "U32107DL1997PTC220109": {
+    "report_url": "https://www.lg.com/content/dam/lge/in/migration/lginvestorrelations/IRPdf/FI/AnnualR/Annual-Report-2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Buddy4Study Foundation",
+        "details": "Life's Good Scholarship — up to Rs 1 Lakh for meritorious students from economically weaker backgrounds",
+        "source": "https://indiacsr.in/csr-lg-electronics-announces-lifes-good-scholarship-program/"
+      },
+      {
+        "ngo": "Akshaya Patra Foundation",
+        "details": "Life's Good Nutrition Programme — mid-day meals for ~59,000 children in govt schools",
+        "source": "https://www.lg.com/in/lg-india-corporate-social-responsibility/"
+      }
+    ],
+    "ceo": {
+      "name": "Hong Ju Jeon",
+      "title": "Managing Director",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Neeta Linz",
+      "title": "GM — Corporate Communications & CSR",
+      "linkedin": "https://www.linkedin.com/in/neeta-linz-8845591b/"
+    },
+    "email_domain": "lge.com"
+  },
+  "L51900MH2000PLC126473": {
+    "report_url": "https://api.dmartindia.com/corporate/content/file/v1/2/a9Os9yY39irtsLGqpfg1sf0j1752936464/Business%20Responsibility%20and%20Sustainability%20Report%20for%20FY%202024-25.pdf",
+    "report_type": "BRSR Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Dakshana Foundation",
+        "details": "Residential coaching scholarships for rural students preparing for IIT-JEE and NEET; 450 scholars in FY25, 260/324 JEE qualified, 255/261 NEET qualified",
+        "source": "https://thecsruniverse.com/articles/dmart-spends-over-rs-35-crore-on-csr-projects-major-focus-on-education"
+      },
+      {
+        "ngo": "Shanti Bhavan Children's Project",
+        "details": "Holistic residential education (ages 4-23) for underprivileged children in Bangalore; DMart supports 28 children",
+        "source": "https://thecsruniverse.com/articles/dmart-spends-over-rs-35-crore-on-csr-projects-major-focus-on-education"
+      }
+    ],
+    "ceo": {
+      "name": "Anshul Asawa",
+      "title": "CEO & Managing Director",
+      "linkedin": "https://in.linkedin.com/in/anshul-asawa"
+    },
+    "csr_head": {
+      "name": "Utkarsh Tripathi",
+      "title": "Manager - CSR",
+      "linkedin": "https://www.linkedin.com/in/utkarshtripathi94/"
+    },
+    "email_domain": "dmartindia.com"
+  },
+  "U74999KA1996FTC055568": {
+    "funded_ngos": [
+      {
+        "ngo": "Literacy India",
+        "details": "Future Skills Project — trained 9,000 youth in 5 states in Python, AI/ML, digital marketing (15-year partnership)",
+        "source": "https://thecsruniverse.com/articles/literacy-india-dell-technologies-transforms-lives-of-9000-youth-under-future-skills-project-"
+      },
+      {
+        "ngo": "India Literacy Project",
+        "details": "ICT tools, career guidance, spoken English for students in govt schools",
+        "source": "https://www.ilpnet.org/ilp-dell-technologies-collaboration/"
+      },
+      {
+        "ngo": "American India Foundation",
+        "details": "Project Future Ready with NSDC — career skills for 100,000+ students in Mumbai and Delhi NCR",
+        "source": "https://csrbox.org/Impact/description/India_CSR_news_Dell-Technologies,-American-India-Foundation-and-NSDC-Collaborate-to-Launch-Project-Future-Ready_893"
+      },
+      {
+        "ngo": "Smile Foundation",
+        "details": "Education programme funding support",
+        "source": "https://ngofundings.org/csr/dells-csr-activities/"
+      }
+    ],
+    "ceo": {
+      "name": "Manish Gupta",
+      "title": "President & MD, Dell India",
+      "linkedin": "https://www.linkedin.com/in/manishgupta05/"
+    },
+    "csr_head": null,
+    "email_domain": "dell.com"
+  },
+  "U30007KA1996PTC019630": {
+    "report_url": "https://www.apple.com/legal/more-resources/docs/Apple-India-Annual-CSR.pdf",
+    "report_type": "CSR Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Akanksha Foundation",
+        "details": "Supports 9 schools for low-income communities in Mumbai, Pune, Nagpur; teacher training",
+        "source": "https://www.apple.com/in/legal/more-resources/docs/Apple-IA-Akanksha-Foundation-Report.pdf"
+      },
+      {
+        "ngo": "Barefoot College",
+        "details": "Solar Mamas training, rural education, village electrification across 15 states",
+        "source": "https://www.thebusinessscroll.com/csr-activities-of-apple-in-india/"
+      }
+    ],
+    "ceo": {
+      "name": "Virat Bhatia",
+      "title": "Managing Director",
+      "linkedin": "https://in.linkedin.com/in/virat-bhatia-19304a97"
+    },
+    "csr_head": null,
+    "email_domain": "apple.com"
+  },
+  "L40200DL1984GOI018976": {
+    "report_url": "https://gailonline.com/pdf/InvestorsZone/AnnualReports/GAIL%20Annual%20Report%202024-25%20web_updated.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "CIPET",
+        "details": "Skill development training in plastics manufacturing across Ahmedabad, Bhubaneshwar, Guwahati, Lucknow, Hyderabad; 460+ candidates",
+        "source": "https://www.cipet.gov.in/centres/cipet-lucknow/gail_2022_23_01.php"
+      },
+      {
+        "ngo": "IL&FS Skills (ISDC)",
+        "details": "GAIL Institute of Skills for job-linked training in hydrocarbon trades at Guna (MP) and Nagaram (AP)",
+        "source": "https://www.skillreporter.com/csr/gail-india-taken-programme-kaushal-skill-development-also-established-gail-institute-skills/"
+      }
+    ],
+    "ceo": {
+      "name": "Deepak Gupta",
+      "title": "Chairman & Managing Director",
+      "linkedin": "https://www.linkedin.com/in/deepak-gupta-0389a46/"
+    },
+    "csr_head": null,
+    "email_domain": "gail.co.in"
+  },
+  "U13100OR1956SGC000313": {
+    "funded_ngos": [
+      {
+        "ngo": "Odisha Adarsha Vidyalaya Sangathan (OAVS)",
+        "details": "Runs 5 Odisha Mining Adarsha Vidyalayas — free CBSE residential schools for 1,400+ students (70% ST/SC) from mining periphery villages",
+        "source": "https://www.prameyanews.com/dhira-nayaks-story-of-hope-and-dignity-embodies-the-success-of-omcs-omav-education-initiative"
+      }
+    ],
+    "ceo": {
+      "name": "Sudhanshu Mohan Samal",
+      "title": "Managing Director (IAS)",
+      "linkedin": null
+    },
+    "csr_head": null,
+    "email_domain": "odishamining.in"
   }
 }
