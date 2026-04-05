@@ -355,7 +355,7 @@ The MCA portal at `mca.gov.in/content/csr/global/master/home/ExploreCsrData/comp
 | **csrxchange.gov.in** | Not viable | Project marketplace only, no company-wise spending data. Has public JSON API at `/Frontend/home_project_list` for CSR projects but no spending amounts in list view |
 | **data.gov.in** | Not viable | CSR dataset pages exist but NO working APIs. MCA explicitly refuses to publish CSR data on OGD platform. Datasets stop at 2020-21 |
 | **csr.gov.in** | Same as MCA | Same portal different URL, same Akamai + CAPTCHA protection |
-| **mcacdm.nic.in** | Untested | MCA CDM portal, SSL certificate issues. May have downloadable CSR analytics |
+| **mcacdm.nic.in** | **Promising — Phase 2** | MCA CDM portal at `mcacdm.nic.in/cdm/` reportedly offers CSV/XLSX download with filters (FY, state, sector, PSU/Non-PSU). Could yield all 27,188 CSR-filing companies for FY 2023-24 without CAPTCHA. **Plan:** after exhausting current 5,667 discovered CINs, scrape CDM for complete company list → feed into existing CAPTCHA+API pipeline. See "Phase 2: CDM Company Discovery" below |
 | **GitHub scrapers** | All abandoned | 6+ repos (spfrantz/MCA-CSR-Scraper, sushantMoon/Captcha-Solver, etc.), all target old V2 portal, none work with current V3 |
 | **Commercial APIs** | No CSR data | SurePass, Sandbox, CompData.in — all offer CIN/DIN lookup only, none expose CSR spending |
 | **Kaggle** | Nothing | No India CSR spending dataset exists |
@@ -381,7 +381,26 @@ The MCA portal at `mca.gov.in/content/csr/global/master/home/ExploreCsrData/comp
 lim, ind, pri, cor, ent, pow, ste, ban, pha, ene,
 oil, inf, tat, rel, fin, ins, tec, cem, aut, che
 ```
-These 20 prefixes are designed to cover virtually all CSR-filing companies in India. Each triggers the MCA portal's live search AJAX, and results are deduplicated by CIN.
+These 20 prefixes (plus 60 more in the extended set, 80 total) discovered 5,667 companies. However, **27,188 companies** filed CSR spending for FY 2023-24 per the National CSR Portal — meaning the prefix approach covers only ~21% of the universe.
+
+### Phase 2: CDM Company Discovery (After 5,667 Exhausted)
+
+**Problem:** The 80 prefix-based discovery only found 5,667 of 27,188 CSR-filing companies. Many company names start with prefixes not covered (hundreds of uncovered 3-letter combinations).
+
+**Solution:** Use `mcacdm.nic.in/cdm/` (MCA CDM portal) to get a complete company list, then feed those CINs into the existing CAPTCHA+API fetch pipeline.
+
+**Plan:**
+1. **Scrape CDM portal** at `mcacdm.nic.in/cdm/` — reportedly offers CSV/XLSX downloads filterable by FY 2023-24, state, development sector, and PSU/Non-PSU classification
+2. **Extract company names + CINs** from the CDM data
+3. **Merge with existing `csr_companies.json`** — deduplicate by CIN, keep new discoveries
+4. **Feed into existing pipeline** — `node csr-scraper.js --resume --source companies` continues with the expanded list
+5. No changes needed to Phase 2 (API fetch) or Phase 3 (transform) — they already work with any `[{name, cin}]` list
+
+**Trigger:** Implement when `--resume --source companies` reports all 5,667 companies processed (i.e., no more companies left to fetch).
+
+**Fallback:** If CDM portal is inaccessible (SSL issues noted previously), generate systematic 3-letter prefixes (`aaa`-`zzz` filtered to common company name starts) and run additional `--discover` cycles. Alternatively, Dataful.in Dataset 1612 (₹999) has all companies with full detail.
+
+**Reference:** The CSR Journal reports India Inc. spent ₹34,908.75 Cr on CSR in FY24 across 27,188 companies. Top 10 alone = ₹5,857 Cr (17%).
 
 ### CSR Frontend Architecture
 
@@ -389,12 +408,13 @@ These 20 prefixes are designed to cover virtually all CSR-filing companies in In
 | File | Purpose |
 |------|---------|
 | `src/components/csr/CsrPage.tsx` | Main page — fetches data, aggregates by CIN, stats bar, filters |
-| `src/components/csr/CsrCompanyTable.tsx` | Sortable table — Education, Vocational, Total CSR columns + expanded project detail |
+| `src/components/csr/CsrCompanyTable.tsx` | Sortable table — Education, Vocational, Total CSR columns + expanded geographic footprint |
 | `src/components/csr/CsrPipeline.tsx` | Kanban board with drag-and-drop (`@dnd-kit`), DndContext + DragOverlay |
 | `src/components/csr/PipelineCard.tsx` | Presentational card for pipeline leads |
 | `src/components/csr/LeadDetailPanel.tsx` | Slide-over detail panel for pipeline leads |
 | `src/hooks/useCsrData.ts` | React Query hook — fetches all `csr_spending` rows with pagination (1000-row batches via `.range()`) |
-| `src/hooks/useCsrLeads.ts` | React Query hooks — `useCsrLeads()`, `useCreateLead()`, `useUpdateLead()` |
+| `src/hooks/useCsrLeads.ts` | React Query hooks — `useCsrLeads()`, `useCreateLead()`, `useUpdateLead()`, `useArchiveLead()`, `useRestoreLead()` |
+| `src/hooks/useCsrGeo.ts` | React Query hook — lazy-loads `csr_spending_geo` records per CIN when row is expanded |
 | `src/hooks/useCsrShortlist.ts` | localStorage-based shortlist by CIN |
 
 ### Pipeline Drag-and-Drop (`CsrPipeline.tsx`)
@@ -417,7 +437,26 @@ These 20 prefixes are designed to cover virtually all CSR-filing companies in In
 Star | Expand | Company | Education | Vocational | Total CSR | Edu %
 
 **Expanded Detail:**
-Shows two sections when expanded: "Education (N)" and "Vocational Skills (N)", each listing projects sorted by spend descending. Education amounts in CSF Blue, Vocational amounts in purple.
+Shows the following sections when a row is expanded:
+1. **Leadership** — CEO and CSR Head with LinkedIn/email links
+2. **Geographic Footprint** — state-level horizontal stacked bars (Education/Vocational/Other), click to expand district breakdown. Priority states (Punjab, Bihar, Tamil Nadu, Maharashtra) sorted first with star icon. Lazy-loaded from `csr_spending_geo` table via `useCsrGeo` hook.
+3. **Education NGO Partners** — funded NGOs with source links
+4. **Pipeline Actions** — "Move to Pipeline" / "Remove from Pipeline" (soft delete with confirmation) / "Restore to Pipeline" (for archived leads)
+
+**Pipeline Soft Delete:**
+- `csr_leads.is_archived` boolean column — `true` = soft-deleted
+- "Remove from Pipeline" shows inline confirmation dialog before archiving
+- Archived leads are excluded from pipeline Kanban and pipeline count in stats bar
+- "Restore to Pipeline" button shown for archived leads in the company table
+- `useCsrLeads(fy, includeArchived)` — pass `true` to include archived leads (used by CsrPage to show restore option)
+
+**Geographic Data:**
+- **Table:** `csr_spending_geo` — stores per-record state/district/sector/project spend from MCA API
+- **Upsert:** `scraper/csr-geo-upsert.ts` — reads `csr_progress.json`, classifies sectors (Education/Vocational/Other), deduplicates by `(cin, state, district, project, fiscal_year)` with amount summing, upserts to Supabase
+- **Composite key:** `(cin, state, district, project, fiscal_year)` — unique constraint
+- **Index:** `idx_csr_geo_cin_fy` on `(cin, fiscal_year)` for fast per-company lookups
+- **RLS:** anon can `SELECT` only
+- **Data:** 9,412 raw API records → ~unique rows across 1,153 companies, 39 states, 588 state-district pairs
 
 **Filters:**
 - Search by company name

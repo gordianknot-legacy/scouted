@@ -22,6 +22,7 @@
  *   node csr-scraper.js --source companies           (use csr_companies.json, prioritised)
  *   node csr-scraper.js --source mylist.json         (use custom JSON [{name,cin},...])
  *   node csr-scraper.js --rank                       (rank scraped companies by spend, output top 500)
+ *   node csr-scraper.js --fresh                      (delete browser profile for clean start)
  *
  * Output: csr_report_23_24.json, csr_top500.json
  */
@@ -37,7 +38,7 @@ import path from 'path';
 config({ path: path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1')), '..', '.env') });
 
 // ─── Config ─────────────────────────────────────────────────────────────────
-const MCA_URL = 'https://www.mca.gov.in/content/csr/global/master/home/ExploreCsrData/company-wise.html';
+const MCA_URL = 'https://www.csr.gov.in/content/csr/global/master/home/ExploreCsrData/company-wise.html';
 const API_PATH = '/content/csr/global/master/home/home/csr-expenditure--geographical-distribution/state/district/company.companyReportAPI.html';
 const TARGET_FY = 'FY 2023-24';
 const OUTPUT_FILE = 'csr_report_23_24.json';
@@ -168,8 +169,10 @@ const TARGET_COMPANIES = [
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const humanDelay = (minMs = 800, maxMs = 2500) => sleep(minMs + Math.random() * (maxMs - minMs));
 const isResume = process.argv.includes('--resume');
 const isManual = process.argv.includes('--manual');
+const isFresh = process.argv.includes('--fresh');
 
 function getStartIndex() {
   const idx = process.argv.indexOf('--start');
@@ -546,8 +549,8 @@ async function discoverCompanies(page) {
     const searchBox = page.locator('#SearchBox');
     await searchBox.click();
     await searchBox.fill('');
-    await sleep(500);
-    await searchBox.pressSequentially(prefix, { delay: 120 });
+    await humanDelay(400, 900);
+    await searchBox.pressSequentially(prefix, { delay: 100 + Math.random() * 80 });
 
     // Wait for table to stabilise (at least 4s of no row count change)
     let prevCount = 0;
@@ -628,7 +631,7 @@ async function discoverCompanies(page) {
     fs.writeFileSync(COMPANIES_FILE, JSON.stringify(allCompanies, null, 2));
 
     // Brief delay before next prefix
-    await sleep(1500);
+    await humanDelay(1200, 3000);
   }
 
   console.log(`\n${'='.repeat(50)}`);
@@ -754,8 +757,8 @@ async function processCompany(page, companyName, index, total) {
   const searchBox = page.locator('#SearchBox');
   await searchBox.click();
   await searchBox.fill('');
-  await sleep(500);
-  await searchBox.pressSequentially(searchTerm, { delay: 100 });
+  await humanDelay(400, 900);
+  await searchBox.pressSequentially(searchTerm, { delay: 80 + Math.random() * 60 });
 
   // Wait for table to stabilise
   let prevCount = 0;
@@ -781,8 +784,8 @@ async function processCompany(page, companyName, index, total) {
     const firstWord = searchTerm.split(' ')[0];
     await searchBox.click();
     await searchBox.fill('');
-    await sleep(500);
-    await searchBox.pressSequentially(firstWord, { delay: 100 });
+    await humanDelay(400, 900);
+    await searchBox.pressSequentially(firstWord, { delay: 80 + Math.random() * 60 });
 
     for (let i = 0; i < 15; i++) {
       await sleep(1000);
@@ -877,7 +880,7 @@ async function processCompany(page, companyName, index, total) {
   if (isManual) {
     const rows = page.locator('#myTable #geoTBody tr, #myTable tbody tr');
     await rows.nth(matchResult.index).click();
-    await sleep(2000);
+    await humanDelay(1500, 3000);
     console.log('  MANUAL: Solve the CAPTCHA and click Submit in the browser.');
     try {
       const response = await page.waitForResponse(
@@ -919,11 +922,11 @@ async function processCompany(page, companyName, index, total) {
     if (attempt > 0) {
       console.log('  Reloading page for fresh attempt...');
       await page.goto(MCA_URL, { waitUntil: 'networkidle', timeout: 60000 });
-      await sleep(2000);
+      await humanDelay(2000, 4000);
       await page.locator('#SearchBox').waitFor({ timeout: 15000 });
       const searchBox = page.locator('#SearchBox');
       await searchBox.fill('');
-      await searchBox.pressSequentially(buildSearchTerm(companyName), { delay: 100 });
+      await searchBox.pressSequentially(buildSearchTerm(companyName), { delay: 80 + Math.random() * 60 });
       for (let w = 0; w < 15; w++) {
         await sleep(1000);
         const count = await page.$$eval('#myTable tbody tr', r => r.length).catch(() => 0);
@@ -978,11 +981,11 @@ async function processCompany(page, companyName, index, total) {
       const captchaInput = page.locator('#customCaptchaInput');
       await captchaInput.click();
       await captchaInput.fill('');
-      await captchaInput.pressSequentially(answer, { delay: 50 });
+      await captchaInput.pressSequentially(answer, { delay: 40 + Math.random() * 40 });
 
       // Submit the captcha answer
       await page.locator('#check').click();
-      await sleep(1500);
+      await humanDelay(1200, 2500);
 
       // Check for wrong captcha
       const pageText = await page.textContent('body').catch(() => '');
@@ -1121,11 +1124,26 @@ async function processCompany(page, companyName, index, total) {
     console.log(`Resuming: ${processedSet.size} companies already processed.`);
   }
 
+  // Delete flagged browser profile if --fresh
+  if (isFresh && fs.existsSync(PROFILE_DIR)) {
+    console.log('Deleting flagged browser profile for fresh start...');
+    fs.rmSync(PROFILE_DIR, { recursive: true, force: true });
+  }
+
   // Launch browser
   console.log('Launching browser...');
   const context = await chromium.launchPersistentContext(PROFILE_DIR, {
     headless: false,
-    args: ['--disable-blink-features=AutomationControlled'],
+    channel: 'chrome',
+    args: [
+      '--disable-blink-features=AutomationControlled',
+      '--disable-features=IsolateOrigins,site-per-process',
+      '--disable-infobars',
+      '--no-first-run',
+      '--no-default-browser-check',
+      '--disable-background-networking',
+      '--disable-dev-shm-usage',
+    ],
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
     viewport: { width: 1366, height: 768 },
     locale: 'en-IN',
@@ -1134,10 +1152,57 @@ async function processCompany(page, companyName, index, total) {
 
   const page = context.pages()[0] || await context.newPage();
 
+  // Stealth: patch bot detection signals before any navigation
+  await page.addInitScript(() => {
+    // 1. Hide webdriver flag
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+
+    // 2. Fake chrome.runtime (all real Chrome browsers have this)
+    if (!window.chrome) window.chrome = {};
+    if (!window.chrome.runtime) window.chrome.runtime = { connect: () => {}, sendMessage: () => {} };
+
+    // 3. Fake plugins array (real Chrome has 3-5 plugins)
+    Object.defineProperty(navigator, 'plugins', {
+      get: () => {
+        const plugins = [
+          { name: 'Chrome PDF Plugin', filename: 'internal-pdf-viewer', description: 'Portable Document Format', length: 1 },
+          { name: 'Chrome PDF Viewer', filename: 'mhjfbmdgcfjbbpaeojofohoefgiehjai', description: '', length: 1 },
+          { name: 'Native Client', filename: 'internal-nacl-plugin', description: '', length: 2 },
+        ];
+        plugins.item = i => plugins[i] || null;
+        plugins.namedItem = n => plugins.find(p => p.name === n) || null;
+        plugins.refresh = () => {};
+        return plugins;
+      },
+    });
+
+    // 4. Languages
+    Object.defineProperty(navigator, 'languages', { get: () => ['en-IN', 'en-US', 'en'] });
+
+    // 5. Permissions API — make it look normal
+    if (navigator.permissions) {
+      const origQuery = navigator.permissions.query.bind(navigator.permissions);
+      navigator.permissions.query = (params) => {
+        if (params.name === 'notifications') {
+          return Promise.resolve({ state: Notification.permission });
+        }
+        return origQuery(params);
+      };
+    }
+
+    // 6. WebGL vendor/renderer (avoid headless tells)
+    const getParameterOrig = WebGLRenderingContext.prototype.getParameter;
+    WebGLRenderingContext.prototype.getParameter = function(param) {
+      if (param === 37445) return 'Google Inc. (Intel)';
+      if (param === 37446) return 'ANGLE (Intel, Intel(R) UHD Graphics 630, OpenGL 4.5)';
+      return getParameterOrig.call(this, param);
+    };
+  });
+
   try {
     console.log('Navigating to MCA CSR page...');
     await page.goto(MCA_URL, { waitUntil: 'networkidle', timeout: 60000 });
-    await sleep(3000);
+    await humanDelay(2500, 5000);
 
     // Wait for search box to confirm page loaded
     await page.locator('#SearchBox').waitFor({ timeout: 15000 });
@@ -1203,14 +1268,14 @@ async function processCompany(page, companyName, index, total) {
           console.log(`\n  >> Progress: ${succeeded} succeeded, ${failed} failed, ${skipped} skipped`);
         }
 
-        // Brief delay between companies
-        await sleep(1500);
+        // Brief delay between companies (randomised to look human)
+        await humanDelay(1000, 3000);
 
         // Reload page every 20 companies to prevent session issues
         if ((succeeded + failed) % 20 === 0 && i < targets.length - 1) {
           console.log('\n  Reloading page to refresh session...');
           await page.goto(MCA_URL, { waitUntil: 'networkidle', timeout: 60000 });
-          await sleep(3000);
+          await humanDelay(2500, 5000);
           await page.locator('#SearchBox').waitFor({ timeout: 15000 });
         }
 
@@ -1224,7 +1289,7 @@ async function processCompany(page, companyName, index, total) {
         // Try to recover by reloading
         try {
           await page.goto(MCA_URL, { waitUntil: 'networkidle', timeout: 60000 });
-          await sleep(3000);
+          await humanDelay(2500, 5000);
         } catch {}
       }
     }

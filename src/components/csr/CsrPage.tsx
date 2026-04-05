@@ -3,7 +3,7 @@ import { ArrowLeftIcon, MagnifyingGlassIcon, StarIcon } from '@heroicons/react/2
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { useCsrData } from '../../hooks/useCsrData'
 import { useCsrShortlist } from '../../hooks/useCsrShortlist'
-import { useCsrLeads, useCreateLead } from '../../hooks/useCsrLeads'
+import { useCsrLeads, useCreateLead, useArchiveLead, useRestoreLead } from '../../hooks/useCsrLeads'
 import { CsrCompanyTable } from './CsrCompanyTable'
 import { formatINR } from '../../lib/formatters'
 import { aggregateByCin } from '../../lib/csr-utils'
@@ -31,8 +31,10 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
 
   const { data: records = [], isLoading, error } = useCsrData(fiscalYear)
   const shortlist = useCsrShortlist()
-  const { data: leads = [] } = useCsrLeads(fiscalYear)
+  const { data: leads = [] } = useCsrLeads(fiscalYear, true)
   const createLead = useCreateLead()
+  const archiveLead = useArchiveLead()
+  const restoreLead = useRestoreLead()
 
   // Aggregate records into company-level summaries
   const companies = useMemo(() => aggregateByCin(records), [records])
@@ -183,7 +185,7 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
                 In Pipeline
               </p>
               <p className="font-heading text-xl font-bold text-csf-purple mt-0.5">
-                {leads.length}
+                {leads.filter(l => !l.is_archived).length}
               </p>
             </div>
           </div>
@@ -255,6 +257,9 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
             onMoveToPipeline={(cin, company) => {
               createLead.mutate({ cin, company, fiscal_year: fiscalYear })
             }}
+            onArchiveLead={(id) => archiveLead.mutate(id)}
+            onRestoreLead={(id) => restoreLead.mutate(id)}
+            fiscalYear={fiscalYear}
             page={page}
             pageSize={15}
             onPageChange={setPage}

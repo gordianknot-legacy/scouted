@@ -46,6 +46,19 @@ export interface CsrSpendingRecord {
   created_at: string
 }
 
+export interface CsrGeoRecord {
+  id: string
+  cin: string
+  company: string
+  state: string
+  district: string
+  sector: string
+  project: string
+  spend_inr: number
+  fiscal_year: string
+  created_at: string
+}
+
 // ── CSR Lead Pipeline ───────────────────────────────────────────────
 
 export type PipelineStage = 'prospect' | 'researching' | 'outreach' | 'proposal_sent' | 'responded' | 'won' | 'lost' | 'paused'
@@ -55,6 +68,7 @@ export interface CsrLead {
   cin: string
   company: string
   pipeline_stage: PipelineStage
+  is_archived: boolean
   ishmeet_connected: boolean | null
   saurabh_connected: boolean | null
   connection_notes: string

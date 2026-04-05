@@ -1,10 +1,17 @@
 import { useState, useMemo } from 'react'
-import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon, MapPinIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { formatINR } from '../../lib/formatters'
+import { useCsrGeo } from '../../hooks/useCsrGeo'
 import type { CompanySummary } from '../../lib/csr-utils'
-import type { CsrLead } from '../../types'
+import type { CsrLead, CsrGeoRecord } from '../../types'
+
+const CSF_PRIORITY_STATES = ['Punjab', 'Bihar', 'Tamil Nadu', 'Maharashtra']
+
+function isPriorityState(state: string): boolean {
+  return CSF_PRIORITY_STATES.some(p => state.toLowerCase() === p.toLowerCase())
+}
 
 type SortField = 'eduSpend' | 'vocSpend' | 'totalSpend' | 'company' | 'eduPct'
 type SortDir = 'asc' | 'desc'
@@ -17,12 +24,15 @@ interface CsrCompanyTableProps {
   }
   leads: CsrLead[]
   onMoveToPipeline: (cin: string, company: string) => void
+  onArchiveLead: (id: string) => void
+  onRestoreLead: (id: string) => void
+  fiscalYear: string
   page: number
   pageSize: number
   onPageChange: (page: number) => void
 }
 
-export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline, page, pageSize, onPageChange }: CsrCompanyTableProps) {
+export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline, onArchiveLead, onRestoreLead, fiscalYear, page, pageSize, onPageChange }: CsrCompanyTableProps) {
   const leadsByCin = useMemo(() => {
     const map = new Map<string, CsrLead>()
     for (const l of leads) map.set(l.cin, l)
@@ -149,6 +159,9 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                   isShortlisted={starred}
                   lead={leadsByCin.get(c.cin)}
                   onMoveToPipeline={() => onMoveToPipeline(c.cin, c.company)}
+                  onArchiveLead={onArchiveLead}
+                  onRestoreLead={onRestoreLead}
+                  fiscalYear={fiscalYear}
                   onToggle={() => setExpandedCin(isExpanded ? null : c.cin)}
                   onStar={(e) => {
                     e.stopPropagation()
@@ -254,49 +267,25 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                   </div>
 
                   {/* Expand chevron */}
-                  {(c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
-                    <button
-                      onClick={() => setExpandedCin(isExpanded ? null : c.cin)}
-                      className="mt-0.5 shrink-0 p-1"
-                    >
-                      <ChevronRightIcon className={`w-4 h-4 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
-                    </button>
-                  )}
+                  <button
+                    onClick={() => setExpandedCin(isExpanded ? null : c.cin)}
+                    className="mt-0.5 shrink-0 p-1"
+                  >
+                    <ChevronRightIcon className={`w-4 h-4 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                  </button>
                 </div>
               </div>
 
-              {/* Expanded: education & vocational projects + NGOs */}
-              {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
-                <div>
-                  <ExpandedProjects
-                    eduProjects={c.eduProjects}
-                    vocProjects={c.vocProjects}
-                    fundedNgos={c.fundedNgos}
-                    ceo={c.ceo}
-                    csrHead={c.csrHead}
-                    cin={c.cin}
-                  />
-                  <div className="px-6 pb-3 flex items-center gap-3">
-                    <button
-                      onClick={() => onMoveToPipeline(c.cin, c.company)}
-                      disabled={inPipeline}
-                      className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-csf-purple text-white hover:bg-csf-purple/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    >
-                      {inPipeline ? 'In Pipeline' : 'Move to Pipeline'}
-                    </button>
-                    {c.reportUrl && (
-                      <a
-                        href={c.reportUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-heading text-xs font-medium border border-csf-blue/20 text-csf-blue hover:bg-csf-blue/5 transition-colors"
-                      >
-                        <DocumentTextIcon className="w-3.5 h-3.5" />
-                        {c.reportType || 'Report'}
-                      </a>
-                    )}
-                  </div>
-                </div>
+              {/* Expanded: geo footprint + NGOs */}
+              {isExpanded && (
+                <ExpandedDetail
+                  company={c}
+                  lead={leadsByCin.get(c.cin)}
+                  onMoveToPipeline={() => onMoveToPipeline(c.cin, c.company)}
+                  onArchiveLead={onArchiveLead}
+                  onRestoreLead={onRestoreLead}
+                  fiscalYear={fiscalYear}
+                />
               )}
             </div>
           )
@@ -341,6 +330,9 @@ function CompanyRow({
   isShortlisted,
   lead,
   onMoveToPipeline,
+  onArchiveLead,
+  onRestoreLead,
+  fiscalYear,
   onToggle,
   onStar,
 }: {
@@ -351,6 +343,9 @@ function CompanyRow({
   isShortlisted: boolean
   lead?: CsrLead
   onMoveToPipeline: () => void
+  onArchiveLead: (id: string) => void
+  onRestoreLead: (id: string) => void
+  fiscalYear: string
   onToggle: () => void
   onStar: (e: React.MouseEvent) => void
 }) {
@@ -379,9 +374,7 @@ function CompanyRow({
 
         {/* Expand chevron */}
         <td className="px-1 py-3 text-center">
-          {(c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
-            <ChevronRightIcon className={`w-3.5 h-3.5 text-gray-400 transition-transform inline ${isExpanded ? 'rotate-90' : ''}`} />
-          )}
+          <ChevronRightIcon className={`w-3.5 h-3.5 text-gray-400 transition-transform inline ${isExpanded ? 'rotate-90' : ''}`} />
         </td>
 
         {/* Company */}
@@ -470,26 +463,17 @@ function CompanyRow({
       </tr>
 
       {/* Expanded detail */}
-      {isExpanded && (c.eduProjects.length > 0 || c.vocProjects.length > 0 || c.fundedNgos.length > 0 || c.ceo || c.csrHead) && (
+      {isExpanded && (
         <tr>
           <td colSpan={8} className="p-0">
-            <ExpandedProjects
-              eduProjects={c.eduProjects}
-              vocProjects={c.vocProjects}
-              fundedNgos={c.fundedNgos}
-              ceo={c.ceo}
-              csrHead={c.csrHead}
-              cin={c.cin}
+            <ExpandedDetail
+              company={c}
+              lead={lead}
+              onMoveToPipeline={onMoveToPipeline}
+              onArchiveLead={onArchiveLead}
+              onRestoreLead={onRestoreLead}
+              fiscalYear={fiscalYear}
             />
-            <div className="px-6 pb-3">
-              <button
-                onClick={(e) => { e.stopPropagation(); onMoveToPipeline() }}
-                disabled={!!lead}
-                className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-csf-purple text-white hover:bg-csf-purple/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-              >
-                {lead ? 'In Pipeline' : 'Move to Pipeline'}
-              </button>
-            </div>
           </td>
         </tr>
       )}
@@ -497,65 +481,55 @@ function CompanyRow({
   )
 }
 
-/* ── Shared expanded projects ── */
+/* ── Expanded detail (shared between desktop & mobile) ── */
 
-function ExpandedProjects({
-  eduProjects,
-  vocProjects,
-  fundedNgos = [],
-  ceo,
-  csrHead,
-  cin,
+function ExpandedDetail({
+  company: c,
+  lead,
+  onMoveToPipeline,
+  onArchiveLead,
+  onRestoreLead,
+  fiscalYear,
 }: {
-  eduProjects: { field: string; spend: number }[]
-  vocProjects: { field: string; spend: number }[]
-  fundedNgos?: { ngo: string; details: string; source: string }[]
-  ceo?: { name: string; title: string; linkedin?: string | null; email?: string | null; email_verified?: boolean; email_confidence?: number }
-  csrHead?: { name: string; title: string; linkedin?: string | null; email?: string | null; email_verified?: boolean; email_confidence?: number }
-  cin: string
+  company: CompanySummary
+  lead?: CsrLead
+  onMoveToPipeline: () => void
+  onArchiveLead: (id: string) => void
+  onRestoreLead: (id: string) => void
+  fiscalYear: string
 }) {
+  const [confirmArchive, setConfirmArchive] = useState(false)
+  const inPipeline = !!lead && !lead.is_archived
+  const isArchived = !!lead && lead.is_archived
+
   return (
     <div className="bg-gray-50/80 border-t border-gray-100 px-6 py-3 space-y-3">
       {/* Leadership + CIN row */}
       <div className="flex items-start justify-between gap-4">
-        {(ceo || csrHead) && (
+        {(c.ceo || c.csrHead) && (
           <div className="flex flex-wrap gap-x-6 gap-y-1">
-            {ceo && (
-              <LeaderBadge label="CEO" name={ceo.name} title={ceo.title} linkedin={ceo.linkedin} email={ceo.email} emailVerified={ceo.email_verified} emailConfidence={ceo.email_confidence} />
+            {c.ceo && (
+              <LeaderBadge label="CEO" name={c.ceo.name} title={c.ceo.title} linkedin={c.ceo.linkedin} email={c.ceo.email} emailVerified={c.ceo.email_verified} emailConfidence={c.ceo.email_confidence} />
             )}
-            {csrHead && (
-              <LeaderBadge label="CSR Head" name={csrHead.name} title={csrHead.title} linkedin={csrHead.linkedin} email={csrHead.email} emailVerified={csrHead.email_verified} emailConfidence={csrHead.email_confidence} />
+            {c.csrHead && (
+              <LeaderBadge label="CSR Head" name={c.csrHead.name} title={c.csrHead.title} linkedin={c.csrHead.linkedin} email={c.csrHead.email} emailVerified={c.csrHead.email_verified} emailConfidence={c.csrHead.email_confidence} />
             )}
           </div>
         )}
-        <p className="font-body text-[11px] text-gray-400 font-mono text-right shrink-0">{cin}</p>
+        <p className="font-body text-[11px] text-gray-400 font-mono text-right shrink-0">{c.cin}</p>
       </div>
 
-      {eduProjects.length > 0 && (
-        <ProjectSection
-          label="Education"
-          projects={eduProjects}
-          prefix="Education: "
-          accentClass="text-csf-blue"
-        />
-      )}
+      {/* Geographic Footprint */}
+      <GeographicFootprint cin={c.cin} fiscalYear={fiscalYear} />
 
-      {vocProjects.length > 0 && (
-        <ProjectSection
-          label="Vocational Skills"
-          projects={vocProjects}
-          prefix="Vocational Skills: "
-          accentClass="text-csf-purple"
-        />
-      )}
-
-      {fundedNgos.length > 0 && (
+      {/* NGO Partners */}
+      {c.fundedNgos.length > 0 && (
         <div>
           <p className="font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-            Education NGO Partners ({fundedNgos.length})
+            Education NGO Partners ({c.fundedNgos.length})
           </p>
           <div className="space-y-1.5">
-            {fundedNgos.map((n, i) => (
+            {c.fundedNgos.map((n, i) => (
               <div key={i} className="flex items-start gap-2">
                 <div className="min-w-0 flex-1">
                   <p className="font-heading text-xs font-semibold text-amber-700">{n.ngo}</p>
@@ -576,9 +550,288 @@ function ExpandedProjects({
           </div>
         </div>
       )}
+
+      {/* Pipeline actions */}
+      <div className="flex items-center gap-3 pt-1">
+        {!inPipeline && !isArchived && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onMoveToPipeline() }}
+            className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium bg-csf-purple text-white hover:bg-csf-purple/90 transition-colors"
+          >
+            Move to Pipeline
+          </button>
+        )}
+        {inPipeline && !confirmArchive && (
+          <>
+            <span className="px-2 py-1 rounded text-[11px] font-heading font-semibold bg-csf-purple/10 text-csf-purple">
+              In Pipeline
+            </span>
+            <button
+              onClick={(e) => { e.stopPropagation(); setConfirmArchive(true) }}
+              className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium border border-red-200 text-red-600 hover:bg-red-50 transition-colors"
+            >
+              Remove from Pipeline
+            </button>
+          </>
+        )}
+        {inPipeline && confirmArchive && (
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 border border-red-200" onClick={(e) => e.stopPropagation()}>
+            <ExclamationTriangleIcon className="w-4 h-4 text-red-500 shrink-0" />
+            <p className="font-body text-xs text-red-700">Remove from pipeline? This will archive the lead.</p>
+            <button
+              onClick={() => { onArchiveLead(lead!.id); setConfirmArchive(false) }}
+              className="px-2 py-1 rounded font-heading text-xs font-medium bg-red-600 text-white hover:bg-red-700 transition-colors"
+            >
+              Remove
+            </button>
+            <button
+              onClick={() => setConfirmArchive(false)}
+              className="px-2 py-1 rounded font-heading text-xs font-medium border border-gray-300 text-gray-600 hover:bg-gray-100 transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+        {isArchived && (
+          <>
+            <span className="px-2 py-1 rounded text-[11px] font-heading font-semibold bg-gray-100 text-gray-400">
+              Archived
+            </span>
+            <button
+              onClick={(e) => { e.stopPropagation(); onRestoreLead(lead!.id) }}
+              className="px-3 py-1.5 rounded-lg font-heading text-xs font-medium border border-csf-purple/30 text-csf-purple hover:bg-csf-purple/5 transition-colors"
+            >
+              Restore to Pipeline
+            </button>
+          </>
+        )}
+        {c.reportUrl && (
+          <a
+            href={c.reportUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-heading text-xs font-medium border border-csf-blue/20 text-csf-blue hover:bg-csf-blue/5 transition-colors"
+          >
+            <DocumentTextIcon className="w-3.5 h-3.5" />
+            {c.reportType || 'Report'}
+          </a>
+        )}
+      </div>
     </div>
   )
 }
+
+/* ── Geographic Footprint ── */
+
+interface StateAggregate {
+  state: string
+  total: number
+  education: number
+  vocational: number
+  other: number
+  isPriority: boolean
+  districts: { district: string; total: number; education: number; vocational: number; other: number }[]
+}
+
+function aggregateGeo(records: CsrGeoRecord[]): StateAggregate[] {
+  const stateMap = new Map<string, {
+    total: number; education: number; vocational: number; other: number
+    districts: Map<string, { total: number; education: number; vocational: number; other: number }>
+  }>()
+
+  for (const r of records) {
+    const amount = Number(r.spend_inr)
+    if (!r.state || isNaN(amount)) continue
+
+    let st = stateMap.get(r.state)
+    if (!st) {
+      st = { total: 0, education: 0, vocational: 0, other: 0, districts: new Map() }
+      stateMap.set(r.state, st)
+    }
+
+    st.total += amount
+    if (r.sector === 'Education') st.education += amount
+    else if (r.sector === 'Vocational') st.vocational += amount
+    else st.other += amount
+
+    const distKey = r.district || 'Unspecified'
+    let dist = st.districts.get(distKey)
+    if (!dist) {
+      dist = { total: 0, education: 0, vocational: 0, other: 0 }
+      st.districts.set(distKey, dist)
+    }
+    dist.total += amount
+    if (r.sector === 'Education') dist.education += amount
+    else if (r.sector === 'Vocational') dist.vocational += amount
+    else dist.other += amount
+  }
+
+  return [...stateMap.entries()]
+    .map(([state, data]) => ({
+      state,
+      total: data.total,
+      education: data.education,
+      vocational: data.vocational,
+      other: data.other,
+      isPriority: isPriorityState(state),
+      districts: [...data.districts.entries()]
+        .map(([district, d]) => ({ district, ...d }))
+        .sort((a, b) => b.total - a.total),
+    }))
+    .sort((a, b) => {
+      // Priority states first, then by total spend desc
+      if (a.isPriority !== b.isPriority) return a.isPriority ? -1 : 1
+      return b.total - a.total
+    })
+}
+
+function GeographicFootprint({ cin, fiscalYear }: { cin: string; fiscalYear: string }) {
+  const { data: geoRecords, isLoading } = useCsrGeo(cin, fiscalYear)
+  const [expandedState, setExpandedState] = useState<string | null>(null)
+  const [showAll, setShowAll] = useState(false)
+
+  const states = useMemo(() => aggregateGeo(geoRecords || []), [geoRecords])
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-2 py-2">
+        <div className="w-3.5 h-3.5 border-2 border-gray-200 border-t-csf-blue rounded-full animate-spin" />
+        <p className="font-body text-xs text-gray-400">Loading geographic data...</p>
+      </div>
+    )
+  }
+
+  if (!states.length) {
+    return (
+      <div className="flex items-center gap-2 py-2">
+        <MapPinIcon className="w-4 h-4 text-gray-300" />
+        <p className="font-body text-xs text-gray-400">No geographic data available</p>
+      </div>
+    )
+  }
+
+  const totalStates = states.length
+  const totalDistricts = states.reduce((sum, s) => sum + s.districts.length, 0)
+  const maxSpend = states[0]?.total || 1
+  const visibleStates = showAll ? states : states.slice(0, 5)
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <MapPinIcon className="w-4 h-4 text-csf-blue" />
+          <p className="font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            Geographic Footprint
+          </p>
+        </div>
+        <p className="font-body text-[11px] text-gray-400">
+          {totalStates} {totalStates === 1 ? 'state' : 'states'} &middot; {totalDistricts} {totalDistricts === 1 ? 'district' : 'districts'}
+        </p>
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center gap-4 mb-2">
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-sm bg-csf-blue" />
+          <span className="font-body text-[10px] text-gray-500">Education</span>
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-sm bg-csf-purple" />
+          <span className="font-body text-[10px] text-gray-500">Vocational</span>
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-sm bg-gray-300" />
+          <span className="font-body text-[10px] text-gray-500">Other</span>
+        </span>
+      </div>
+
+      <div className="space-y-1">
+        {visibleStates.map(st => {
+          const isOpen = expandedState === st.state
+          const barWidth = Math.max(4, (st.total / maxSpend) * 100)
+          const eduPct = st.total > 0 ? (st.education / st.total) * 100 : 0
+          const vocPct = st.total > 0 ? (st.vocational / st.total) * 100 : 0
+          const otherPct = 100 - eduPct - vocPct
+
+          return (
+            <div key={st.state}>
+              <button
+                className="w-full flex items-center gap-2 py-1.5 group text-left"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setExpandedState(isOpen ? null : st.state)
+                }}
+              >
+                <ChevronRightIcon className={`w-3 h-3 text-gray-400 transition-transform shrink-0 ${isOpen ? 'rotate-90' : ''}`} />
+                <span className={`font-heading text-xs w-32 truncate shrink-0 ${
+                  st.isPriority ? 'font-semibold text-csf-blue' : 'font-medium text-gray-700'
+                }`}>
+                  {st.isPriority && <span className="text-csf-yellow mr-1">&#9733;</span>}
+                  {st.state}
+                </span>
+                {/* Stacked bar */}
+                <div className="flex-1 h-3 rounded-full overflow-hidden bg-gray-100 flex" style={{ width: `${barWidth}%` }}>
+                  {eduPct > 0 && <div className="h-full bg-csf-blue" style={{ width: `${eduPct}%` }} />}
+                  {vocPct > 0 && <div className="h-full bg-csf-purple" style={{ width: `${vocPct}%` }} />}
+                  {otherPct > 0 && <div className="h-full bg-gray-300" style={{ width: `${otherPct}%` }} />}
+                </div>
+                <span className="font-heading text-xs font-semibold text-gray-600 w-20 text-right shrink-0">
+                  {formatINR(st.total)}
+                </span>
+                <span className="font-body text-[10px] text-gray-400 w-16 text-right shrink-0">
+                  {st.districts.length} dist.
+                </span>
+              </button>
+
+              {/* District breakdown */}
+              {isOpen && (
+                <div className="ml-7 mb-2 pl-3 border-l-2 border-gray-200 space-y-1">
+                  {st.districts.map(d => (
+                    <div key={d.district} className="flex items-center gap-2 py-0.5">
+                      <span className="font-body text-[11px] text-gray-500 w-28 truncate shrink-0">{d.district}</span>
+                      <div className="flex gap-3 flex-1 min-w-0">
+                        {d.education > 0 && (
+                          <span className="font-heading text-[11px] font-medium text-csf-blue">
+                            Edu: {formatINR(d.education)}
+                          </span>
+                        )}
+                        {d.vocational > 0 && (
+                          <span className="font-heading text-[11px] font-medium text-csf-purple">
+                            Voc: {formatINR(d.vocational)}
+                          </span>
+                        )}
+                        {d.other > 0 && (
+                          <span className="font-heading text-[11px] font-medium text-gray-400">
+                            Other: {formatINR(d.other)}
+                          </span>
+                        )}
+                      </div>
+                      <span className="font-heading text-[11px] font-semibold text-gray-500 shrink-0">
+                        {formatINR(d.total)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+
+      {states.length > 5 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); setShowAll(!showAll) }}
+          className="font-heading text-xs text-csf-blue hover:text-csf-blue/80 mt-1 transition-colors"
+        >
+          {showAll ? 'Show fewer' : `+ ${states.length - 5} more states`}
+        </button>
+      )}
+    </div>
+  )
+}
+
+/* ── Leader badge ── */
 
 function LeaderBadge({ label, name, title, linkedin, email, emailVerified, emailConfidence }: {
   label: string
@@ -589,7 +842,6 @@ function LeaderBadge({ label, name, title, linkedin, email, emailVerified, email
   emailVerified?: boolean
   emailConfidence?: number
 }) {
-  // Confidence indicator: green = verified/high, yellow = medium, gray = low
   const confidenceColor = emailVerified ? 'bg-green-400' :
     (emailConfidence ?? 0) >= 75 ? 'bg-csf-yellow' :
     (emailConfidence ?? 0) >= 50 ? 'bg-amber-300' : 'bg-gray-300'
@@ -630,51 +882,6 @@ function LeaderBadge({ label, name, title, linkedin, email, emailVerified, email
           />
         </span>
       )}
-    </div>
-  )
-}
-
-function ProjectSection({
-  label,
-  projects,
-  prefix,
-  accentClass,
-}: {
-  label: string
-  projects: { field: string; spend: number }[]
-  prefix: string
-  accentClass: string
-}) {
-  const cleaned = projects.map(p => ({
-    name: p.field.replace(new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i'), ''),
-    spend: p.spend,
-  }))
-
-  const showAll = cleaned.length <= 6
-  const visible = showAll ? cleaned : cleaned.slice(0, 5)
-
-  return (
-    <div>
-      <p className="font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-        {label} ({projects.length})
-      </p>
-      <div className="space-y-1">
-        {visible.map((p, i) => (
-          <div key={i} className="flex items-start justify-between gap-4">
-            <p className="font-body text-xs text-gray-600 min-w-0 leading-relaxed">
-              {p.name}
-            </p>
-            <p className={`font-heading text-xs font-semibold shrink-0 ${accentClass}`}>
-              {formatINR(p.spend)}
-            </p>
-          </div>
-        ))}
-        {!showAll && (
-          <p className="font-body text-xs text-gray-400 italic">
-            + {cleaned.length - 5} more projects
-          </p>
-        )}
-      </div>
     </div>
   )
 }
