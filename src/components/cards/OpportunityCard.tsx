@@ -9,6 +9,7 @@ import { Badge } from '../ui/Badge'
 import { DownloadDropdown } from '../ui/DownloadDropdown'
 import { RelevanceScore } from '../ui/RelevanceScore'
 import { applyDecay } from '../../lib/scoring'
+import { OPPORTUNITY_TYPES } from '../../lib/constants'
 import type { Opportunity } from '../../types'
 
 interface OpportunityCardProps {
@@ -34,6 +35,11 @@ function formatDeadline(deadline: string | null): string {
   return formatted
 }
 
+function formatPublished(createdAt: string): string {
+  const d = new Date(createdAt)
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+}
+
 export function OpportunityCard({
   opportunity,
   isBookmarked,
@@ -41,9 +47,11 @@ export function OpportunityCard({
   onHide,
   onClick,
 }: OpportunityCardProps) {
-  const decayedScore = applyDecay(opportunity.relevance_score, opportunity.created_at)
-  const deadlineText = formatDeadline(opportunity.deadline)
-  const isUrgent = opportunity.deadline && Math.ceil((new Date(opportunity.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) <= 7 && Math.ceil((new Date(opportunity.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) >= 0
+  const decayedScore = applyDecay(opportunity.relevance_score, opportunity.created_at, opportunity.type)
+  const isGrantLike = opportunity.type === 'grant' || opportunity.type === 'rfp'
+  const deadlineText = isGrantLike ? formatDeadline(opportunity.deadline) : formatPublished(opportunity.created_at)
+  const isUrgent = isGrantLike && opportunity.deadline && Math.ceil((new Date(opportunity.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) <= 7 && Math.ceil((new Date(opportunity.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) >= 0
+  const typeConfig = OPPORTUNITY_TYPES.find(t => t.key === opportunity.type)
 
   return (
     <article
@@ -63,11 +71,25 @@ export function OpportunityCard({
         {/* Top row: org + score */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            {opportunity.organisation && (
-              <p className="text-xs font-heading text-csf-blue/50 uppercase tracking-wider font-semibold mb-1.5 truncate">
-                {opportunity.organisation}
-              </p>
-            )}
+            <div className="flex items-center gap-1.5 mb-1.5">
+              {typeConfig && (
+                <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold ${typeConfig.colour}`}>
+                  {typeConfig.label}
+                </span>
+              )}
+              {opportunity.csf_mentioned && (
+                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-heading font-semibold bg-csf-yellow/20 text-csf-blue">
+                  CSF Mentioned
+                </span>
+              )}
+              {opportunity.organisation && (
+                <span className="text-xs font-heading text-csf-blue/50 uppercase tracking-wider font-semibold truncate">
+                  {opportunity.source_name && opportunity.source_name !== opportunity.organisation
+                    ? `${opportunity.organisation} · ${opportunity.source_name}`
+                    : opportunity.organisation}
+                </span>
+              )}
+            </div>
             <h3 className="font-heading font-bold text-[15px] sm:text-base text-gray-900 leading-snug line-clamp-2 group-hover:text-csf-blue transition-colors">
               {opportunity.title}
             </h3>
@@ -90,7 +112,7 @@ export function OpportunityCard({
         {/* Bottom meta row */}
         <div className="mt-4 pt-0 flex items-center justify-between">
           <div className="flex items-center gap-3 text-xs text-gray-400 font-heading">
-            {opportunity.amount && (
+            {opportunity.amount && isGrantLike && (
               <span className="font-semibold text-gray-600">{opportunity.amount}</span>
             )}
             {opportunity.location && (
@@ -99,7 +121,9 @@ export function OpportunityCard({
           </div>
           <div className="flex items-center gap-1 text-xs font-heading">
             <CalendarDaysIcon className="w-3.5 h-3.5 text-gray-400" />
-            <span className={isUrgent ? 'text-csf-orange font-semibold' : 'text-gray-400'}>{deadlineText}</span>
+            <span className={isUrgent ? 'text-csf-orange font-semibold' : 'text-gray-400'}>
+              {isGrantLike ? deadlineText : `Published: ${deadlineText}`}
+            </span>
           </div>
         </div>
       </div>

@@ -50,8 +50,8 @@ function clientSideFilter(opportunities: Opportunity[], filters: Filters): Oppor
 
 function sortByScore(opportunities: Opportunity[]): Opportunity[] {
   return [...opportunities].sort((a, b) => {
-    const scoreA = applyDecay(a.relevance_score, a.created_at)
-    const scoreB = applyDecay(b.relevance_score, b.created_at)
+    const scoreA = applyDecay(a.relevance_score, a.created_at, a.type)
+    const scoreB = applyDecay(b.relevance_score, b.created_at, b.type)
     return scoreB - scoreA
   })
 }
@@ -62,9 +62,10 @@ export function useOpportunities(filters: Filters) {
     queryFn: async ({ pageParam = 0 }) => {
       if (!supabase) {
         // Use mock data when Supabase is not configured
-        const all = sortByScore(mockOpportunities)
+        const all = sortByScore(mockOpportunities as Opportunity[])
         const filtered = clientSideFilter(all, filters).filter(opp => {
-          const decayedScore = applyDecay(opp.relevance_score, opp.created_at)
+          if (filters.types.length > 0 && !filters.types.includes(opp.type)) return false
+          const decayedScore = applyDecay(opp.relevance_score, opp.created_at, opp.type)
           if (filters.scoreLevel) {
             if (filters.scoreLevel === 'high' && decayedScore < SCORE_THRESHOLDS.high) return false
             if (filters.scoreLevel === 'medium' && (decayedScore < SCORE_THRESHOLDS.medium || decayedScore >= SCORE_THRESHOLDS.high)) return false
@@ -93,6 +94,11 @@ export function useOpportunities(filters: Filters) {
         query = query.gte('relevance_score', SCORE_THRESHOLDS.medium).lt('relevance_score', SCORE_THRESHOLDS.high)
       } else if (filters.scoreLevel === 'low') {
         query = query.lt('relevance_score', SCORE_THRESHOLDS.medium)
+      }
+
+      // Type filtering at DB level
+      if (filters.types.length > 0) {
+        query = query.in('type', filters.types)
       }
 
       // Deadline filtering at DB level

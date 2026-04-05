@@ -8,8 +8,9 @@ import { parseFundsForNgos } from './parsers/fundsforngos.js'
 import { parseIdr } from './parsers/idr.js'
 import { parseDevex } from './parsers/devex.js'
 import { parseAlliance } from './parsers/alliance.js'
-import { parseCsrbox } from './parsers/csrbox.js'
 import { parseGoogleCse } from './parsers/google-cse.js'
+import { parsePib } from './parsers/pib.js'
+import { parseIndianNews } from './parsers/indian-news.js'
 import { isActionableFunding } from './parsers/utils.js'
 
 const PARSERS: Record<string, (url: string) => Promise<RawOpportunity[]>> = {
@@ -19,7 +20,8 @@ const PARSERS: Record<string, (url: string) => Promise<RawOpportunity[]>> = {
   idr: parseIdr,
   devex: parseDevex,
   alliance: parseAlliance,
-  csrbox: parseCsrbox,
+  pib: parsePib,
+  'indian-news': parseIndianNews,
   'google-cse': parseGoogleCse,
 }
 
@@ -105,9 +107,6 @@ function hasNegativeKeyword(opp: RawOpportunity): boolean {
   return false
 }
 
-// URL path segments that indicate blog/opinion content, not grant listings
-const BLOG_PATH_SEGMENTS = ['/blog/', '/opinion/', '/editorial/', '/interview/', '/podcast/']
-
 async function main() {
   console.log('=== ScoutEd Scraper ===')
   console.log(`Started at ${new Date().toISOString()}`)
@@ -130,10 +129,15 @@ async function main() {
       console.log(`[${source.name}] Parsed ${raw.length} raw opportunities`)
       totalParsed += raw.length
 
+      // Ensure source_name is set on every item
+      for (const opp of raw) {
+        if (!opp.source_name) opp.source_name = source.name
+      }
+
       // Source classification for filtering
       //
       // India-focused sources: trust education tagging, only filter for education
-      //   NGOBox (all India-based), FundsForNGOs /tag/india/, CSRBox, IDR
+      //   NGOBox (all India-based), FundsForNGOs /tag/india/, IDR, PIB, Indian news
       //
       // Education-focused sources: trust education categorisation, only filter for India
       //   FundsForNGOs /education/, /edtech/
@@ -146,9 +150,11 @@ async function main() {
       //
       const isIndiaSource = source.url.includes('ngobox.org') ||
                             source.url.includes('/tag/india/') ||
-                            source.url.includes('csrbox.org') ||
-                            source.url.includes('idronline.org')
-      const isEducationSource = /education|edtech/i.test(source.url)
+                            source.url.includes('idronline.org') ||
+                            source.parser === 'pib' ||
+                            source.parser === 'indian-news'
+      const isEducationSource = /education|edtech/i.test(source.url) ||
+                                source.parser === 'pib'
       const isPreFiltered = source.parser === 'devex' ||
                             source.parser === 'alliance'
 
@@ -158,6 +164,9 @@ async function main() {
       const cutoffStr = cutoff.toISOString().split('T')[0]
 
       const filtered = raw.filter(opp => {
+        // Exclude CSF's own website content
+        if (opp.source_url.includes('centralsquarefoundation.org')) return false
+
         // Filter out very old expired deadlines (>3 months ago)
         if (opp.deadline && opp.deadline < cutoffStr) return false
 
@@ -167,12 +176,14 @@ async function main() {
         // Reject negative keywords (veterinary, petroleum, infrastructure, etc.)
         if (hasNegativeKeyword(opp)) return false
 
-        // Reject blog/opinion/editorial URLs (never actual grant listings)
-        if (BLOG_PATH_SEGMENTS.some(seg => opp.source_url.toLowerCase().includes(seg))) return false
+        // For grants/RFPs: require deadline or actionable funding signal
+        // For news/blog/government: skip this check (they don't have deadlines)
+        const itemType = opp.type || 'grant'
+        if ((itemType === 'grant' || itemType === 'rfp') &&
+            !opp.deadline && !isActionableFunding(`${opp.title} ${opp.description}`)) return false
 
-        // Reject items with no deadline AND no actionable funding signal
-        // (likely blog posts, project showcases, or completed awards)
-        if (!opp.deadline && !isActionableFunding(`${opp.title} ${opp.description}`)) return false
+        // Detect CSF mentions for highlighting
+        opp.csf_mentioned = /\bcentral square foundation\b|\bcsf\b/i.test(`${opp.title} ${opp.description}`)
 
         // Pre-filtered sources already did India+education filtering in the parser
         if (isPreFiltered) return true

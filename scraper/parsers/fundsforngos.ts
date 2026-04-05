@@ -70,6 +70,8 @@ export async function parseFundsForNgos(url: string): Promise<RawOpportunity[]> 
         organisation: 'FundsForNGOs',
         amount: extractAmount(title + ' ' + desc),
         location: extractLocation(title + ' ' + desc),
+        type: 'grant',
+        source_name: 'FundsForNGOs',
       })
     })
   } catch (err) {

@@ -76,3 +76,21 @@ export const SCORE_THRESHOLDS = {
   high: 75,
   medium: 50,
 } as const
+
+// Type-aware decay rates (points per week)
+export const DECAY_BY_TYPE: Record<string, number> = {
+  grant: 5,
+  rfp: 5,
+  news: 8,
+  blog: 8,
+  government: 5,
+}
+
+// Content type display configuration
+export const OPPORTUNITY_TYPES = [
+  { key: 'grant', label: 'Grants', colour: 'bg-emerald-50 text-emerald-700' },
+  { key: 'rfp', label: 'RFPs', colour: 'bg-purple-50 text-purple-700' },
+  { key: 'news', label: 'News', colour: 'bg-blue-50 text-blue-700' },
+  { key: 'government', label: 'Govt', colour: 'bg-red-50 text-red-700' },
+  { key: 'blog', label: 'Blogs', colour: 'bg-amber-50 text-amber-700' },
+] as const

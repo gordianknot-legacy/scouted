@@ -62,7 +62,6 @@ export async function parseAlliance(_url: string): Promise<RawOpportunity[]> {
 
         const fullText = `${title} ${description} ${categories.join(' ')}`
         if (!isRelevant(fullText)) return
-        if (!isActionableFunding(fullText)) return
 
         const descText = contentEncoded
           ? stripTags(contentEncoded).substring(0, 2000)
@@ -78,6 +77,8 @@ export async function parseAlliance(_url: string): Promise<RawOpportunity[]> {
           organisation: 'Alliance Magazine',
           amount: extractAmount(fullText),
           location: extractLocation(fullText),
+          type: 'news',
+          source_name: 'Alliance',
         })
       })
 
@@ -106,7 +107,7 @@ export async function parseAlliance(_url: string): Promise<RawOpportunity[]> {
         const excerpt = $el.find('.entry-summary, .entry-content, .excerpt, p').first().text().trim()
         const fullText = `${title} ${excerpt}`
 
-        if (!isActionableFunding(fullText)) return
+        if (!isRelevant(fullText)) return
 
         allItems.push({
           title: title.substring(0, 300),
@@ -118,6 +119,8 @@ export async function parseAlliance(_url: string): Promise<RawOpportunity[]> {
           organisation: 'Alliance Magazine',
           amount: extractAmount(fullText),
           location: extractLocation(fullText),
+          type: 'news',
+          source_name: 'Alliance',
         })
       })
 

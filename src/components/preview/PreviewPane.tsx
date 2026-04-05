@@ -57,7 +57,7 @@ export function PreviewPane({
 }: PreviewPaneProps) {
   if (!opportunity) return null
 
-  const decayedScore = applyDecay(opportunity.relevance_score, opportunity.created_at)
+  const decayedScore = applyDecay(opportunity.relevance_score, opportunity.created_at, opportunity.type)
   const deadline = formatDeadline(opportunity.deadline)
 
   return (

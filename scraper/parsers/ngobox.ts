@@ -98,6 +98,8 @@ function parseGrantsFromHtml(html: string, opportunities: RawOpportunity[]) {
       organisation: organisation || 'NGOBox',
       amount,
       location: extractLocation(title + ' ' + blockText),
+      type: 'grant',
+      source_name: 'NGOBox',
     })
   }
 }

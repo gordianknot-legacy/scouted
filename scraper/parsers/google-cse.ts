@@ -97,6 +97,8 @@ export async function parseGoogleCse(_url: string): Promise<RawOpportunity[]> {
           organisation: item.displayLink,
           amount: extractAmount(fullText),
           location: extractLocation(fullText),
+          type: 'grant',
+          source_name: 'Google CSE',
         })
       }
 

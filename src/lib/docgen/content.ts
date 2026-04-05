@@ -197,5 +197,5 @@ export function generateFileName(title: string, ext: 'pptx' | 'docx'): string {
 // ── Decayed score for documents ─────────────────────────────────────
 
 export function getDecayedScore(opp: Opportunity): number {
-  return applyDecay(opp.relevance_score, opp.created_at)
+  return applyDecay(opp.relevance_score, opp.created_at, opp.type)
 }

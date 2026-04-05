@@ -27,8 +27,8 @@ const navItems: {
 }[] = [
   {
     id: 'dashboard',
-    label: 'Grant Opportunities',
-    description: 'Browse scored grants and funding',
+    label: 'Education Tracker',
+    description: 'Grants, news & ecosystem intelligence',
     icon: MagnifyingGlassIcon,
     iconBg: 'bg-csf-yellow/20',
     iconColor: 'text-csf-blue',

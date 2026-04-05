@@ -24,7 +24,7 @@ interface MobileNavProps {
 
 const tabs: { id: Tab; label: string; icon: typeof HomeIcon; activeIcon: typeof HomeIconSolid }[] = [
   { id: 'home', label: 'Home', icon: HomeIcon, activeIcon: HomeIconSolid },
-  { id: 'dashboard', label: 'Grants', icon: MagnifyingGlassIcon, activeIcon: MagnifyingGlassIconSolid },
+  { id: 'dashboard', label: 'Tracker', icon: MagnifyingGlassIcon, activeIcon: MagnifyingGlassIconSolid },
   { id: 'bookmarks', label: 'Bookmarks', icon: BookmarkIcon, activeIcon: BookmarkIconSolid },
   { id: 'subscribe', label: 'Subscribe', icon: EnvelopeIcon, activeIcon: EnvelopeIconSolid },
   { id: 'csr', label: 'CSR Data', icon: ChartBarIcon, activeIcon: ChartBarIconSolid },

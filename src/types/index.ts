@@ -1,3 +1,5 @@
+export type OpportunityType = 'grant' | 'rfp' | 'news' | 'blog' | 'government'
+
 export interface Opportunity {
   id: string
   title: string
@@ -11,6 +13,9 @@ export interface Opportunity {
   organisation: string | null
   amount: string | null
   location: string | null
+  type: OpportunityType
+  source_name: string | null
+  csf_mentioned: boolean
 }
 
 export interface UserAction {
@@ -34,6 +39,7 @@ export interface Filters {
   states: string[]
   deadlineBefore: string | null
   search: string
+  types: OpportunityType[]
 }
 
 export interface CsrSpendingRecord {

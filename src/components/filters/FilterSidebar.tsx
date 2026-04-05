@@ -1,6 +1,6 @@
 import { XMarkIcon, FunnelIcon } from '@heroicons/react/24/outline'
-import { ALL_INDIAN_STATES, CSF_SECTORS } from '../../lib/constants'
-import type { Filters, ScoreLevel } from '../../types'
+import { ALL_INDIAN_STATES, CSF_SECTORS, OPPORTUNITY_TYPES } from '../../lib/constants'
+import type { Filters, ScoreLevel, OpportunityType } from '../../types'
 
 interface FilterSidebarProps {
   filters: Filters
@@ -27,11 +27,17 @@ export function FilterSidebar({ filters, onChange, onClose, isMobile }: FilterSi
     updateFilter(key, next)
   }
 
-  const clearAll = () => {
-    onChange({ scoreLevel: null, sectors: [], states: [], deadlineBefore: null, search: '' })
+  const toggleType = (type: OpportunityType) => {
+    const arr = filters.types
+    const next = arr.includes(type) ? arr.filter(t => t !== type) : [...arr, type]
+    updateFilter('types', next)
   }
 
-  const hasFilters = filters.scoreLevel || filters.sectors.length > 0 || filters.states.length > 0 || filters.deadlineBefore
+  const clearAll = () => {
+    onChange({ scoreLevel: null, sectors: [], states: [], deadlineBefore: null, search: '', types: [] })
+  }
+
+  const hasFilters = filters.scoreLevel || filters.sectors.length > 0 || filters.states.length > 0 || filters.deadlineBefore || filters.types.length > 0
 
   return (
     <div className="space-y-5">
@@ -78,6 +84,29 @@ export function FilterSidebar({ filters, onChange, onClose, isMobile }: FilterSi
               {opt.label}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Content Type */}
+      <div>
+        <h3 className="font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Content Type</h3>
+        <div className="flex flex-wrap gap-1.5">
+          {OPPORTUNITY_TYPES.map(opt => {
+            const isActive = filters.types.includes(opt.key as OpportunityType)
+            return (
+              <button
+                key={opt.key}
+                onClick={() => toggleType(opt.key as OpportunityType)}
+                className={`px-2.5 py-1 rounded-lg text-xs font-heading font-medium transition-all border ${
+                  isActive
+                    ? 'bg-csf-blue/10 text-csf-blue border-csf-blue/20'
+                    : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200'
+                }`}
+              >
+                {opt.label}
+              </button>
+            )
+          })}
         </div>
       </div>
 

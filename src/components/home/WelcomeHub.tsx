@@ -8,8 +8,8 @@ interface WelcomeHubProps {
 const tools = [
   {
     id: 'dashboard' as Tab,
-    title: 'Grant Opportunities',
-    description: 'Browse scored grant and funding opportunities',
+    title: 'Education Tracker',
+    description: 'Grants, news & intelligence for Indian education',
     icon: MagnifyingGlassIcon,
     iconBg: 'bg-csf-yellow/20',
     iconColor: 'text-csf-blue',

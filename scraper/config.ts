@@ -33,13 +33,6 @@ export const SOURCES: Source[] = [
     parser: 'fundsforngos',
   },
 
-  // === CSR Data ===
-  {
-    name: 'CSRBox Education CSR',
-    url: 'https://csrbox.org/India-list-CSR-projects-India',
-    parser: 'csrbox',
-  },
-
   // === Philanthropy & Development News ===
   {
     name: 'IDR (India Development Review)',
@@ -55,6 +48,25 @@ export const SOURCES: Source[] = [
     name: 'Alliance Magazine',
     url: 'https://alliancemagazine.org/feed',
     parser: 'alliance',
+  },
+
+  // === Government Sources ===
+  {
+    name: 'PIB Ministry of Education',
+    url: 'https://pib.gov.in/allRel.aspx',
+    parser: 'pib',
+  },
+
+  // === Indian Education News ===
+  {
+    name: 'The Wire Education',
+    url: 'https://thewire.in/education/feed',
+    parser: 'indian-news',
+  },
+  {
+    name: 'Scroll.in',
+    url: 'https://scroll.in/rss/feed',
+    parser: 'indian-news',
   },
 
   // === Discovery (Google Custom Search) ===

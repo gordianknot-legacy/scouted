@@ -5,7 +5,8 @@ import type { Opportunity } from '../types'
 // No Indian government sources. International funders included where project is in India.
 // Scores computed by algorithm: Sector +30, Geo (priority states) +20, Funding ≥1Cr +20, Duration ≥2yr +10
 // Priority states: Punjab, Haryana, UP, Telangana, Odisha, Assam, Bihar, HP, Gujarat
-export const mockOpportunities: Opportunity[] = [
+// Mock data — add default type/source_name/csf_mentioned to all entries
+const rawMockOpportunities = [
   {
     id: '1',
     title: 'Michael & Susan Dell Foundation — Quality Schools Programme India',
@@ -187,3 +188,11 @@ export const mockOpportunities: Opportunity[] = [
     location: 'India',
   },
 ]
+
+export const mockOpportunities: Opportunity[] = rawMockOpportunities.map(opp => ({
+  ...opp,
+  tags: [...opp.tags],
+  type: 'grant' as const,
+  source_name: opp.organisation,
+  csf_mentioned: false,
+}))

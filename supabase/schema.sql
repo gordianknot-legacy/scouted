@@ -19,6 +19,9 @@ CREATE TABLE IF NOT EXISTS opportunities (
   organisation TEXT,
   amount TEXT,
   location TEXT,
+  type TEXT NOT NULL DEFAULT 'grant',
+  source_name TEXT,
+  csf_mentioned BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -26,6 +29,8 @@ CREATE TABLE IF NOT EXISTS opportunities (
 CREATE INDEX IF NOT EXISTS idx_opportunities_score ON opportunities (relevance_score DESC);
 CREATE INDEX IF NOT EXISTS idx_opportunities_deadline ON opportunities (deadline);
 CREATE INDEX IF NOT EXISTS idx_opportunities_created ON opportunities (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_opportunities_type ON opportunities (type);
+CREATE INDEX IF NOT EXISTS idx_opportunities_source ON opportunities (source_name);
 
 -- Decayed score function for server-side sorting
 CREATE OR REPLACE FUNCTION decayed_score(opp opportunities)

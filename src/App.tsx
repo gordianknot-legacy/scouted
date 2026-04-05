@@ -29,6 +29,7 @@ const defaultFilters: Filters = {
   states: [],
   deadlineBefore: null,
   search: '',
+  types: [],
 }
 
 export default function App() {
@@ -179,7 +180,7 @@ export default function App() {
 
         {/* Results count */}
         <p className="text-xs font-heading text-gray-400 mb-4 uppercase tracking-wider">
-          {visibleOpportunities.length} {visibleOpportunities.length === 1 ? 'opportunity' : 'opportunities'} found
+          {visibleOpportunities.length} {visibleOpportunities.length === 1 ? 'item' : 'items'} found
         </p>
 
         {/* Loading state */}

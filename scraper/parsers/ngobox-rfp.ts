@@ -84,6 +84,8 @@ function parseRfpsFromHtml(html: string, opportunities: RawOpportunity[]) {
       organisation: organisation || 'NGOBox RFP',
       amount: null,
       location: extractLocation(title + ' ' + blockText),
+      type: 'rfp',
+      source_name: 'NGOBox',
     })
   }
 }

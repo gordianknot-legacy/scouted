@@ -16,19 +16,19 @@ const steps = [
     icon: MagnifyingGlassIcon,
     title: 'Welcome to ScoutEd',
     description:
-      'ScoutEd automatically scouts and aggregates funding and grant opportunities relevant to CSF\'s mission in Indian education. New opportunities are fetched daily at 8 AM IST.',
+      'ScoutEd tracks grants, news, government announcements, and analysis relevant to K-12 education in India. New items are fetched daily at 8 AM IST.',
   },
   {
     icon: ChartBarIcon,
     title: 'How Scoring Works',
     description:
-      'Each opportunity is scored 0\u2013100 based on sector match (FLN, EdTech, School Governance), geography (CSF priority states), funding size, and programme duration. Scores decay over time to keep the feed fresh.',
+      'Each item is scored 0\u2013100 based on sector match, geography (CSF priority states), funding signals, and known funders. Grants and news have different scoring criteria. Scores decay over time to keep the feed fresh.',
   },
   {
     icon: BellIcon,
     title: 'Stay Updated',
     description:
-      'Subscribe to receive a daily digest of the top-scored opportunities at 8:30 AM IST. You can also bookmark opportunities and hide irrelevant ones to customise your feed.',
+      'Subscribe to receive a daily digest of top-scored items at 8:30 AM IST. Use the Content Type filter to focus on grants, news, government updates, or blog analysis. Bookmark items and hide irrelevant ones to customise your feed.',
   },
 ]
 

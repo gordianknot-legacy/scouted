@@ -1,10 +1,11 @@
-import { CSF_PRIORITY_STATES, CSF_SECTORS, FLN_KEYWORDS, SCORE_WEIGHTS } from './constants'
+import { CSF_PRIORITY_STATES, CSF_SECTORS, FLN_KEYWORDS, SCORE_WEIGHTS, DECAY_BY_TYPE } from './constants'
 
-export function applyDecay(baseScore: number, createdAt: string): number {
+export function applyDecay(baseScore: number, createdAt: string, type?: string): number {
   const weeks = Math.floor(
     (Date.now() - new Date(createdAt).getTime()) / (7 * 24 * 60 * 60 * 1000)
   )
-  return Math.max(0, baseScore - weeks * SCORE_WEIGHTS.decayPerWeek)
+  const decayRate = DECAY_BY_TYPE[type || 'grant'] ?? SCORE_WEIGHTS.decayPerWeek
+  return Math.max(0, baseScore - weeks * decayRate)
 }
 
 export function calculateRelevanceScore(opportunity: {

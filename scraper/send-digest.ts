@@ -26,6 +26,9 @@ interface Opportunity {
   organisation: string | null
   amount: string | null
   location: string | null
+  type: string | null
+  source_name: string | null
+  csf_mentioned: boolean | null
 }
 
 interface Subscriber {
@@ -34,12 +37,27 @@ interface Subscriber {
 }
 
 function buildEmailHtml(opportunities: Opportunity[], date: string, unsubscribeUrl: string): string {
+  const TYPE_COLOURS: Record<string, string> = {
+    grant: '#dcfce7', rfp: '#f3e8ff', news: '#dbeafe', blog: '#fef3c7', government: '#fee2e2',
+  }
+  const TYPE_TEXT: Record<string, string> = {
+    grant: '#166534', rfp: '#6b21a8', news: '#1e40af', blog: '#92400e', government: '#991b1b',
+  }
+  const TYPE_LABELS: Record<string, string> = {
+    grant: 'Grant', rfp: 'RFP', news: 'News', blog: 'Blog', government: 'Govt',
+  }
+
   const rows = opportunities.map(opp => {
     const scoreColour = opp.relevance_score >= 75 ? '#22c55e' : opp.relevance_score >= 50 ? '#FFD400' : '#ef4444'
-    const deadline = opp.deadline
+    const isGrantLike = opp.type === 'grant' || opp.type === 'rfp'
+    const deadline = isGrantLike && opp.deadline
       ? new Date(opp.deadline).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-      : 'No deadline'
+      : isGrantLike ? 'No deadline' : ''
     const tags = opp.tags.slice(0, 3).join(' · ')
+    const typeBg = TYPE_COLOURS[opp.type || 'grant'] || '#f3f4f6'
+    const typeText = TYPE_TEXT[opp.type || 'grant'] || '#374151'
+    const typeLabel = TYPE_LABELS[opp.type || 'grant'] || 'Grant'
+    const ctaLabel = isGrantLike ? 'View Opportunity →' : 'Read Article →'
 
     return `
     <tr>
@@ -47,10 +65,14 @@ function buildEmailHtml(opportunities: Opportunity[], date: string, unsubscribeU
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
           <tr>
             <td>
+              <span style="display:inline-block; background:${typeBg}; color:${typeText}; font-family:'Gill Sans MT','Gill Sans',sans-serif; font-size:11px; font-weight:bold; padding:2px 7px; border-radius:4px; margin-right:4px;">
+                ${typeLabel}
+              </span>
               <span style="display:inline-block; background:${scoreColour}; color:#fff; font-family:'Gill Sans MT','Gill Sans',sans-serif; font-size:12px; font-weight:bold; padding:3px 8px; border-radius:12px; margin-bottom:6px;">
                 Score: ${opp.relevance_score}
               </span>
-              ${opp.amount ? `<span style="display:inline-block; background:#FFF3CD; color:#856404; font-family:'Gill Sans MT','Gill Sans',sans-serif; font-size:12px; padding:3px 8px; border-radius:12px; margin-left:4px;">${opp.amount}</span>` : ''}
+              ${opp.csf_mentioned ? '<span style="display:inline-block; background:#FFD400; color:#00316B; font-family:\'Gill Sans MT\',\'Gill Sans\',sans-serif; font-size:11px; font-weight:bold; padding:2px 7px; border-radius:4px; margin-left:4px;">CSF Mentioned</span>' : ''}
+              ${opp.amount && isGrantLike ? `<span style="display:inline-block; background:#FFF3CD; color:#856404; font-family:'Gill Sans MT','Gill Sans',sans-serif; font-size:12px; padding:3px 8px; border-radius:12px; margin-left:4px;">${opp.amount}</span>` : ''}
             </td>
           </tr>
           <tr>
@@ -67,13 +89,13 @@ function buildEmailHtml(opportunities: Opportunity[], date: string, unsubscribeU
           </tr>
           <tr>
             <td style="padding-top:8px; font-family:'Gill Sans MT','Gill Sans',sans-serif; font-size:12px; color:#999;">
-              ${opp.organisation || ''} · ${opp.location || 'India'} · ${deadline} · ${tags}
+              ${opp.organisation || ''} · ${opp.source_name ? opp.source_name + ' · ' : ''}${opp.location || 'India'}${deadline ? ' · ' + deadline : ''} · ${tags}
             </td>
           </tr>
           <tr>
             <td style="padding-top:10px;">
               <a href="${opp.source_url}" style="display:inline-block; background:#FFD400; color:#00316B; font-family:'Gill Sans MT','Gill Sans',sans-serif; font-size:13px; font-weight:bold; padding:8px 16px; border-radius:6px; text-decoration:none;">
-                View Opportunity →
+                ${ctaLabel}
               </a>
             </td>
           </tr>
@@ -108,7 +130,7 @@ function buildEmailHtml(opportunities: Opportunity[], date: string, unsubscribeU
                 </tr>
                 <tr>
                   <td style="padding-top:6px; font-family:Cambria,Georgia,serif; font-size:14px; color:rgba(255,255,255,0.7);">
-                    ${date} · Top ${opportunities.length} opportunities
+                    ${date} · Top ${opportunities.length} items
                   </td>
                 </tr>
               </table>

@@ -63,10 +63,10 @@ export async function parseDevex(_url: string): Promise<RawOpportunity[]> {
 
     console.log(`[Devex] RSS returned ${rssItems.length} items`)
 
-    // Filter for India + education/funding relevance + actionable funding
+    // Filter for India + education/funding relevance (no longer requires actionable funding signal)
     const relevant = rssItems.filter(item => {
       const text = `${item.title} ${item.description}`
-      return isRelevant(text) && isActionableFunding(text)
+      return isRelevant(text)
     })
 
     console.log(`[Devex] After relevance filter: ${relevant.length}`)
@@ -143,5 +143,7 @@ function addItem(
     organisation: 'Devex',
     amount: extractAmount(fullText),
     location: extractLocation(fullText),
+    type: 'news',
+    source_name: 'Devex',
   })
 }

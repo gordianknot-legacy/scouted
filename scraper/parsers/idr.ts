@@ -54,8 +54,8 @@ export async function parseIdr(_url: string): Promise<RawOpportunity[]> {
 
         const fullText = `${title} ${description} ${categories.join(' ')}`
 
-        // Only keep items that describe actionable funding (not opinion/analysis)
-        if (!isActionableFunding(fullText)) return
+        // Classify: actionable funding items = 'news', analysis/opinion = 'blog'
+        const isFunding = isActionableFunding(fullText)
 
         // Extract description from content:encoded or description
         const descText = contentEncoded
@@ -79,6 +79,8 @@ export async function parseIdr(_url: string): Promise<RawOpportunity[]> {
           organisation: 'IDR',
           amount: extractAmount(fullText),
           location: extractLocation(fullText) || 'India',
+          type: isFunding ? 'news' : 'blog',
+          source_name: 'IDR',
         })
       })
 
