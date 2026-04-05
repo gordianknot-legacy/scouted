@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { FunnelIcon, ChartBarIcon, BookOpenIcon, RectangleStackIcon, NewspaperIcon } from '@heroicons/react/24/outline'
+import { FunnelIcon } from '@heroicons/react/24/outline'
 import { Header } from './components/layout/Header'
 import { MobileNav, type Tab } from './components/layout/MobileNav'
 import { OpportunityCard } from './components/cards/OpportunityCard'
@@ -259,54 +259,6 @@ export default function App() {
                   <FilterSidebar filters={filters} onChange={setFilters} />
                 </div>
                 <EmailSubscribe />
-                <button
-                  onClick={() => setActiveTab('csr')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all group"
-                >
-                  <div className="w-9 h-9 bg-csf-yellow/20 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-yellow/30 transition-colors">
-                    <ChartBarIcon className="w-5 h-5 text-csf-blue" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-heading text-sm font-bold text-gray-900">CSR Data</p>
-                    <p className="font-body text-xs text-gray-400">Company CSR spending</p>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setActiveTab('pipeline')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all group"
-                >
-                  <div className="w-9 h-9 bg-csf-purple/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-purple/15 transition-colors">
-                    <RectangleStackIcon className="w-5 h-5 text-csf-purple" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-heading text-sm font-bold text-gray-900">Pipeline</p>
-                    <p className="font-body text-xs text-gray-400">CSR lead tracking</p>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setActiveTab('guide')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all group"
-                >
-                  <div className="w-9 h-9 bg-csf-yellow/20 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-yellow/30 transition-colors">
-                    <BookOpenIcon className="w-5 h-5 text-csf-blue" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-heading text-sm font-bold text-gray-900">Creator's Guide</p>
-                    <p className="font-body text-xs text-gray-400">How ScoutEd works</p>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setActiveTab('newsletter')}
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all group"
-                >
-                  <div className="w-9 h-9 bg-csf-orange/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-csf-orange/15 transition-colors">
-                    <NewspaperIcon className="w-5 h-5 text-csf-orange" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-heading text-sm font-bold text-gray-900">Newsletter</p>
-                    <p className="font-body text-xs text-gray-400">Donor newsletters</p>
-                  </div>
-                </button>
               </div>
             </aside>
           )}
