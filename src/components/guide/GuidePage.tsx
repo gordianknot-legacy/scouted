@@ -494,9 +494,9 @@ RESEND_API_KEY=your-resend-key-here`}</CodeBlock>
           <h2 className="font-heading text-xl font-bold text-csf-blue mt-1">How Each Feature Works</h2>
         </div>
 
-        <Section title="Education Tracker">
+        <Section title="Ecosystem Tracker">
           <p>
-            The Education Tracker is the heart of ScoutEd. Every morning, the scraper visits 10+ sources — NGOBox, FundsForNGOs, IDR Online, Devex, Alliance Magazine, PIB, The Wire, Scroll.in, and Google Custom Search — to find grants, news, government announcements, and analysis about K-12 education in India. Each item is classified by type (Grant, RFP, News, Govt, Blog) and scored for relevance. Items mentioning Central Square Foundation are highlighted with a yellow badge.
+            The Ecosystem Tracker is the heart of ScoutEd. Every morning, the scraper visits 10+ sources — NGOBox, FundsForNGOs, IDR Online, Devex, Alliance Magazine, PIB, The Wire, Scroll.in, and Google Custom Search — to find grants, news, government announcements, and analysis about K-12 education in India. Each item is classified by type (Grant, RFP, News, Govt, Blog) and scored for relevance. Items mentioning Central Square Foundation are highlighted with a yellow badge.
           </p>
 
           <h3 className="font-heading text-sm font-bold text-gray-800 mt-4 mb-1">How scoring works</h3>

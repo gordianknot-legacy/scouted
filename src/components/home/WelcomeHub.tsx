@@ -8,7 +8,7 @@ interface WelcomeHubProps {
 const tools = [
   {
     id: 'dashboard' as Tab,
-    title: 'Education Tracker',
+    title: 'Ecosystem Tracker',
     description: 'Grants, news & intelligence for Indian education',
     icon: MagnifyingGlassIcon,
     iconBg: 'bg-csf-yellow/20',

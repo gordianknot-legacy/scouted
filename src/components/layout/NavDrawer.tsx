@@ -27,7 +27,7 @@ const navItems: {
 }[] = [
   {
     id: 'dashboard',
-    label: 'Education Tracker',
+    label: 'Ecosystem Tracker',
     description: 'Grants, news & ecosystem intelligence',
     icon: MagnifyingGlassIcon,
     iconBg: 'bg-csf-yellow/20',
