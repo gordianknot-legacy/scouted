@@ -2293,5 +2293,198 @@
     },
     "csr_head": null,
     "email_domain": "odishamining.in"
+  },
+  "U80903MH2010PTC211466": {
+    "funded_ngos": [],
+    "ceo": {
+      "name": "Sushma Boppana",
+      "title": "CEO & Director",
+      "linkedin": "https://in.linkedin.com/in/sushma-boppana-sri-chaitanya"
+    },
+    "csr_head": null,
+    "email_domain": "varsitymgmt.com"
+  },
+  "L28920MH1957PLC010839": {
+    "report_url": "https://downloads.ctfassets.net/17si5cpawjzf/1cNeuTCVvlzBFrSyA4A9XR/72e70fb92afbc6a6988580e05af43c1b/Siemens-Limited-Annual-Report-2024.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2023-24",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Project Jigyaasa (STEM in 170+ govt schools) and Experimento India (250+ open educational resources)",
+        "source": "https://dailycadcam.com/siemens-stiftung-siemens-india-pratham-launch-open-digital-resource-to-scale-up-stem-education-in-schools/"
+      },
+      {
+        "ngo": "Tata STRIVE",
+        "details": "Dual Vocational Education and Training at ITIs, German model; 120,000+ beneficiaries",
+        "source": "https://press.siemens.com/in/en/pressrelease/siemens-limited-and-tata-strive-celebrate-dual-vet-milestone-120000-beneficiaries"
+      }
+    ],
+    "ceo": {
+      "name": "Sunil Mathur",
+      "title": "Managing Director & CEO",
+      "linkedin": "https://in.linkedin.com/in/sunil-mathur"
+    },
+    "csr_head": {
+      "name": "Ranjeeta Kukreja",
+      "title": "Head, Corporate Citizenship (CSR)",
+      "linkedin": "https://in.linkedin.com/in/ranjeeta-kukreja-19a47391"
+    },
+    "email_domain": "siemens.com"
+  },
+  "U99999DL1993PLC054135": {
+    "report_url": "https://www.icicipruamc.com/blob/financials-disclosures-files/Files/ICICI%20Prudential%20Assest%20Management%20Company/2024-2025/32nd%20Annual%20Report%20and%20Annual%20Accounts%20for%202024-25_ICICI%20Pru%20AMC.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "ICICI Foundation for Inclusive Growth",
+        "details": "Runs ICICI Academy for Skills across 28 academies in 20 states/UTs; free vocational training + elementary education",
+        "source": "https://csrbox.org/India_CSR_Project_ICICI-Prudential-Asset-Management-Company-Limited--pan-india_20243"
+      }
+    ],
+    "ceo": {
+      "name": "Nimesh Shah",
+      "title": "Managing Director & CEO",
+      "linkedin": "https://www.linkedin.com/in/nimesh-shah-bb6949169/"
+    },
+    "csr_head": null,
+    "email_domain": "icicipruamc.com"
+  },
+  "L18101DL1970PLC005197": {
+    "report_url": "https://annualreport.srf.com/2024-25/pdf/SRF-Limited_Annual-Report-2025.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "CARE India",
+        "details": "Udaan Girl's Residential Special Training Centre since 2011",
+        "source": "https://csrbox.org/Impact/description/Impact_talks_full_In-Conversation-with-Dr.-Y.-Suresh-Reddy,-Lead-CSR-&-Director,-SRF-Foundation_216"
+      },
+      {
+        "ngo": "PRADAN",
+        "details": "Natural resource management and sustainable livelihoods in Alwar, Rajasthan since 2005",
+        "source": "https://www.srf-foundation.org/our-reach/natural-resource-management-2/"
+      }
+    ],
+    "ceo": {
+      "name": "Ashish Bharat Ram",
+      "title": "Chairman & Managing Director",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Dr. Y. Suresh Reddy",
+      "title": "Lead CSR & Director, SRF Foundation",
+      "linkedin": "https://www.linkedin.com/in/suresh-reddy-52b45511/"
+    },
+    "email_domain": "srf.com"
+  },
+  "U24239MH1989PLC052049": {
+    "funded_ngos": [],
+    "ceo": {
+      "name": "Shivam Katwal",
+      "title": "CEO",
+      "linkedin": null
+    },
+    "csr_head": null,
+    "email_domain": "macleodspharma.com"
+  },
+  "L26942GJ1981PLC004717": {
+    "report_url": "https://www.ambujacement.com/-/media/Project/AmbujaLimited/Investor/Annual-Report/2025/Ambuja-Cements-IR-2024-25-Web-Low-res-02-06-2025.ashx",
+    "report_type": "Integrated Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Adani Foundation",
+        "details": "Joint initiative transforming learning spaces in Guna district; 74 desks/benches in govt schools",
+        "source": "https://observervoice.com/ambuja-cements-and-adani-foundation-transform-learning-spaces-in-guna-district-173103/"
+      },
+      {
+        "ngo": "NSDC",
+        "details": "Certification of skilled youth across 15 SEDIs in 10 states",
+        "source": "https://www.ambujafoundation.org/our-partners"
+      }
+    ],
+    "ceo": {
+      "name": "Ajay Kapur",
+      "title": "Managing Director",
+      "linkedin": "https://www.linkedin.com/in/ajayakapur/"
+    },
+    "csr_head": {
+      "name": "Pearl Tiwari",
+      "title": "Director & CEO, Ambuja Cement Foundation",
+      "linkedin": "https://www.linkedin.com/in/pearl-tiwari-0339b126"
+    },
+    "email_domain": "ambujacement.com"
+  },
+  "L72200MH1989PLC053666": {
+    "report_url": "https://s201.q4cdn.com/971593819/files/doc_financials/2024/ar/India-ofss-annual-report-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Charities Aid Foundation (CAF) India",
+        "details": "Primary implementation partner for Oracle CSR grants in education, skills, and community programmes",
+        "source": "https://spoindia.org/oracle-looks-to-delivering-high-profile-csr-projects-with-caf-and-other-non-profit-grantees/"
+      }
+    ],
+    "ceo": {
+      "name": "Makarand Padalkar",
+      "title": "Managing Director & CEO",
+      "linkedin": "https://www.linkedin.com/in/makarand-padalkar-b8684718/"
+    },
+    "csr_head": null,
+    "email_domain": "oracle.com"
+  },
+  "U40300MH1972PTC015941": {
+    "funded_ngos": [
+      {
+        "ngo": "JJT Foundation",
+        "details": "Education of underprivileged children via Adarsh Vidya Mandir (~500 girls), Adarsh Bal Niketan, JJT University in Jhunjhunu, Rajasthan",
+        "source": "https://roha.com/csr/"
+      },
+      {
+        "ngo": "Asha Ka Jharna",
+        "details": "Special education for ~250 students; National Trust Best Organisation Award 2014",
+        "source": "https://ashakajharna.org/"
+      }
+    ],
+    "ceo": {
+      "name": "Mahesh Tibrewala",
+      "title": "Managing Director",
+      "linkedin": "https://in.linkedin.com/in/mahesh-tibrewala-a7126617"
+    },
+    "csr_head": null,
+    "email_domain": "rohagroup.com"
+  },
+  "U31900DL1995PTC071387": {
+    "funded_ngos": [
+      {
+        "ngo": "ESSCI",
+        "details": "Samsung Innovation Campus — AI, IoT, Big Data skills training for youth 18-25 across Delhi NCR, KA, TN, UP",
+        "source": "https://csr.samsung.com/india/"
+      },
+      {
+        "ngo": "FITT, IIT Delhi",
+        "details": "Solve for Tomorrow national innovation competition with MeitY and UN India",
+        "source": "https://news.samsung.com/in/samsung-launches-season-two-of-solve-for-tomorrow-a-national-innovation-competition-to-develop-innovative-thinking-mindset-among-indias-youth-partners-with-iit-delhi-and"
+      },
+      {
+        "ngo": "Mahattattva Educational Advisory",
+        "details": "Galaxy Empowered teacher upskilling programme; 250 schools in Delhi",
+        "source": "https://news.samsung.com/in/samsung-launches-unique-community-led-programme-galaxy-empowered-to-upskill-20000-teachers-by-2025"
+      }
+    ],
+    "ceo": {
+      "name": "JB Park",
+      "title": "President & CEO, Samsung Southwest Asia",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Shubham Mukherjee",
+      "title": "Head Corporate Communications & CSR",
+      "linkedin": "https://www.linkedin.com/in/shubham-mukherjee-199b337/"
+    },
+    "email_domain": "samsung.com"
   }
 }
