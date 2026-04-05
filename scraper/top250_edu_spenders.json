@@ -1,0 +1,1502 @@
+[
+  {
+    "cin": "L17110MH1973PLC019786",
+    "company": "Reliance Industries Limited",
+    "edu_spend_inr": 10626219392.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L22210MH1995PLC084781",
+    "company": "Tata Consultancy Services Limited",
+    "edu_spend_inr": 7724154883.4800005,
+    "already_enriched": true
+  },
+  {
+    "cin": "L65920MH1994PLC080618",
+    "company": "Hdfc Bank Limited",
+    "edu_spend_inr": 4019244548.54,
+    "already_enriched": true
+  },
+  {
+    "cin": "L85110KA1981PLC013115",
+    "company": "Infosys Limited",
+    "edu_spend_inr": 3327976153.46,
+    "already_enriched": true
+  },
+  {
+    "cin": "L27105HR1979PLC009913",
+    "company": "Jindal Steel And Power Limited",
+    "edu_spend_inr": 3140200000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L74899DL1993GOI054155",
+    "company": "Oil And Natural Gas Corporation Limited",
+    "edu_spend_inr": 1866083435.08,
+    "already_enriched": true
+  },
+  {
+    "cin": "L65110GJ1993PLC020769",
+    "company": "Axis Bank Limited",
+    "edu_spend_inr": 1694430836.8,
+    "already_enriched": true
+  },
+  {
+    "cin": "L65910KL1997PLC011300",
+    "company": "Muthoot Finance Limited",
+    "edu_spend_inr": 1505383442.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L27100MH1907PLC000260",
+    "company": "Tata Steel Limited",
+    "edu_spend_inr": 1336211102.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U40104MH1987GOI149458",
+    "company": "NUCLEAR POWER CORPORATION OF INDIA LIMITED",
+    "edu_spend_inr": 1317600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65910MH1987PLC042961",
+    "company": "Bajaj Finance Limited",
+    "edu_spend_inr": 1108857435.18,
+    "already_enriched": true
+  },
+  {
+    "cin": "U29309TN1996PLC035377",
+    "company": "Hyundai Motor India Limited",
+    "edu_spend_inr": 1083400000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L74140DL1991PLC046369",
+    "company": "Hcl Technologies Limited",
+    "edu_spend_inr": 1025743672.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L32102KA1945PLC020800",
+    "company": "Wipro Limited",
+    "edu_spend_inr": 983793903.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L27102MH1994PLC152925",
+    "company": "Jsw Steel Limited",
+    "edu_spend_inr": 942312584.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L65990MH1945PLC004558",
+    "company": "Mahindra And Mahindra Limited",
+    "edu_spend_inr": 932143120.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L16005WB1910PLC001985",
+    "company": "Itc Limited",
+    "edu_spend_inr": 918148293.18,
+    "already_enriched": true
+  },
+  {
+    "cin": "L23201MH1959GOI011388",
+    "company": "Indian Oil Corporation Limited",
+    "edu_spend_inr": 863185769.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U10102MP1985GOI003160",
+    "company": "Northern Coalfields Limited",
+    "edu_spend_inr": 833952000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L64200MH1986PLC041370",
+    "company": "Tech Mahindra Limited",
+    "edu_spend_inr": 803375378.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L65110MH1985PLC038137",
+    "company": "Kotak Mahindra Bank Limited",
+    "edu_spend_inr": 726689792.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U74910TN2000PTC046218",
+    "company": "APARAJITHA CORPORATE SERVICES PRIVATE LIMITED",
+    "edu_spend_inr": 686500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L99999MH1946PLC004768",
+    "company": "LARSEN AND TOUBRO LIMITED",
+    "edu_spend_inr": 669300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L27203OR1981GOI000920",
+    "company": "National Aluminium Co Ltd",
+    "edu_spend_inr": 628666802.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L23220MH1952GOI008931",
+    "company": "Bharat Petroleum Corporation Limited",
+    "edu_spend_inr": 618541820.52,
+    "already_enriched": true
+  },
+  {
+    "cin": "U01100MH1999PLC120563",
+    "company": "Reliance Retail Limited",
+    "edu_spend_inr": 615000000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L23201MH1952GOI008858",
+    "company": "Hindustan Petroleum Corporation Limited",
+    "edu_spend_inr": 601598574.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L26940MH2000PLC128420",
+    "company": "Ultratech Cement Limited",
+    "edu_spend_inr": 599121449.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L65191TN1979PLC007874",
+    "company": "SHRIRAM FINANCE LIMITED",
+    "edu_spend_inr": 594700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65190GJ1994PLC021012",
+    "company": "Icici Bank Limited",
+    "edu_spend_inr": 577071498.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L23109WB1973GOI028844",
+    "company": "Coal India Ltd Govt Of India Undertaking",
+    "edu_spend_inr": 525568518.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L40101DL1989GOI038121",
+    "company": "Power Grid Corporation Of India Limited",
+    "edu_spend_inr": 515130140.56000006,
+    "already_enriched": true
+  },
+  {
+    "cin": "U72300TN1994PTC026590",
+    "company": "COGNIZANT TECHNOLOGY SOLUTIONS INDIA PRI VATE LIMITED",
+    "edu_spend_inr": 498500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U02005WB1943PTC011231",
+    "company": "RUNGTA SONS PVT LTD",
+    "edu_spend_inr": 498000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40101HR1975GOI032564",
+    "company": "NHPC LIMITED",
+    "edu_spend_inr": 480300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40300MH1977PLC019594",
+    "company": "LLOYDS METALS AND ENERGY LIMITED",
+    "edu_spend_inr": 459200000.00000006,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45202TG2006PLC050271",
+    "company": "MEGHA ENGINEERING & INFRASTRUCTURES LIMITED",
+    "edu_spend_inr": 455000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200KA1997PTC022382",
+    "company": "IBM INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 445900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40101DL1975GOI007966",
+    "company": "Ntpc Limited",
+    "edu_spend_inr": 423956278.64,
+    "already_enriched": true
+  },
+  {
+    "cin": "L27020MH1958PLC011238",
+    "company": "Hindalco Industries Limited",
+    "edu_spend_inr": 403403767.09999996,
+    "already_enriched": true
+  },
+  {
+    "cin": "L35301KA1963GOI001622",
+    "company": "Hindustan Aeronautics Limited",
+    "edu_spend_inr": 387398000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U27100GJ1976FLC013787",
+    "company": "ARCELORMITTAL NIPPON STEEL INDIA LIMITED",
+    "edu_spend_inr": 373900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L17124MP1947PLC000410",
+    "company": "Grasim Industries Ltd",
+    "edu_spend_inr": 372429740.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L35911DL1984PLC017354",
+    "company": "Hero Motocorp Limited",
+    "edu_spend_inr": 361050476.31,
+    "already_enriched": true
+  },
+  {
+    "cin": "U85110PN1993PLC145950",
+    "company": "CAPGEMINI TECHNOLOGY SERVICES INDIA LIMITED",
+    "edu_spend_inr": 351500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24230GJ2011PTC065022",
+    "company": "MERIL HEALTHCARE PRIVATE LIMITED",
+    "edu_spend_inr": 350000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U32107DL1997PTC220109",
+    "company": "L G ELECTRONICS INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 349000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L72900MH1996PLC104693",
+    "company": "Ltimindtree Limited",
+    "edu_spend_inr": 335108204.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U66010PN2000PLC015329",
+    "company": "Bajaj Allianz General Insurance Company Limited",
+    "edu_spend_inr": 330873376.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U51909MH2006PLC166166",
+    "company": "Reliance Retail Ventures Limited",
+    "edu_spend_inr": 325000000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U51900MH2000PLC126473",
+    "company": "AVENUE SUPERMARTS",
+    "edu_spend_inr": 313200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L51900MH2000PLC126473",
+    "company": "AVENUE SUPERMARTS LIMITED",
+    "edu_spend_inr": 313200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24100MH1983PLC029442",
+    "company": "Lupin Limited",
+    "edu_spend_inr": 306873808.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L27204RJ1966PLC001208",
+    "company": "Hindustan Zinc Limited",
+    "edu_spend_inr": 306794932.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L34103DL1981PLC011375",
+    "company": "Maruti Suzuki India Limited",
+    "edu_spend_inr": 304496269.88,
+    "already_enriched": true
+  },
+  {
+    "cin": "U74999KA1996FTC055568",
+    "company": "DELL INTERNATIONAL SERVICES INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 289900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U30007KA1996PTC019630",
+    "company": "APPLE INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 283800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40200DL1984GOI018976",
+    "company": "GAIL (INDIA) LIMITED",
+    "edu_spend_inr": 278700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U13100OR1956SGC000313",
+    "company": "ODISHA MINING CORPORATION LIMITED",
+    "edu_spend_inr": 278700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U80903MH2010PTC211466",
+    "company": "VARSITY EDUCATION MANAGEMENT PRIVATE LIMITED",
+    "edu_spend_inr": 276400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L28920MH1957PLC010839",
+    "company": "SIEMENS LIMITED",
+    "edu_spend_inr": 270900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U99999DL1993PLC054135",
+    "company": "ICICI PRUDENTIAL ASSET MANAGEMENT COMPANY LIMITED",
+    "edu_spend_inr": 265000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L18101DL1970PLC005197",
+    "company": "SRF LIMITED",
+    "edu_spend_inr": 262200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24100MH1969PLC014336",
+    "company": "Pidilite Industries Limited",
+    "edu_spend_inr": 254201758.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U24239MH1989PLC052049",
+    "company": "MACLEODS PHARMACEUTICALS LTD",
+    "edu_spend_inr": 244600000.00000003,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65993PN2007PLC130076",
+    "company": "Bajaj Auto Limited.",
+    "edu_spend_inr": 240859578.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L26942GJ1981PLC004717",
+    "company": "AMBUJA CEMENTS LIMITED",
+    "edu_spend_inr": 233300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L72200MH1989PLC053666",
+    "company": "ORACLE FINANCIAL SERVICES SOFTWARE LIMITED",
+    "edu_spend_inr": 232900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65191PN1994PLC076333",
+    "company": "Indusind Bank Ltd.",
+    "edu_spend_inr": 232618680.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U40300MH1972PTC015941",
+    "company": "ROHA DYE CHEM PRIVATE LIMITED",
+    "edu_spend_inr": 228100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U31900DL1995PTC071387",
+    "company": "SAMSUNG INDIA ELECTRONICS PRIVATE LIMITED",
+    "edu_spend_inr": 226800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65910MH1984PLC032639",
+    "company": "PIRAMAL CAPITAL & HOUSING FINANCE LIMITED",
+    "edu_spend_inr": 223200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U36912MH2007PTC174133",
+    "company": "KIRAN GEMS PRIVATE LIMITED",
+    "edu_spend_inr": 222700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U85110KA1997PTC021606",
+    "company": "INTEL TECHNOLOGY INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 212600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L93090TN1956GOI003507",
+    "company": "Neyveli Lignite Corporation Limited",
+    "edu_spend_inr": 206464000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L24299MH1977PLC019982",
+    "company": "GLENMARK PHARMACEUTICALS LIMITED",
+    "edu_spend_inr": 202400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24290PN2020PTC191301",
+    "company": "SERUM INSTITUTE LIFE SCIENCES PRIVATE LIMITED",
+    "edu_spend_inr": 200000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65110TN1921PLC001908",
+    "company": "Tamilnad Mercantile Bank Limited",
+    "edu_spend_inr": 199600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L13100AP1958GOI001674",
+    "company": "NMDC LIMITED",
+    "edu_spend_inr": 197500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U35301KA1963GOI001622",
+    "company": "HINDUSTAN AERONAUTICS LIMITED",
+    "edu_spend_inr": 193700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U27205KA1993PTC014077",
+    "company": "NAVRATHAN JEWELLERS PRIVATE LIMITED",
+    "edu_spend_inr": 190000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72900TG2000PTC039976",
+    "company": "DELOITTE CONSULTING INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 189400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L45200MH1995PLC093041",
+    "company": "MACROTECH DEVELOPERS LIMITED",
+    "edu_spend_inr": 186900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U61100GJ2009FLC095953",
+    "company": "Adani Harbour Services Limited",
+    "edu_spend_inr": 182901000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U74999MH2016PTC283227",
+    "company": "TEAMLEASE DIGITAL PRIVATE LIMITED",
+    "edu_spend_inr": 179000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74990MH2008NPL189067",
+    "company": "NATIONAL PAYMENTS CORPORATION OF INDIA",
+    "edu_spend_inr": 174700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24239MH1935PLC002380",
+    "company": "Cipla Limited",
+    "edu_spend_inr": 173079756.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L31900DL1983PLC016304",
+    "company": "HAVELLS INDIA LIMITED",
+    "edu_spend_inr": 171500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U23201PB2000PLC024126",
+    "company": "HPCL-MITTAL ENERGY LIMITED",
+    "edu_spend_inr": 168300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72900MH1996PLC104693",
+    "company": "LARSEN & TOUBRO INFOTECH LIMITED",
+    "edu_spend_inr": 167500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L11101AS1959GOI001148",
+    "company": "Oil India Limited",
+    "edu_spend_inr": 166116058.56,
+    "already_enriched": true
+  },
+  {
+    "cin": "L35921TN1992PLC022845",
+    "company": "TVS MOTOR COMPANY LIMITED",
+    "edu_spend_inr": 163100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65910KL1992PLC006623",
+    "company": "MANAPPURAM FINANCE LIMITED",
+    "edu_spend_inr": 161400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U67200MH2000PLC129408",
+    "company": "ICICI LOMBARD GENERAL INSURANCE COMPANY LIMITED",
+    "edu_spend_inr": 161200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U10200JH1956GOI000581",
+    "company": "Central Coalfields Limited",
+    "edu_spend_inr": 159657911.60000002,
+    "already_enriched": true
+  },
+  {
+    "cin": "L17111TZ2003PLC010518",
+    "company": "K.P.R. MILL LIMITED",
+    "edu_spend_inr": 158000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65990GJ1991PLC064603",
+    "company": "ADITYA BIRLA FINANCE LIMITED",
+    "edu_spend_inr": 156600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U26109TN1997PTC037875",
+    "company": "SAINT-GOBAIN INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 153900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40101DL1969GOI005095",
+    "company": "Rec Limited",
+    "edu_spend_inr": 151833986.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U67120MH2000PTC123921",
+    "company": "PROFITEX SHARES & SECURITIES PRIVATE LIMITED",
+    "edu_spend_inr": 150000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U67200MH1996PLC097730",
+    "company": "KOTAK MAHINDRA PRIME LIMITED",
+    "edu_spend_inr": 149700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L51100GJ1993PLC019067",
+    "company": "Adani Enterprises Limited",
+    "edu_spend_inr": 145600000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U16009WB1986PTC040023",
+    "company": "PATAKA INDUSTRIES PRIVATE LIMITED",
+    "edu_spend_inr": 144500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65110JK1938SGC000048",
+    "company": "JAMMU AND KASHMIR BANK LIMITED",
+    "edu_spend_inr": 143000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L74899HR1944PLC039088",
+    "company": "ESCORTS KUBOTA LIMITED",
+    "edu_spend_inr": 142800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L35920MH1942PLC003554",
+    "company": "THE SUPREME INDUSTRIES LIMITED",
+    "edu_spend_inr": 142100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65191KL1931PLC000368",
+    "company": "THE FEDERAL BANK LTD",
+    "edu_spend_inr": 141400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200PN2002PTC016894",
+    "company": "HSBC SOFTWARE DEVELOPMENT (INDIA) PRIVATE LIMITED",
+    "edu_spend_inr": 140600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U51909GJ2019PTC106218",
+    "company": "NIYOGI ENTERPRISE PRIVATE LIMITED",
+    "edu_spend_inr": 138300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L74999TZ1984PLC001456",
+    "company": "Titan Company Limited",
+    "edu_spend_inr": 135309537.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L27101OR1961PLC000428",
+    "company": "Indian Metals And Ferro Alloys Ltd.",
+    "edu_spend_inr": 134538938.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L24230GJ1993PLC019050",
+    "company": "Sun Pharmaceutical Industries Limited",
+    "edu_spend_inr": 133314748.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L22110TN1985PLC012491",
+    "company": "SUN TV NETWORK LIMITED",
+    "edu_spend_inr": 131300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U31103TG1984PTC004436",
+    "company": "MEDHA SERVO DRIVES PVT LTD",
+    "edu_spend_inr": 131300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24239MH1961PTC012098",
+    "company": "USV PRIVATE LIMITED",
+    "edu_spend_inr": 131100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U27203KA1999PTC024654",
+    "company": "MANISH ALUMINIUM PRIVATE LIMITED",
+    "edu_spend_inr": 130000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U51432UP1992PTC013969",
+    "company": "APCO INFRATECH PRIVATE LIMITED",
+    "edu_spend_inr": 129800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U99999MH2000PLC129113",
+    "company": "SBI LIFE INSURANCE COMPANY",
+    "edu_spend_inr": 129400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L99999MH2000PLC129113",
+    "company": "Sbi Life Insurance Company Limited",
+    "edu_spend_inr": 129373622.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U35912HR2001PTC034649",
+    "company": "HONDA MOTORCYCLE AND SCOOTER INDIA PVT LTD",
+    "edu_spend_inr": 127700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74999MH1957GOI010918",
+    "company": "ECGC LIMITED",
+    "edu_spend_inr": 126700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72900MH2009FTC192938",
+    "company": "CITICORP SERVICES INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 126400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74899DL1992PTC047911",
+    "company": "VINEY CORPORATION PRIVATE LIMITED",
+    "edu_spend_inr": 125000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24110TG1989PLC009723",
+    "company": "HETERO LABS LIMITED",
+    "edu_spend_inr": 124900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200MH1996PTC100196",
+    "company": "WNS GLOBAL SERVICES PRIVATE LIMITED",
+    "edu_spend_inr": 124100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L15140MH1988PLC049208",
+    "company": "Marico Limited",
+    "edu_spend_inr": 123488728.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U36912MH2012PTC229115",
+    "company": "SHREE RAMKRISHNA EXPORTS PRIVATE LIMITED",
+    "edu_spend_inr": 123400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65990MH1991PLC060670",
+    "company": "Tata Capital Limited",
+    "edu_spend_inr": 122849960.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U45203UR1988GOI009822",
+    "company": "Thdc India Limited",
+    "edu_spend_inr": 121844784.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "L85195TG1984PLC004507",
+    "company": "DR.REDDY'S LABORATORIES LTD",
+    "edu_spend_inr": 121500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L74899DL1998PLC093073",
+    "company": "Petronet Lng Limited",
+    "edu_spend_inr": 121245976.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U65910PN2008PLC132228",
+    "company": "Bajaj Housing Finance Limited",
+    "edu_spend_inr": 121090000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U92200DL2006PLC156075",
+    "company": "BHARTI TELEMEDIA LIMITED",
+    "edu_spend_inr": 120000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65923MH1997PTC106632",
+    "company": "BENGAL FINANCE AND INVESTMENT PRIVATE LIMITED",
+    "edu_spend_inr": 120000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72900GJ2019PLC110816",
+    "company": "JIO PLATFORMS LIMITED",
+    "edu_spend_inr": 120000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65110TN2014PLC097792",
+    "company": "IDFC BANK LIMITED",
+    "edu_spend_inr": 118200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L15491WB1962PLC031425",
+    "company": "Tata Consumer Products Limited",
+    "edu_spend_inr": 117122000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U72200KA1997PTC022727",
+    "company": "HP INDIA SALES PRIVATE LIMITED",
+    "edu_spend_inr": 116700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200PN2007FTC132479",
+    "company": "BARCLAYS GLOBAL SERVICE CENTRE PRIVATE LIMITED",
+    "edu_spend_inr": 116200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U40100GJ2010PLC059593",
+    "company": "MAHARASHTRA EASTERN GRID POWER TRANSMISSION COMPANY LIMITED",
+    "edu_spend_inr": 114100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U34101KA1997PTC022858",
+    "company": "TOYOTA KIRLOSKAR MOTOR PRIVATE LIMITED",
+    "edu_spend_inr": 114000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24124RJ1985PLC003293",
+    "company": "CHAMBAL FERTILISERS AND CHEMICALS LIMITED",
+    "edu_spend_inr": 111400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65929KA2018PLC116815",
+    "company": "ZERODHA BROKING LIMITED",
+    "edu_spend_inr": 109000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40108PN1981PLC024153",
+    "company": "FINOLEX INDUSTRIES LIMITED",
+    "edu_spend_inr": 107400000.00000001,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45001PN1982PTC026507",
+    "company": "RDA HOLDINGS PRIVATE LIMITED",
+    "edu_spend_inr": 107200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U85100MH2009NPL193774",
+    "company": "ATOS SYNTEL PRAYAS FOUNDATION",
+    "edu_spend_inr": 106400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45209GJ2009PLC058789",
+    "company": "ADANI HAZIRA PORT LIMITED",
+    "edu_spend_inr": 105800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L67190MH2005PLC153397",
+    "company": "MOTILAL OSWAL FINANCIAL SERVICES LIMITED",
+    "edu_spend_inr": 104600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200KA2002PLC030310",
+    "company": "Infosys Bpm Limited",
+    "edu_spend_inr": 104543737.06,
+    "already_enriched": true
+  },
+  {
+    "cin": "L17229UP1994PLC017199",
+    "company": "J. K. CEMENT LIMITED.",
+    "edu_spend_inr": 103800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200DL1997PTC250622",
+    "company": "ADOBE SYSTEMS INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 103700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24110TG1990PLC011854",
+    "company": "DIVI'S LABORATORIES LIMITED",
+    "edu_spend_inr": 102800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U40109KA1999SGC025521",
+    "company": "KARNATAKA POWER TRANSMISSION CORPORATION LIMITED",
+    "edu_spend_inr": 101900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U11202AS1993GOI003893",
+    "company": "NUMALIGARH REFINERY LTD",
+    "edu_spend_inr": 101100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L23209KA1988GOI008959",
+    "company": "Mangalore Refinery And Petrochemicals Limited",
+    "edu_spend_inr": 100496125.75000003,
+    "already_enriched": true
+  },
+  {
+    "cin": "L85110KA1988GOI008959",
+    "company": "MANGALORE REFINERY AND PETROCHEMICALS LIMITED",
+    "edu_spend_inr": 100200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24304GJ2021PLC126977",
+    "company": "Reliance Syngas Limited",
+    "edu_spend_inr": 100000000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U24240MH1989PTC050398",
+    "company": "PROCTER & GAMBLE HOME PRODUCTS PRIVATE LIMITED",
+    "edu_spend_inr": 100000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200TG2006PTC051001",
+    "company": "WELLS FARGO EGS (INDIA) PRIVATE LIMITED",
+    "edu_spend_inr": 100000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74999MH2015PTC262630",
+    "company": "GAGANDEEP CONSULTANCY PRIVATE LIMITED",
+    "edu_spend_inr": 100000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72300KA2000PTC026968",
+    "company": "EIT SERVICES INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 99800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74899DL1995PTC065815",
+    "company": "SCHNEIDER ELECTRIC INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 98600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U67190WB2014PLC204622",
+    "company": "BANDHAN BANK",
+    "edu_spend_inr": 97899999.99999999,
+    "already_enriched": false
+  },
+  {
+    "cin": "L67190WB2014PLC204622",
+    "company": "Bandhan Bank Limited",
+    "edu_spend_inr": 97870948.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U24232KA1973PLC002401",
+    "company": "MICRO LABS LIMITED",
+    "edu_spend_inr": 97400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24114DL2002PLC115757",
+    "company": "KUTCH CHEMICAL INDUSTRIES LIMITED",
+    "edu_spend_inr": 97100000.00000001,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72300MH2000PLC128359",
+    "company": "CREDIT INFORMATION BUREAU (INDIA) LIMITED",
+    "edu_spend_inr": 96400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L27101WB1985PLC039503",
+    "company": "MAITHAN ALLOYS LTD.",
+    "edu_spend_inr": 95700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L45201DL1999PLC195937",
+    "company": "PNC INFRATECH LIMITED",
+    "edu_spend_inr": 95399999.99999999,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45201DL1999PLC195937",
+    "company": "PNC INFRATECH",
+    "edu_spend_inr": 95399999.99999999,
+    "already_enriched": false
+  },
+  {
+    "cin": "U51101CT1998PTC012995",
+    "company": "ABIS EXPORTS (INDIA) PRIVATE LIMITED",
+    "edu_spend_inr": 95300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200KA2004PTC035309",
+    "company": "SAMSUNG R&D INSTITUTE INDIA -BANGALORE PRIVATE LIMITED",
+    "edu_spend_inr": 95000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L34101TN1948PLC000105",
+    "company": "ASHOK LEYLAND LIMITED",
+    "edu_spend_inr": 94000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74999TN2006PTC059050",
+    "company": "MOHAN MUTHA EXPORTS PRIVATE LIMITED",
+    "edu_spend_inr": 93800000.00000001,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65993KA1981PTC024196",
+    "company": "PRAZIM TRADING AND INVESTMENT COMPANY PRIVATE LIMITED.",
+    "edu_spend_inr": 92900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65921MH1991PLC059642",
+    "company": "MAHINDRA AND MAHINDRA FINANCIAL SERVICES LIMITED",
+    "edu_spend_inr": 92800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L28920MH1945PLC004520",
+    "company": "Tata Motors Limited",
+    "edu_spend_inr": 92730682.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U72200TG2003PTC041835",
+    "company": "Ba Continuum India Private Limited",
+    "edu_spend_inr": 92600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U40100TN2010PTC075961",
+    "company": "ZOHO CORPORATION PRIVATE LIMITED",
+    "edu_spend_inr": 92400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L74899DL1995PLC068021",
+    "company": "Info Edge (India) Limited",
+    "edu_spend_inr": 90998571.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U65991WB1996PLC077341",
+    "company": "ITC INFOTECH INDIA LIMITED",
+    "edu_spend_inr": 90700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24237DL2006PLC144789",
+    "company": "PATANJALI AYURVED LIMITED",
+    "edu_spend_inr": 90200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45202GJ2003PTC043160",
+    "company": "Dineshchandra R. Agrawal Infracon Private Limited",
+    "edu_spend_inr": 90000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24230MH1979PLC022059",
+    "company": "AJANTA PHARMA LIMITED",
+    "edu_spend_inr": 87800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U18101DN1988PTC000365",
+    "company": "BHILOSA INDUSTRIES PRIVATE LIMITED",
+    "edu_spend_inr": 87700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U15430MH1948PTC006457",
+    "company": "MONDELEZ INDIA FOODS PRIVATE LIMITED",
+    "edu_spend_inr": 87400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24117DL1998PTC096701",
+    "company": "PANOLI INTERMEDIATES (INDIA) PRIVATE LIMITED",
+    "edu_spend_inr": 87100000.00000001,
+    "already_enriched": false
+  },
+  {
+    "cin": "U73100DL2005PTC307363",
+    "company": "GENPACT INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 86800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74220PN1997PTC112441",
+    "company": "JOHN DEERE INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 86600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L31402AP1985PLC005305",
+    "company": "AMARA RAJA BATTERIES LIMITED",
+    "edu_spend_inr": 85800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U31401MH2007PTC171667",
+    "company": "GOLDMEDAL ELECTRICALS PRIVATE LIMITED",
+    "edu_spend_inr": 85700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24110GJ1976PLC002903",
+    "company": "GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS LIMITED",
+    "edu_spend_inr": 83200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45200TG1992PTC015115",
+    "company": "MY HOME CONSTRUCTIONS PRIVATE LIMITED",
+    "edu_spend_inr": 82500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L67100MH1995PLC093797",
+    "company": "IIFL FINANCE LIMITED",
+    "edu_spend_inr": 82100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45200MH1974PLC017190",
+    "company": "UNIQUE ESTATES DEVELOPMENT COMPANY LIMITED",
+    "edu_spend_inr": 82000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U34300DL2002PTC116292",
+    "company": "MUSASHI AUTO PARTS INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 81700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200KA2014PLC073660",
+    "company": "EDGEVERVE SYSTEMS LIMITED",
+    "edu_spend_inr": 81700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U67120MH1996PTC102851",
+    "company": "PARAM CAPITAL RESEARCH PRIVATE LIMITED",
+    "edu_spend_inr": 80000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L45201KA1995PLC018475",
+    "company": "SOBHA LIMITED",
+    "edu_spend_inr": 79700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U32109KA1997PTC029635",
+    "company": "SCHNEIDER ELECTRIC IT BUSINESS INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 79200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U22121RJ1974PTC001600",
+    "company": "RAJASTHAN PATRIKA PRIVATE LIMITED",
+    "edu_spend_inr": 78800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L27100MH1973PLC016617",
+    "company": "SARDA ENERGY & MINERALS LIMITED",
+    "edu_spend_inr": 78700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40100GJ2005PLC046553",
+    "company": "Adani Total Gas Limited",
+    "edu_spend_inr": 78600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L36911RJ1996PLC011381",
+    "company": "AU SMALL FINANCE BANK LIMITED",
+    "edu_spend_inr": 78400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U40109DL2001PLC111526",
+    "company": "TATA POWER DELHI DISTRIBUTION LIMITED",
+    "edu_spend_inr": 78300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72300TN2001PTC046551",
+    "company": "VERIZON DATA SERVICES INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 78200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L26593MH1950PLC008163",
+    "company": "GRINDWELL NORTON LIMITED",
+    "edu_spend_inr": 77500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L85110KA1924PLC001128",
+    "company": "THE KARNATAKA BANK LIMITED",
+    "edu_spend_inr": 77300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L28931RJ1984PLC002890",
+    "company": "GILLETTE INDIA",
+    "edu_spend_inr": 77200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L28931MH1984PLC267130",
+    "company": "GILLETTE INDIA LIMITED",
+    "edu_spend_inr": 77200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65993MH2006PLC166475",
+    "company": "IIFL HOME FINANCE LIMITED",
+    "edu_spend_inr": 77100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U40102TG2014SGC094070",
+    "company": "TELANGANA STATE POWER GENERATION CORPORATION LIMITED",
+    "edu_spend_inr": 77100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L29308MH1954PLC009371",
+    "company": "Voltas Limited",
+    "edu_spend_inr": 76795820.47,
+    "already_enriched": true
+  },
+  {
+    "cin": "U00305MH1973PLC174201",
+    "company": "ALKEM LABORATORIES LIMITED",
+    "edu_spend_inr": 76700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65110TN1904PLC001287",
+    "company": "CITY UNION BANK LIMITED",
+    "edu_spend_inr": 76400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24299WB1997PTC088796",
+    "company": "MCPI PRIVATE LIMITED",
+    "edu_spend_inr": 76400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U27203KA1970PLC002806",
+    "company": "JINDAL ALUMINIUM LIMITED.",
+    "edu_spend_inr": 76400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74899PB2000PLC045626",
+    "company": "MAX LIFE INSURANCE COMPANY LIMITED",
+    "edu_spend_inr": 75900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72200MH2005PTC151511",
+    "company": "BNP PARIBAS INDIA SOLUTIONS PRIVATE LIMITED",
+    "edu_spend_inr": 75100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L35110MH1948PLC006472",
+    "company": "THE GREAT EASTERN SHIPPING COMPANY LIMITED",
+    "edu_spend_inr": 74800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U24222MH1979PLC021670",
+    "company": "ESDEE PAINTS LIMITED",
+    "edu_spend_inr": 74400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U22120MH1913PLC000391",
+    "company": "BENNETT COLEMAN AND COMPANY LIMITED",
+    "edu_spend_inr": 73100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74999PN2015FTC157258",
+    "company": "UBS BUSINESS SOLUTIONS (INDIA) PRIVATE LIMITED",
+    "edu_spend_inr": 73000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U10102CT1985GOI003161",
+    "company": "SOUTH EASTERN COALFIELDS LIMITED",
+    "edu_spend_inr": 72600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24210MH1958PLC011173",
+    "company": "BAYER CROPSCIENCE LIMITED",
+    "edu_spend_inr": 71900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L85110KA1954PLC000759",
+    "company": "THE SANDUR MANGANESE AND IRON ORES LIMITED",
+    "edu_spend_inr": 71200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65110MH2000PLC128245",
+    "company": "Hdfc Life Insurance Company Limited",
+    "edu_spend_inr": 71117000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U65991MH1999PLC123027",
+    "company": "HDFC ASSET MANAGEMENT COMPANY LIMITED",
+    "edu_spend_inr": 71000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65991MH1999PLC123027",
+    "company": "Hdfc Asset Management Company Limited",
+    "edu_spend_inr": 70999180.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U28996PN1985PTC037806",
+    "company": "FORBES MARSHALL PRIVATE LIMITED",
+    "edu_spend_inr": 70600000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L40101TN1965GOI005389",
+    "company": "CHENNAI PETROLEUM CORPORATION LIMITED",
+    "edu_spend_inr": 70300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72900KA2007PTC042047",
+    "company": "VMWARE SOFTWARE INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 69700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U65923MH1995PTC087401",
+    "company": "SOCIETE GENERALE SECURITIES INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 69500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L15140MH1986PLC038536",
+    "company": "PATANJALI FOODS LIMITED",
+    "edu_spend_inr": 69200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L15146GJ1999PLC035320",
+    "company": "Adani Wilmar Limited",
+    "edu_spend_inr": 68200000.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U15146GJ1999PLC035320",
+    "company": "ADANI WILMAR",
+    "edu_spend_inr": 68200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U72900TG2010PTC067943",
+    "company": "OPTUM GLOBAL SOLUTIONS (INDIA) PRIVATE LIMITED",
+    "edu_spend_inr": 68200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L24110GJ1984PLC007301",
+    "company": "AARTI INDUSTRIES LTD",
+    "edu_spend_inr": 67900000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L07010KA1997PLC022322",
+    "company": "PRESTIGE ESTATES PROJECTS LIMITED",
+    "edu_spend_inr": 67800000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L23200MH1989PLC054633",
+    "company": "SUPREME PETROCHEM LIMITED",
+    "edu_spend_inr": 67700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L99999MH1961PLC012185",
+    "company": "BALKRISHNA INDUSTRIES LIMITED",
+    "edu_spend_inr": 66500000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65991TN1984PLC010844",
+    "company": "FIVE-STAR BUSINESS FINANCE LIMITED",
+    "edu_spend_inr": 66400000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U27109WB2003PLC097108",
+    "company": "CAPTAIN STEEL INDIA LIMITED",
+    "edu_spend_inr": 65599999.99999999,
+    "already_enriched": false
+  },
+  {
+    "cin": "Not Applicable",
+    "company": "Equitas Small Finance Bank Limited",
+    "edu_spend_inr": 65200000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U74120TG2004PTC043472",
+    "company": "DELOITTE & TOUCHE ASSURANCE & ENTERPRISE RISK SERVICES INDIA PRIVATE LIMITED",
+    "edu_spend_inr": 65000000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L29259GJ1991PLC015182",
+    "company": "AIA ENGINEERING LIMITED",
+    "edu_spend_inr": 64700000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "U45200TG1993PTC016175",
+    "company": "YASHODA HEALTHCARE SERVICES PRIVATE LIMITED",
+    "edu_spend_inr": 64300000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L26943RJ1979PLC001935",
+    "company": "SHREE CEMENT LIMITED",
+    "edu_spend_inr": 64100000.0,
+    "already_enriched": false
+  },
+  {
+    "cin": "L65999DL1998PLC093849",
+    "company": "Sbi Cards And Payment Services Limited",
+    "edu_spend_inr": 63941319.0,
+    "already_enriched": true
+  },
+  {
+    "cin": "U65999DL1998PLC093849",
+    "company": "SBI CARDS AND PAYMENT SERVICES LIMITED",
+    "edu_spend_inr": 63900000.0,
+    "already_enriched": false
+  }
+]

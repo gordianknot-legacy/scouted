@@ -1803,5 +1803,252 @@
   "U72200MH2004PTC144362": {},
   "U45203KA2001PLC028418": {},
   "U28111TN2006PTC089185": {},
-  "U74899DL1989PTC036517": {}
+  "U74899DL1989PTC036517": {},
+  "U40104MH1987GOI149458": {
+    "report_url": "https://www.npcil.nic.in/content/514_1_AnnualReports.aspx",
+    "report_type": "Annual Report (IR page)",
+    "report_year": "2024-25",
+    "funded_ngos": [],
+    "ceo": {
+      "name": "Bhuwan Chandra Pathak",
+      "title": "Chairman & Managing Director",
+      "linkedin": null
+    },
+    "csr_head": null,
+    "email_domain": "npcil.co.in"
+  },
+  "L99999MH1946PLC004768": {
+    "report_url": "https://investors.larsentoubro.com/upload/AnnualRep/FY2025AnnualRepL&T-ANNUAL%20REPORT%202024-25%20-%20LOW%202.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Pratham Education Foundation",
+        "details": "Education implementing partner via L&T Public Charitable Trust",
+        "source": "https://csrbox.org/India_CSR_Project_Larsen-&-Toubro-Ltd-(L&T)-Education-&-Vocational-Training-pan-india_3886"
+      },
+      {
+        "ngo": "Save The Children India",
+        "details": "Education implementing partner via L&T Public Charitable Trust",
+        "source": "https://csrbox.org/India_CSR_Project_Larsen-&-Toubro-Ltd-(L&T)-Education-&-Vocational-Training-pan-india_3886"
+      },
+      {
+        "ngo": "NavNirmiti",
+        "details": "Education implementing partner via L&T Public Charitable Trust",
+        "source": "https://csrbox.org/India_CSR_Project_Larsen-&-Toubro-Ltd-(L&T)-Education-&-Vocational-Training-pan-india_3886"
+      },
+      {
+        "ngo": "Seva Mandir",
+        "details": "Education implementing partner via L&T Public Charitable Trust",
+        "source": "https://csrbox.org/India_CSR_Project_Larsen-&-Toubro-Ltd-(L&T)-Education-&-Vocational-Training-pan-india_3886"
+      }
+    ],
+    "ceo": {
+      "name": "S. N. Subrahmanyan",
+      "title": "Chairman & Managing Director",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Partha Mallik",
+      "title": "Head - Sustainability, CSR & Corporate EHS",
+      "linkedin": "https://in.linkedin.com/in/partha-mallik-54567b46"
+    },
+    "email_domain": "larsentoubro.com"
+  },
+  "L65191TN1979PLC007874": {
+    "report_url": "https://cdn.shriramfinance.in/sfl-kalam/files/2025-06/Shriram_Finance-AR-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Shriram Foundation",
+        "details": "Scholarship programme for children of truck drivers and small transporters since 2013; 72,697+ students",
+        "source": "https://csrbox.org/India_CSR_Project_Shriram-Transport-Finance-Company-Limited-Scholarship-Scheme-_11134"
+      },
+      {
+        "ngo": "Collective Good Foundation",
+        "details": "Implementing partner for education scholarship scheme",
+        "source": "https://csrbox.org/India_CSR_Project_Shriram-Transport-Finance-Company-Limited-Scholarship-Scheme-_11134"
+      },
+      {
+        "ngo": "PanIIT Alumni Reach for India Foundation",
+        "details": "Implementing partner for education scholarship scheme",
+        "source": "https://csrbox.org/India_CSR_Project_Shriram-Transport-Finance-Company-Limited-Scholarship-Scheme-_11134"
+      }
+    ],
+    "ceo": {
+      "name": "Parag Sharma",
+      "title": "Managing Director & CEO",
+      "linkedin": "https://in.linkedin.com/in/parag-sharma-b5aaa34"
+    },
+    "csr_head": {
+      "name": "S. Balamurugan Thevar",
+      "title": "Director Sales & CSR Head",
+      "linkedin": "https://www.linkedin.com/in/balamurugan-thevar-a624696/"
+    },
+    "email_domain": "shriramfinance.in"
+  },
+  "U72300TN1994PTC026590": {
+    "funded_ngos": [
+      {
+        "ngo": "Agastya International Foundation",
+        "details": "STEAM4All partner; Science on Wheels mobile lab for 4,000+ govt school students in TN, KA, TG",
+        "source": "https://www.cognizantfoundation.org/in/en/home/what-we-do/our-programs/steam4all"
+      },
+      {
+        "ngo": "Khan Academy India",
+        "details": "STEAM4All partner for digital learning initiatives",
+        "source": "https://www.cognizantfoundation.org/in/en/home/what-we-do/our-programs/steam4all"
+      },
+      {
+        "ngo": "India Literacy Project",
+        "details": "STEAM4All partner for education programmes",
+        "source": "https://www.cognizantfoundation.org/in/en/home/what-we-do/our-programs/steam4all"
+      },
+      {
+        "ngo": "Buddy4Study",
+        "details": "Excellence4All partner for scholarship programmes",
+        "source": "https://www.cognizantfoundation.org/in/en/home/what-we-do/our-programs/excellence4all"
+      }
+    ],
+    "ceo": {
+      "name": "Rajesh Varrier",
+      "title": "Chairman & MD, Cognizant India",
+      "linkedin": "https://in.linkedin.com/in/rajesh-v-718aa9"
+    },
+    "csr_head": {
+      "name": "Deepak Prabhu Matti",
+      "title": "CEO, Cognizant Foundation India",
+      "linkedin": "https://www.linkedin.com/in/deepakpm/"
+    },
+    "email_domain": "cognizant.com"
+  },
+  "L40101HR1975GOI032564": {
+    "report_url": "https://www.nhpcindia.com/assests/pzi_public/gallery/17546519840hi.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Samaarambh Foundation",
+        "details": "Implements Shiksha Rath CSR initiative in remote Ladakh border villages; education and digital infrastructure",
+        "source": "https://www.sarkaritel.com/cmd-nhpc-flags-off-bikers-for-implementation-of-shiksha-rath-7-0-under-csr-initiative/"
+      }
+    ],
+    "ceo": {
+      "name": "Bhupender Gupta",
+      "title": "Chairman & Managing Director",
+      "linkedin": null
+    },
+    "csr_head": null,
+    "email_domain": "nhpc.nic.in"
+  },
+  "U74910TN2000PTC046218": {
+    "funded_ngos": [
+      {
+        "ngo": "Aparajitha Foundations",
+        "details": "In-house CSR arm; life skills education (Tim Tim Tare, AlcheMe) in govt schools across 10+ states",
+        "source": "https://aparajitha.org/"
+      }
+    ],
+    "ceo": {
+      "name": "Dr. Bharath Krishna Sankar",
+      "title": "Chairman",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Nagaraj Krishnan",
+      "title": "MD & Trustee, Aparajitha Foundations",
+      "linkedin": "https://in.linkedin.com/in/nagaraj-krishnan-9562802a"
+    },
+    "email_domain": "aparajitha.com"
+  },
+  "U02005WB1943PTC011231": {
+    "funded_ngos": [],
+    "ceo": {
+      "name": "Nandlal Rungta",
+      "title": "Chairman / Managing Director",
+      "linkedin": null
+    },
+    "csr_head": {
+      "name": "Siddharth Rungta",
+      "title": "Director (CSR lead)",
+      "linkedin": "https://www.linkedin.com/in/siddharth-rungta-63a60297/"
+    },
+    "email_domain": "rungtamines.com"
+  },
+  "L40300MH1977PLC019594": {
+    "report_url": "https://lloyds.in/wp-content/uploads/2025/05/Annual-Report-for-Financial-Year-2024-25.pdf",
+    "report_type": "Annual Report",
+    "report_year": "2024-25",
+    "funded_ngos": [
+      {
+        "ngo": "Lloyds Infinite Foundation",
+        "details": "CSR arm; operates schools in Chandrapur, sponsors 24 tribal students at Curtin University Australia",
+        "source": "https://lloydsinfinite.org/education/"
+      },
+      {
+        "ngo": "Light of Life Trust",
+        "details": "Anando School Empowerment Program at 3 schools in Ghugus, Chandrapur",
+        "source": "https://lloydsinfinite.org/education/"
+      }
+    ],
+    "ceo": {
+      "name": "Rajesh Gupta",
+      "title": "Managing Director",
+      "linkedin": "https://in.linkedin.com/in/rajesh-gupta-47a2a34"
+    },
+    "csr_head": {
+      "name": "Gajanana Naik",
+      "title": "General Manager - CSR",
+      "linkedin": "https://in.linkedin.com/in/gajanan-naik-221586160"
+    },
+    "email_domain": "lloyds.in"
+  },
+  "U45202TG2006PLC050271": {
+    "funded_ngos": [
+      {
+        "ngo": "Young India Skills University",
+        "details": "MEIL Foundation contributing Rs 200 Cr to build university campus in Hyderabad",
+        "source": "https://meil.in/meil-sponsor-200-cr-build-yisu-under-csr"
+      }
+    ],
+    "ceo": {
+      "name": "P.V. Krishna Reddy",
+      "title": "Managing Director",
+      "linkedin": null
+    },
+    "csr_head": null,
+    "email_domain": "meil.in"
+  },
+  "U72200KA1997PTC022382": {
+    "funded_ngos": [
+      {
+        "ngo": "Quest Alliance",
+        "details": "National partner for STEM for Girls; 200,000+ girls across 12 states in govt schools",
+        "source": "https://www.ibm.com/blog/stem-for-girls-shaping-womens-education-and-careers-in-india/"
+      },
+      {
+        "ngo": "American India Foundation Trust",
+        "details": "National partner for STEM for Girls; agency building, life skills, career counselling",
+        "source": "https://www.ibm.com/blog/stem-for-girls-shaping-womens-education-and-careers-in-india/"
+      },
+      {
+        "ngo": "Edunet Foundation",
+        "details": "Anchor partner for IBM SkillsBuild in India since 2020",
+        "source": "https://sb4al.edunetworld.com/"
+      },
+      {
+        "ngo": "CSC Academy",
+        "details": "IBM courses in 6,000 training centres across 26 states, 500,000 learners",
+        "source": "https://www.skillreporter.com/csr/ibm-skills-build-programme-csrbox/"
+      }
+    ],
+    "ceo": {
+      "name": "Sandip Patel",
+      "title": "MD, IBM India & South Asia",
+      "linkedin": "https://www.linkedin.com/in/sandip-patel-8b2450"
+    },
+    "csr_head": null,
+    "email_domain": "ibm.com"
+  }
 }
