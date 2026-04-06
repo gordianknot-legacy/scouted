@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import { ChevronUpIcon, ChevronDownIcon, ChevronRightIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon, MapPinIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
@@ -13,7 +13,23 @@ function isPriorityState(state: string): boolean {
   return CSF_PRIORITY_STATES.some(p => state.toLowerCase() === p.toLowerCase())
 }
 
-type SortField = 'eduSpend' | 'vocSpend' | 'totalSpend' | 'company' | 'eduPct'
+export type SpendMode = 'edu' | 'voc' | 'both'
+
+const SPEND_MODE_LABELS: Record<SpendMode, string> = {
+  edu: 'Education',
+  voc: 'Vocational',
+  both: 'Edu + Voc',
+}
+
+function getSpend(c: CompanySummary, mode: SpendMode): number {
+  switch (mode) {
+    case 'edu': return c.eduSpend
+    case 'voc': return c.vocSpend
+    case 'both': return c.eduSpend + c.vocSpend
+  }
+}
+
+type SortField = 'modeSpend' | 'totalSpend' | 'company' | 'modePct'
 type SortDir = 'asc' | 'desc'
 
 interface CsrCompanyTableProps {
@@ -30,22 +46,24 @@ interface CsrCompanyTableProps {
   page: number
   pageSize: number
   onPageChange: (page: number) => void
+  spendMode: SpendMode
+  onSpendModeChange: (mode: SpendMode) => void
 }
 
-export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline, onArchiveLead, onRestoreLead, fiscalYear, page, pageSize, onPageChange }: CsrCompanyTableProps) {
+export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline, onArchiveLead, onRestoreLead, fiscalYear, page, pageSize, onPageChange, spendMode, onSpendModeChange }: CsrCompanyTableProps) {
   const leadsByCin = useMemo(() => {
     const map = new Map<string, CsrLead>()
     for (const l of leads) map.set(l.cin, l)
     return map
   }, [leads])
 
-  const [sortField, setSortField] = useState<SortField>('eduSpend')
+  const [sortField, setSortField] = useState<SortField>('modeSpend')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [expandedCin, setExpandedCin] = useState<string | null>(null)
 
-  const eduPct = (c: CompanySummary) => {
+  const modePct = (c: CompanySummary) => {
     if (c.totalSpend === 0) return 0
-    return Math.round((c.eduSpend / c.totalSpend) * 100)
+    return Math.round((getSpend(c, spendMode) / c.totalSpend) * 100)
   }
 
   const sorted = useMemo(() => {
@@ -54,13 +72,12 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
       switch (sortField) {
         case 'company': cmp = a.company.localeCompare(b.company); break
         case 'totalSpend': cmp = a.totalSpend - b.totalSpend; break
-        case 'eduSpend': cmp = a.eduSpend - b.eduSpend; break
-        case 'vocSpend': cmp = a.vocSpend - b.vocSpend; break
-        case 'eduPct': cmp = eduPct(a) - eduPct(b); break
+        case 'modeSpend': cmp = getSpend(a, spendMode) - getSpend(b, spendMode); break
+        case 'modePct': cmp = modePct(a) - modePct(b); break
       }
       return sortDir === 'asc' ? cmp : -cmp
     })
-  }, [companies, sortField, sortDir])
+  }, [companies, sortField, sortDir, spendMode])
 
   const totalPages = Math.ceil(sorted.length / pageSize)
   const paginated = sorted.slice(page * pageSize, (page + 1) * pageSize)
@@ -113,17 +130,13 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
               >
                 Company <SortIcon field="company" />
               </th>
-              <th
-                className="text-right px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors"
-                onClick={() => toggleSort('eduSpend')}
-              >
-                Education <SortIcon field="eduSpend" />
-              </th>
-              <th
-                className="text-right px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors"
-                onClick={() => toggleSort('vocSpend')}
-              >
-                Vocational <SortIcon field="vocSpend" />
+              <th className="text-right px-4 py-3">
+                <SpendModeHeader
+                  spendMode={spendMode}
+                  onSpendModeChange={mode => { onSpendModeChange(mode); onPageChange(0) }}
+                  onSort={() => toggleSort('modeSpend')}
+                  sortIcon={<SortIcon field="modeSpend" />}
+                />
               </th>
               <th
                 className="text-right px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors"
@@ -133,9 +146,9 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
               </th>
               <th
                 className="text-center px-4 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-csf-blue transition-colors w-40"
-                onClick={() => toggleSort('eduPct')}
+                onClick={() => toggleSort('modePct')}
               >
-                Edu % <SortIcon field="eduPct" />
+                {SPEND_MODE_LABELS[spendMode]} % <SortIcon field="modePct" />
               </th>
               <th className="text-center px-3 py-3 font-heading text-xs font-semibold text-gray-500 uppercase tracking-wider w-16">
                 Report
@@ -146,7 +159,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
             {paginated.map((c, i) => {
               const rank = page * pageSize + i + 1
               const isExpanded = expandedCin === c.cin
-              const pct = eduPct(c)
+              const pct = modePct(c)
               const starred = shortlist.isShortlisted(c.cin)
 
               return (
@@ -154,7 +167,8 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                   key={c.cin}
                   company={c}
                   rank={rank}
-                  eduPct={pct}
+                  modePct={pct}
+                  spendMode={spendMode}
                   isExpanded={isExpanded}
                   isShortlisted={starred}
                   lead={leadsByCin.get(c.cin)}
@@ -179,7 +193,7 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
         {paginated.map((c, i) => {
           const rank = page * pageSize + i + 1
           const isExpanded = expandedCin === c.cin
-          const pct = eduPct(c)
+          const pct = modePct(c)
           const starred = shortlist.isShortlisted(c.cin)
           const inPipeline = leadsByCin.has(c.cin)
 
@@ -227,19 +241,11 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
                     {/* Key metrics */}
                     <div className="flex items-baseline gap-4 mt-2">
                       <div>
-                        <p className="font-body text-[11px] text-gray-400 uppercase">Education</p>
+                        <p className="font-body text-[11px] text-gray-400 uppercase">{SPEND_MODE_LABELS[spendMode]}</p>
                         <p className="font-heading text-base font-bold text-csf-blue">
-                          {formatINR(c.eduSpend)}
+                          {formatINR(getSpend(c, spendMode))}
                         </p>
                       </div>
-                      {c.vocSpend > 0 && (
-                        <div>
-                          <p className="font-body text-[11px] text-gray-400 uppercase">Vocational</p>
-                          <p className="font-heading text-sm text-gray-600">
-                            {formatINR(c.vocSpend)}
-                          </p>
-                        </div>
-                      )}
                       <div>
                         <p className="font-body text-[11px] text-gray-400 uppercase">Total CSR</p>
                         <p className="font-heading text-sm text-gray-600">
@@ -320,12 +326,82 @@ export function CsrCompanyTable({ companies, shortlist, leads, onMoveToPipeline,
   )
 }
 
+/* ── Spend mode column header (custom dropdown + sort) ── */
+
+function SpendModeHeader({
+  spendMode,
+  onSpendModeChange,
+  onSort,
+  sortIcon,
+}: {
+  spendMode: SpendMode
+  onSpendModeChange: (mode: SpendMode) => void
+  onSort: () => void
+  sortIcon: React.ReactNode
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [open])
+
+  return (
+    <div className="flex items-center justify-end gap-1.5" ref={ref}>
+      {/* Dropdown trigger */}
+      <div className="relative">
+        <button
+          onClick={() => setOpen(!open)}
+          className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-heading text-xs font-semibold uppercase tracking-wider text-gray-500 hover:text-csf-blue hover:bg-csf-blue/5 transition-all"
+        >
+          {SPEND_MODE_LABELS[spendMode]}
+          <ChevronDownIcon className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`} />
+        </button>
+
+        {/* Dropdown menu */}
+        {open && (
+          <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-gray-200 py-1 z-30 min-w-[140px]">
+            {(['edu', 'voc', 'both'] as SpendMode[]).map(mode => (
+              <button
+                key={mode}
+                onClick={() => { onSpendModeChange(mode); setOpen(false) }}
+                className={`w-full text-left px-3 py-1.5 font-heading text-xs font-medium transition-colors ${
+                  spendMode === mode
+                    ? 'text-csf-blue bg-csf-blue/5'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+              >
+                {SPEND_MODE_LABELS[mode]}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Sort button */}
+      <button
+        onClick={onSort}
+        className="p-0.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-csf-blue"
+        title="Sort"
+      >
+        {sortIcon}
+      </button>
+    </div>
+  )
+}
+
 /* ── Desktop row ── */
 
 function CompanyRow({
   company: c,
   rank,
-  eduPct,
+  modePct,
+  spendMode,
   isExpanded,
   isShortlisted,
   lead,
@@ -338,7 +414,8 @@ function CompanyRow({
 }: {
   company: CompanySummary
   rank: number
-  eduPct: number
+  modePct: number
+  spendMode: SpendMode
   isExpanded: boolean
   isShortlisted: boolean
   lead?: CsrLead
@@ -349,6 +426,7 @@ function CompanyRow({
   onToggle: () => void
   onStar: (e: React.MouseEvent) => void
 }) {
+  const modeSpend = getSpend(c, spendMode)
   return (
     <>
       <tr
@@ -399,21 +477,12 @@ function CompanyRow({
           </div>
         </td>
 
-        {/* Education Spend — primary metric */}
+        {/* Mode Spend (Education / Vocational / Both) */}
         <td className="px-4 py-3 text-right">
           <span className={`font-heading text-sm font-bold ${
-            c.eduSpend > 0 ? 'text-csf-blue' : 'text-gray-300'
+            modeSpend > 0 ? 'text-csf-blue' : 'text-gray-300'
           }`}>
-            {c.eduSpend > 0 ? formatINR(c.eduSpend) : '—'}
-          </span>
-        </td>
-
-        {/* Vocational Spend */}
-        <td className="px-4 py-3 text-right">
-          <span className={`font-heading text-sm ${
-            c.vocSpend > 0 ? 'text-gray-600' : 'text-gray-300'
-          }`}>
-            {c.vocSpend > 0 ? formatINR(c.vocSpend) : '—'}
+            {modeSpend > 0 ? formatINR(modeSpend) : '—'}
           </span>
         </td>
 
@@ -422,23 +491,23 @@ function CompanyRow({
           {formatINR(c.totalSpend)}
         </td>
 
-        {/* Education % — wider bar */}
+        {/* Mode % bar */}
         <td className="px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="flex-1 h-2.5 rounded-full overflow-hidden bg-gray-100 flex">
-              {eduPct > 0 && (
+              {modePct > 0 && (
                 <div
                   className={`h-full rounded-full transition-all ${
-                    eduPct >= 50 ? 'bg-csf-yellow' : 'bg-csf-yellow/50'
+                    modePct >= 50 ? 'bg-csf-yellow' : 'bg-csf-yellow/50'
                   }`}
-                  style={{ width: `${eduPct}%` }}
+                  style={{ width: `${modePct}%` }}
                 />
               )}
             </div>
             <span className={`font-heading text-xs w-8 text-right shrink-0 ${
-              eduPct >= 50 ? 'font-semibold text-gray-700' : 'text-gray-400'
+              modePct >= 50 ? 'font-semibold text-gray-700' : 'text-gray-400'
             }`}>
-              {eduPct}%
+              {modePct}%
             </span>
           </div>
         </td>
@@ -465,7 +534,7 @@ function CompanyRow({
       {/* Expanded detail */}
       {isExpanded && (
         <tr>
-          <td colSpan={8} className="p-0">
+          <td colSpan={7} className="p-0">
             <ExpandedDetail
               company={c}
               lead={lead}

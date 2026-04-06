@@ -4,7 +4,9 @@ import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { useCsrData } from '../../hooks/useCsrData'
 import { useCsrShortlist } from '../../hooks/useCsrShortlist'
 import { useCsrLeads, useCreateLead, useArchiveLead, useRestoreLead } from '../../hooks/useCsrLeads'
-import { CsrCompanyTable } from './CsrCompanyTable'
+import { useNlQuery } from '../../hooks/useNlQuery'
+import { CsrCompanyTable, type SpendMode } from './CsrCompanyTable'
+import { NlQueryBar } from './NlQueryBar'
 import { formatINR } from '../../lib/formatters'
 import { aggregateByCin } from '../../lib/csr-utils'
 
@@ -28,6 +30,7 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
   const [minEduSpend, setMinEduSpend] = useState(0)
   const [showShortlistedOnly, setShowShortlistedOnly] = useState(false)
   const [page, setPage] = useState(0)
+  const [spendMode, setSpendMode] = useState<SpendMode>('edu')
 
   const { data: records = [], isLoading, error } = useCsrData(fiscalYear)
   const shortlist = useCsrShortlist()
@@ -35,17 +38,26 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
   const createLead = useCreateLead()
   const archiveLead = useArchiveLead()
   const restoreLead = useRestoreLead()
+  const nlQuery = useNlQuery()
 
   // Aggregate records into company-level summaries
   const companies = useMemo(() => aggregateByCin(records), [records])
 
-  // Stats
-  const companiesWithEdu = companies.filter(c => c.eduSpend > 0 || c.vocSpend > 0).length
-  const totalEduSpend = companies.reduce((sum, c) => sum + c.eduSpend, 0)
-  const totalVocSpend = companies.reduce((sum, c) => sum + c.vocSpend, 0)
+  // Stats — adapt to spend mode
+  const getModeSpend = (c: { eduSpend: number; vocSpend: number }) => {
+    switch (spendMode) {
+      case 'edu': return c.eduSpend
+      case 'voc': return c.vocSpend
+      case 'both': return c.eduSpend + c.vocSpend
+    }
+  }
+  const totalModeSpend = companies.reduce((sum, c) => sum + getModeSpend(c), 0)
 
-  // Filter
+  // Filter — NL query overrides manual filters when active
   const filtered = useMemo(() => {
+    const nlResult = nlQuery.applyFilter(companies, shortlist, leads)
+    if (nlResult) return nlResult
+
     let result = companies
 
     // Search
@@ -54,9 +66,9 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
       result = result.filter(c => c.company.toLowerCase().includes(q))
     }
 
-    // Min education spend
+    // Min spend threshold (adapts to spend mode)
     if (minEduSpend > 0) {
-      result = result.filter(c => c.eduSpend >= minEduSpend)
+      result = result.filter(c => getModeSpend(c) >= minEduSpend)
     }
 
     // Shortlisted only
@@ -65,7 +77,7 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
     }
 
     return result
-  }, [companies, search, minEduSpend, showShortlistedOnly, shortlist])
+  }, [companies, search, minEduSpend, showShortlistedOnly, shortlist, nlQuery, leads, spendMode])
 
   // Reset page when filters change
   const updateFilter = (fn: () => void) => {
@@ -143,30 +155,13 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
       {!isLoading && !error && records.length > 0 && (
         <div className="space-y-5">
           {/* Stats bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
-              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
-                Companies with Edu/Voc CSR
-              </p>
-              <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
-                {companiesWithEdu}
-                <span className="text-sm font-normal text-gray-400 ml-1">/ {companies.length}</span>
-              </p>
-            </div>
+          <div className="grid grid-cols-3 gap-3">
             <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-csf-yellow/30 px-4 py-3">
               <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
-                Education CSR
+                {spendMode === 'edu' ? 'Education' : spendMode === 'voc' ? 'Vocational' : 'Edu + Voc'} CSR
               </p>
               <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
-                {formatINR(totalEduSpend)}
-              </p>
-            </div>
-            <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
-              <p className="font-body text-xs text-gray-400 uppercase tracking-wider">
-                Vocational Skills CSR
-              </p>
-              <p className="font-heading text-xl font-bold text-csf-blue mt-0.5">
-                {formatINR(totalVocSpend)}
+                {formatINR(totalModeSpend)}
               </p>
             </div>
             <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] border border-transparent px-4 py-3">
@@ -190,8 +185,22 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
             </div>
           </div>
 
-          {/* Filters */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          {/* NL Query Bar */}
+          <NlQueryBar
+            onSubmit={(q) => { nlQuery.submit(q); setPage(0) }}
+            onClear={() => { nlQuery.clear(); setPage(0) }}
+            isActive={nlQuery.isActive}
+            isLoading={nlQuery.isLoading}
+            status={nlQuery.status}
+            source={nlQuery.source}
+            description={nlQuery.description}
+            error={nlQuery.error}
+            resultCount={nlQuery.isActive ? filtered.length : undefined}
+            countOnly={nlQuery.filter?.countOnly}
+          />
+
+          {/* Manual Filters (dimmed when NL query is active) */}
+          <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-3 transition-opacity ${nlQuery.isActive ? 'opacity-40 pointer-events-none' : ''}`}>
             {/* Search */}
             <div className="relative flex-1">
               <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400" />
@@ -239,16 +248,6 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
             </button>
           </div>
 
-          {/* MCA data methodology note */}
-          <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-amber-50/80 border border-amber-200/50">
-            <svg className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-            </svg>
-            <p className="font-body text-[11px] text-amber-800 leading-relaxed">
-              <span className="font-semibold">Data Source: MCA Portal (FY 2023-24)</span> — Figures reflect project-level CSR spend per company ({'\u2018'}amnt_spent{'\u2019'} from MCA API), excluding administrative overheads and impact assessment costs. Holding companies (e.g., Bajaj Finserv) show only their own statutory spend; subsidiary CSR appears under each subsidiary{'\u2019'}s separate row. Totals may differ from consolidated figures in annual reports.
-            </p>
-          </div>
-
           {/* Company table */}
           <CsrCompanyTable
             companies={filtered}
@@ -263,6 +262,8 @@ export function CsrPage({ onBack, onNavigatePipeline }: CsrPageProps) {
             page={page}
             pageSize={15}
             onPageChange={setPage}
+            spendMode={spendMode}
+            onSpendModeChange={setSpendMode}
           />
         </div>
       )}

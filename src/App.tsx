@@ -138,7 +138,7 @@ export default function App() {
     }
 
     if (activeTab === 'csr') {
-      return <CsrPage onBack={() => setActiveTab('dashboard')} onNavigatePipeline={() => setActiveTab('pipeline')} />
+      return <CsrPage onBack={() => setActiveTab('home')} onNavigatePipeline={() => setActiveTab('pipeline')} />
     }
 
     if (activeTab === 'pipeline') {
